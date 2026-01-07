@@ -1,0 +1,10 @@
+# Ignore original high-res masters if added
+*.psd
+*.ai
+
+# Keep optimized images in repo (optional)
+# If you prefer to commit images, remove these lines
+
+# Keep README and .gitkeep
+!README.md
+!.gitkeep
