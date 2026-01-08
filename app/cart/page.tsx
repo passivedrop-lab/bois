@@ -10,8 +10,8 @@ export default function CartPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Mon Panier</h1>
-        <p className="text-wood-600 mb-8">Vérifiez et modifiez vos articles</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Мой Карзина</h1>
+        <p className="text-wood-600 mb-8">Проверьте и измените ваши товары</p>
         
         {cartItems.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -26,7 +26,7 @@ export default function CartPage() {
                   )}
                   <div className="flex-1">
                     <h3 className="font-semibold text-wood-900">{item.name}</h3>
-                    <p className="text-sm text-wood-600">Prix: {item.price}₽</p>
+                    <p className="text-sm text-wood-600">Цена: {item.price}₽</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <button 
@@ -55,40 +55,40 @@ export default function CartPage() {
             
             {/* Summary */}
             <div className="bg-white rounded-lg shadow p-6 h-fit">
-              <h2 className="text-xl font-bold text-wood-900 mb-4">Résumé</h2>
+              <h2 className="text-xl font-bold text-wood-900 mb-4">Объемы</h2>
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-wood-600">
-                  <span>Sous-total</span>
+                  <span>Подитог</span>
                   <span>{getTotal()}₽</span>
                 </div>
                 <div className="flex justify-between text-wood-600">
-                  <span>Livraison</span>
-                  <span>À définir</span>
+                  <span>Доставка</span>
+                  <span>Неопределено</span>
                 </div>
                 <div className="border-t border-wood-200 pt-3 flex justify-between font-bold text-wood-900">
-                  <span>Total</span>
+                  <span>Итого</span>
                   <span>{getTotal()}₽</span>
                 </div>
               </div>
               <button className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold mb-3">
                 <Link href="/checkout">
-                  Passer la commande
+                  Оформить заказ
                 </Link>
               </button>
               <button 
                 onClick={() => clearCart()}
                 className="w-full border border-wood-300 text-wood-700 py-2 rounded-lg hover:bg-wood-50 transition font-semibold"
               >
-                Vider le panier
+                Очистить карзину
               </button>
             </div>
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <ShoppingCart className="mx-auto text-wood-300 mb-4" size={48} />
-            <p className="text-wood-600 mb-6">Votre panier est vide</p>
+            <p className="text-wood-600 mb-6">Ваш карзина пуста</p>
             <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
-              Continuer les achats
+              Продолжить покупки
             </Link>
           </div>
         )}

@@ -25,8 +25,8 @@ export default function FavoritesPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Mes Favoris</h1>
-        <p className="text-wood-600 mb-12">Produits que vous avez sauvegardés</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Мои Избранные</h1>
+        <p className="text-wood-600 mb-12">Продукты, которые вы сохранили</p>
         
         {favorites.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -38,7 +38,7 @@ export default function FavoritesPage() {
                   </div>
                 ) : (
                   <div className="bg-wood-100 h-48 flex items-center justify-center">
-                    <span className="text-wood-400 text-sm">Image produit</span>
+                    <span className="text-wood-400 text-sm">Изображение продукта</span>
                   </div>
                 )}
                 <div className="p-4">
@@ -54,12 +54,12 @@ export default function FavoritesPage() {
                       }`}
                     >
                       <ShoppingCart size={16} />
-                      {addedToCart === item.id ? 'Ajouté!' : 'Ajouter'}
+                      {addedToCart === item.id ? 'Добавлено!' : 'Добавить'}
                     </button>
                     <button 
                       onClick={() => removeFavorite(item.id)}
                       className="p-2 hover:bg-red-100 rounded transition"
-                      title="Supprimer des favoris"
+                      title="Удалить из избранных"
                     >
                       <Heart size={18} className="text-red-600 fill-red-600" />
                     </button>
@@ -71,9 +71,9 @@ export default function FavoritesPage() {
         ) : (
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <Heart className="mx-auto text-wood-300 mb-4" size={48} />
-            <p className="text-wood-600 mb-6">Vous n'avez pas encore de favoris</p>
+            <p className="text-wood-600 mb-6">У вас еще нет избранных товаров</p>
             <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
-              Découvrir le catalogue
+              Открыть каталог
             </Link>
           </div>
         )}

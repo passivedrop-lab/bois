@@ -5,9 +5,9 @@ import { ArrowLeft, Package } from 'lucide-react'
 
 export default function OrdersPage() {
   const orders = [
-    { id: '001', date: '2025-12-15', amount: '4,500₽', status: 'Livré' },
-    { id: '002', date: '2025-11-28', amount: '2,850₽', status: 'En cours' },
-    { id: '003', date: '2025-01-08', amount: '50,000₽', status: 'En attente de vérification' },
+    { id: '001', date: '2025-12-15', amount: '4,500₽', status: 'Доставлено' },
+    { id: '002', date: '2025-11-28', amount: '2,850₽', status: 'В процессе' },
+    { id: '003', date: '2025-01-08', amount: '50,000₽', status: 'Ожидание проверки' },
   ]
 
   return (
@@ -18,11 +18,11 @@ export default function OrdersPage() {
           className="inline-flex items-center gap-2 text-fire-600 hover:text-fire-700 mb-6"
         >
           <ArrowLeft size={18} />
-          Retour au profil
+          Назад к профилю
         </Link>
         
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Mes Commandes</h1>
-        <p className="text-wood-600 mb-8">Suivi de vos commandes</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Мои Наказы</h1>
+        <p className="text-wood-600 mb-8">Прослеживание ваших заказов</p>
         
         {orders.length > 0 ? (
           <div className="space-y-4">

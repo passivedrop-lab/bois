@@ -12,22 +12,22 @@ export default function SettingsPage() {
           className="inline-flex items-center gap-2 text-fire-600 hover:text-fire-700 mb-6"
         >
           <ArrowLeft size={18} />
-          Retour au profil
+          Назад к профилю
         </Link>
         
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Paramètres</h1>
-        <p className="text-wood-600 mb-8">Gérez vos préférences et paramètres de sécurité</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Настройки</h1>
+        <p className="text-wood-600 mb-8">Управляйте своими данными и безопасностью</p>
         
         <div className="max-w-2xl space-y-6">
           {/* Change Password */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-bold text-wood-900 mb-4 flex items-center gap-2">
               <Lock className="text-fire-600" size={24} />
-              Changer le mot de passe
+              Изменить пароль
             </h2>
             <form className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-wood-900 mb-2">Mot de passe actuel</label>
+                <label className="block text-sm font-medium text-wood-900 mb-2">Текущий пароль</label>
                 <input 
                   type="password"
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
