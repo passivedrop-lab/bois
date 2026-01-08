@@ -52,19 +52,21 @@ DROP POLICY IF EXISTS "Block public access to otps" ON otps;
 -- ============================================================
 
 -- Politique pour les INSERTS (via service_role uniquement)
+-- Note: INSERT utilise ONLY WITH CHECK (pas USING)
 CREATE POLICY "Service role insert otps"
   ON otps
   FOR INSERT
-  USING (auth.role() = 'service_role')
   WITH CHECK (auth.role() = 'service_role');
 
 -- Politique pour les SELECTS (via service_role uniquement)
+-- Note: SELECT utilise ONLY USING (pas WITH CHECK)
 CREATE POLICY "Service role select otps"
   ON otps
   FOR SELECT
   USING (auth.role() = 'service_role');
 
 -- Politique pour les DELETES (via service_role uniquement)
+-- Note: DELETE utilise ONLY USING (pas WITH CHECK)
 CREATE POLICY "Service role delete otps"
   ON otps
   FOR DELETE
