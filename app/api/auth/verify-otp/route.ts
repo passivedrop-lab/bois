@@ -28,8 +28,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Code invalide' }, { status: 400 })
     }
 
-    if (stored.expires_at < Date.now()) {
-      // delete expired
+    // Comparer les timestamps ISO (convert to number for comparison)
+    const expiresTime = new Date(stored.expires_at).getTime()
+    if (expiresTime < Date.now()) {
+      // Supprimer l'OTP expiré
       await supabase.from('otps').delete().eq('email', email)
       return NextResponse.json({ error: 'Code expiré' }, { status: 400 })
     }

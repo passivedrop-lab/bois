@@ -10,20 +10,24 @@ export async function POST(request: NextRequest) {
     }
 
     const code = Math.floor(100000 + Math.random() * 900000).toString()
-    const expiresAt = Date.now() + 10 * 60 * 1000
+    // expires_at DOIT être un TIMESTAMP ISO (format texte), pas un nombre
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString()
 
     const supabase = await createServerClient()
 
-    // Insert into otps table (create this table in Supabase: email, code, expires_at bigint)
+    // Insert into otps table
     const { error } = await supabase.from('otps').insert([{ email, code, expires_at: expiresAt }])
     if (error) {
       console.error('Erreur insertion OTP:', error)
-      return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+      return NextResponse.json({ error: 'Erreur lors de l\'envoi du code' }, { status: 500 })
     }
 
-    // Option: rely on Supabase triggers or external jobs to send the OTP email.
-    // For development, return the code in response.
-    return NextResponse.json({ success: true, message: 'Code OTP enregistré', ...(process.env.NODE_ENV === 'development' && { code }) })
+    // En développement, retourner le code. En production, le code est envoyé par email (job externe)
+    if (process.env.NODE_ENV === 'development') {
+      return NextResponse.json({ success: true, message: 'Code OTP envoyé (dev mode)', code })
+    }
+
+    return NextResponse.json({ success: true, message: 'Code OTP envoyé à votre email' })
   } catch (error) {
     console.error('Erreur send-otp:', error)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })

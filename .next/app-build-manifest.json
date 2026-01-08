@@ -12,20 +12,18 @@
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/css/261198ce7d45fb72.css",
+      "static/css/d4d764bf8f0a8d24.css",
       "static/chunks/451-7cf988bddb85c4ab.js",
       "static/chunks/53-cfba9a5fa0d939df.js",
       "static/chunks/528-0fc30fabd1d815cc.js",
       "static/chunks/app/layout-e0e270aaf2fc10ba.js"
     ],
-    "/admin/page": [
+    "/a-propos/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/451-7cf988bddb85c4ab.js",
-      "static/chunks/53-cfba9a5fa0d939df.js",
-      "static/chunks/app/admin/page-1784a44a4021472b.js"
+      "static/chunks/app/a-propos/page-488099f6b1ff9276.js"
     ],
     "/admin/login/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -34,20 +32,22 @@
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/app/admin/login/page-a579ffdc0f07d944.js"
     ],
-    "/a-propos/page": [
-      "static/chunks/webpack-03f7c6bc932ce1e3.js",
-      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
-      "static/chunks/117-652ff4e7f37afac8.js",
-      "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/a-propos/page-96729c8ddab41335.js"
-    ],
-    "/admin/products/page": [
+    "/admin/products/new/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/451-7cf988bddb85c4ab.js",
-      "static/chunks/app/admin/products/page-c8acc9ba88dd933b.js"
+      "static/chunks/app/admin/products/new/page-a170cf5a666bec23.js"
+    ],
+    "/admin/orders/page": [
+      "static/chunks/webpack-03f7c6bc932ce1e3.js",
+      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
+      "static/chunks/117-652ff4e7f37afac8.js",
+      "static/chunks/main-app-8ef1d51848c4648b.js",
+      "static/chunks/451-7cf988bddb85c4ab.js",
+      "static/chunks/53-cfba9a5fa0d939df.js",
+      "static/chunks/app/admin/orders/page-435b2cc3ea87b320.js"
     ],
     "/cart/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -62,49 +62,49 @@
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-brut-industriel/page-33272e1f4588893b.js"
+      "static/chunks/app/catalogue/bois-brut-industriel/page-559c08f7a8e11d19.js"
     ],
     "/catalogue/bois-de-chauffage/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-de-chauffage/page-6bf3ecda5fc17f03.js"
+      "static/chunks/app/catalogue/bois-de-chauffage/page-0a6f7194b189dfc4.js"
     ],
     "/catalogue/bois-de-construction/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-de-construction/page-5df7ec08dd9d71c5.js"
+      "static/chunks/app/catalogue/bois-de-construction/page-4981824b26ced54a.js"
     ],
     "/catalogue/bois-decoratif/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-decoratif/page-144075014070b9f9.js"
+      "static/chunks/app/catalogue/bois-decoratif/page-6f1b9870acf38497.js"
     ],
     "/catalogue/bois-exterieur/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-exterieur/page-98e13f51dd41bcae.js"
+      "static/chunks/app/catalogue/bois-exterieur/page-f72a4e003b59c549.js"
     ],
     "/catalogue/bois-sauna/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-sauna/page-db1cea99543cca5c.js"
+      "static/chunks/app/catalogue/bois-sauna/page-7cf41ecd654d25f3.js"
     ],
     "/catalogue/bois-scié/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/bois-scié/page-2e009026ab820879.js"
+      "static/chunks/app/catalogue/bois-scié/page-73ff588060196511.js"
     ],
     "/catalogue/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -114,36 +114,36 @@
       "static/chunks/451-7cf988bddb85c4ab.js",
       "static/chunks/app/catalogue/page-05a2b704e41beb07.js"
     ],
-    "/admin/orders/page": [
+    "/catalogue/panneaux/page": [
+      "static/chunks/webpack-03f7c6bc932ce1e3.js",
+      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
+      "static/chunks/117-652ff4e7f37afac8.js",
+      "static/chunks/main-app-8ef1d51848c4648b.js",
+      "static/chunks/app/catalogue/panneaux/page-a1fe2decddcaf938.js"
+    ],
+    "/admin/products/page": [
+      "static/chunks/webpack-03f7c6bc932ce1e3.js",
+      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
+      "static/chunks/117-652ff4e7f37afac8.js",
+      "static/chunks/main-app-8ef1d51848c4648b.js",
+      "static/chunks/451-7cf988bddb85c4ab.js",
+      "static/chunks/app/admin/products/page-c8acc9ba88dd933b.js"
+    ],
+    "/admin/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/451-7cf988bddb85c4ab.js",
       "static/chunks/53-cfba9a5fa0d939df.js",
-      "static/chunks/app/admin/orders/page-435b2cc3ea87b320.js"
-    ],
-    "/catalogue/panneaux/page": [
-      "static/chunks/webpack-03f7c6bc932ce1e3.js",
-      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
-      "static/chunks/117-652ff4e7f37afac8.js",
-      "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/catalogue/panneaux/page-12e46554958f0976.js"
-    ],
-    "/admin/products/new/page": [
-      "static/chunks/webpack-03f7c6bc932ce1e3.js",
-      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
-      "static/chunks/117-652ff4e7f37afac8.js",
-      "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/451-7cf988bddb85c4ab.js",
-      "static/chunks/app/admin/products/new/page-a170cf5a666bec23.js"
+      "static/chunks/app/admin/page-1784a44a4021472b.js"
     ],
     "/contacts/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/contacts/page-cab517e39e31d47a.js"
+      "static/chunks/app/contacts/page-9ff40a5f3cef7e27.js"
     ],
     "/checkout/payment/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -152,6 +152,14 @@
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/451-7cf988bddb85c4ab.js",
       "static/chunks/app/checkout/payment/page-0768a97dc93c4f16.js"
+    ],
+    "/checkout/receipt/page": [
+      "static/chunks/webpack-03f7c6bc932ce1e3.js",
+      "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
+      "static/chunks/117-652ff4e7f37afac8.js",
+      "static/chunks/main-app-8ef1d51848c4648b.js",
+      "static/chunks/451-7cf988bddb85c4ab.js",
+      "static/chunks/app/checkout/receipt/page-33873802dc82e66f.js"
     ],
     "/favorites/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -174,15 +182,14 @@
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/livraison/page-4bd93bcbab49c7a7.js"
+      "static/chunks/app/livraison/page-7d452e6f0f470382.js"
     ],
-    "/checkout/receipt/page": [
+    "/legal/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/451-7cf988bddb85c4ab.js",
-      "static/chunks/app/checkout/receipt/page-33873802dc82e66f.js"
+      "static/chunks/app/legal/page-b022f4f0585ac6c2.js"
     ],
     "/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -226,12 +233,12 @@
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/app/services/page-07159d22fb7992d4.js"
     ],
-    "/faq/page": [
+    "/diagnostics/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/faq/page-88bfdbd41e9090ca.js"
+      "static/chunks/app/diagnostics/page-d50ac7162f4b5fef.js"
     ],
     "/login/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
@@ -240,12 +247,12 @@
       "static/chunks/main-app-8ef1d51848c4648b.js",
       "static/chunks/app/login/page-7b2d64ac481ccb90.js"
     ],
-    "/legal/page": [
+    "/faq/page": [
       "static/chunks/webpack-03f7c6bc932ce1e3.js",
       "static/chunks/fd9d1056-d3f98d09bd3114f7.js",
       "static/chunks/117-652ff4e7f37afac8.js",
       "static/chunks/main-app-8ef1d51848c4648b.js",
-      "static/chunks/app/legal/page-b022f4f0585ac6c2.js"
+      "static/chunks/app/faq/page-88bfdbd41e9090ca.js"
     ]
   }
 }
