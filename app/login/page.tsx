@@ -333,9 +333,6 @@ export default function LoginPage() {
     </div>
   )
 }
-
-  // Step 1: Envoyer OTP
-  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
