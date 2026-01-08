@@ -1,11 +1,3 @@
-export default function HomePage() {
-  return (
-    <>
-      <h1>Accueil</h1>
-      <p>Bienvenue sur le site.</p>
-    </>
-  )
-}
 import Hero from '@/components/Hero'
 import Features from '@/components/Features'
 import Categories from '@/components/Categories'
