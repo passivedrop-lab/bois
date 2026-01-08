@@ -28,13 +28,11 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
-    const email = localStorage.getItem('adminEmail')
 
     if (!token) {
       router.push('/admin/login')
     } else {
       setIsAuthenticated(true)
-      setAdminEmail(email || '')
       loadStats()
     }
   }, [router])
@@ -86,7 +84,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
-    localStorage.removeItem('adminEmail')
+    localStorage.removeItem('adminCode')
     router.push('/admin/login')
   }
 
@@ -191,8 +189,8 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold text-wood-900">Dashboard</h2>
           </div>
           <div className="text-right">
-            <p className="text-sm text-wood-600">Connecté en tant que</p>
-            <p className="font-semibold text-wood-900">{adminEmail}</p>
+            <p className="text-sm text-wood-600">Administrateur connecté</p>
+            <p className="font-semibold text-wood-900">🔐 Dashboard Sécurisé</p>
           </div>
         </div>
 
