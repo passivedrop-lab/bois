@@ -16,18 +16,18 @@ export default function PaymentPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Effectuez votre virement</h1>
-        <p className="text-wood-600 mb-12">Utilisez les coordonnées ci-dessous pour faire votre virement instantané</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Осуществите ваш перевод</h1>
+        <p className="text-wood-600 mb-12">Используйте приведенные ниже данные для быстрого перевода</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Coordonnées bancaires */}
           <div className="lg:col-span-2">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow-lg p-8 border-2 border-blue-300 mb-8">
-              <h2 className="text-2xl font-bold text-blue-900 mb-6">Coordonnées pour virement instantané</h2>
+              <h2 className="text-2xl font-bold text-blue-900 mb-6">Координаты для быстрого перевода</h2>
               
               <div className="space-y-5 bg-white rounded-lg p-6 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-wood-600 mb-2">Bénéficiaire</label>
+                  <label className="block text-sm font-medium text-wood-600 mb-2">Получатель</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -38,7 +38,7 @@ export default function PaymentPage() {
                     <button
                       onClick={() => copyToClipboard('TsarstvoDereva LLC')}
                       className="p-2 hover:bg-wood-100 rounded-lg transition"
-                      title="Copier"
+                      title="Копировать"
                     >
                       <Copy size={18} className="text-fire-600" />
                     </button>
@@ -46,7 +46,7 @@ export default function PaymentPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-wood-600 mb-2">IBAN</label>
+                  <label className="block text-sm font-medium text-wood-600 mb-2">Расчётный счёт</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -57,7 +57,7 @@ export default function PaymentPage() {
                     <button
                       onClick={() => copyToClipboard('RU12 0456 1234 5678 9012 3456')}
                       className="p-2 hover:bg-wood-100 rounded-lg transition"
-                      title="Copier"
+                      title="Копировать"
                     >
                       <Copy size={18} className="text-fire-600" />
                     </button>
@@ -65,7 +65,7 @@ export default function PaymentPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-wood-600 mb-2">BIC</label>
+                  <label className="block text-sm font-medium text-wood-600 mb-2">Корреспондентский</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -76,7 +76,7 @@ export default function PaymentPage() {
                     <button
                       onClick={() => copyToClipboard('SBERRU33')}
                       className="p-2 hover:bg-wood-100 rounded-lg transition"
-                      title="Copier"
+                      title="Копировать"
                     >
                       <Copy size={18} className="text-fire-600" />
                     </button>
@@ -84,20 +84,20 @@ export default function PaymentPage() {
                 </div>
 
                 <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                  <label className="block text-sm font-medium text-wood-600 mb-2">Montant à virer</label>
+                  <label className="block text-sm font-medium text-wood-600 mb-2">Сумма к переводу</label>
                   <p className="text-3xl font-bold text-orange-600">50,000 RUB</p>
                   <p className="text-sm text-orange-700 mt-2">
-                    ⚠️ Assurez-vous que le montant correspond exactement à celui-ci pour que votre virement soit correctement associé à votre commande.
+                    ⚠️ Убедитесь, что сумма соответствует точно, чтобы ваш перевод был правильно связан с нашим заказом.
                   </p>
                 </div>
               </div>
 
               {/* Instructions */}
               <div className="bg-white rounded-lg p-6">
-                <h3 className="font-bold text-wood-900 mb-4">Étapes du virement:</h3>
+                <h3 className="font-bold text-wood-900 mb-4">Этапы перевода:</h3>
                 <ol className="list-decimal list-inside space-y-3 text-wood-700">
-                  <li>Ouvrez votre application ou plateforme bancaire</li>
-                  <li>Sélectionnez "Effectuer un virement" ou "Paiement instantané"</li>
+                  <li>Откройте свое банковское приложение или веб-платформу</li>
+                  <li>Выберите "Осуществить перевод" или "Быстрый паятеж"
                   <li>Entrez les coordonnées ci-dessus (IBAN et BIC)</li>
                   <li>Confirmer le montant: <strong>50,000 RUB</strong></li>
                   <li>Complétez l'authentification (code OTP, empreinte digitale, etc.)</li>
