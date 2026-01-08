@@ -73,7 +73,7 @@ export default function Header() {
               <span className="text-xl sm:text-2xl font-bold">TS</span>
             </div>
             <div className="min-w-0 hidden xs:block">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-wood-900 truncate">TSARSTVODereva</h1>
+              <h1 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-wood-900 truncate">TsarstvoDereva</h1>
               <p className="text-xs text-wood-600 hidden sm:block">Качество и надежность</p>
             </div>
           </Link>

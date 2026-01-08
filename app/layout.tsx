@@ -6,9 +6,9 @@ import AuthProvider from '@/components/AuthProvider'
 import Toaster from '@/components/Toaster'
 
 export const metadata: Metadata = {
-  title: 'TSARSTVODereva - Качественные дрова для отопления',
-  description: 'TSARSTVODereva — премиальные дрова, пеллеты и печи. Доставка по всей России. Качество гарантировано.',
-  keywords: 'TSARSTVODereva, дрова, пеллеты, печи, камины, топливо',
+  title: 'TsarstvoDereva - Качественные дрова для отопления',
+  description: 'TsarstvoDereva — премиальные дрова, пеллеты и печи. Доставка по всей России. Качество гарантировано.',
+  keywords: 'TsarstvoDereva, дрова, пеллеты, печи, камины, топливо',
 }
 
 export default function RootLayout({

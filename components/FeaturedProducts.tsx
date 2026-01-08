@@ -208,7 +208,7 @@ export default function FeaturedProducts() {
         </div>
 
         <div className="text-center px-4">
-          <Link href="/products" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-block">
+          <Link href="/catalogue" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-block">
             Смотреть все товары
           </Link>
         </div>

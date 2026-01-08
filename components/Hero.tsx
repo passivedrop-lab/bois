@@ -40,11 +40,11 @@ export default function Hero() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <Link href="/products" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center justify-center gap-2">
+              <Link href="/catalogue" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center justify-center gap-2">
                 Каталог товаров
                 <ArrowRight size={18} className="sm:w-5 sm:h-5" />
               </Link>
-              <Link href="/about" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-wood-900 inline-flex items-center justify-center">
+              <Link href="/a-propos" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-wood-900 inline-flex items-center justify-center">
                 О компании
               </Link>
             </div>

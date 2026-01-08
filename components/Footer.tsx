@@ -12,10 +12,10 @@ export default function Footer() {
               <div className="bg-fire-600 text-white p-1.5 sm:p-2 rounded-lg">
                 <span className="text-lg sm:text-xl font-bold">TS</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-serif font-bold">TSARSTVODereva</h3>
+              <h3 className="text-lg sm:text-xl font-serif font-bold">TsarstvoDereva</h3>
             </div>
             <p className="text-sm sm:text-base text-wood-300 mb-3 sm:mb-4">
-              TSARSTVODereva — качественные дрова для отопления с доставкой по всей России.
+              TsarstvoDereva — качественные дрова для отопления с доставкой по всей России.
               Премиальное качество, доступные цены.
             </p>
             <div className="flex gap-3 sm:gap-4">
@@ -59,23 +59,8 @@ export default function Footer() {
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Наши услуги</h4>
             <ul className="space-y-2 text-sm sm:text-base text-wood-300">
               <li>
-                <Link href="/delivery" className="hover:text-fire-400 transition">
+                <Link href="/livraison" className="hover:text-fire-400 transition">
                   Доставка дров
-                </Link>
-              </li>
-              <li>
-                <Link href="/payment" className="hover:text-fire-400 transition">
-                  Способы оплаты
-                </Link>
-              </li>
-              <li>
-                <Link href="/warranty" className="hover:text-fire-400 transition">
-                  Гарантия качества
-                </Link>
-              </li>
-              <li>
-                <Link href="/wholesale" className="hover:text-fire-400 transition">
-                  Оптовые поставки
                 </Link>
               </li>
             </ul>
@@ -86,23 +71,8 @@ export default function Footer() {
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Информация</h4>
             <ul className="space-y-2 text-sm sm:text-base text-wood-300">
               <li>
-                <Link href="/about" className="hover:text-fire-400 transition">
+                <Link href="/a-propos" className="hover:text-fire-400 transition">
                   О компании
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-fire-400 transition">
-                  Частые вопросы
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy" className="hover:text-fire-400 transition">
-                  Политика конфиденциальности
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-fire-400 transition">
-                  Условия использования
                 </Link>
               </li>
             </ul>
@@ -110,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-wood-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-wood-400 text-xs sm:text-sm">
-          <p>&copy; 2025 TSARSTVODereva. Все права защищены.</p>
+          <p>&copy; 2025 TsarstvoDereva. Все права защищены.</p>
         </div>
       </div>
     </footer>
