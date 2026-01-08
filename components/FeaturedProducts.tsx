@@ -7,73 +7,52 @@ import { ShoppingCart, Star, Heart } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
-
-const products = [
-  {
-    id: 1,
-    name: 'Дрова дубовые 30 см - 3,1 стера',
-    price: 4510,
-    originalPrice: null,
-    image: '/images-product/dub-30-3.1.jpg',
-    rating: 4.8,
-    reviews: 124,
-    badge: 'Хит продаж',
-  },
-  {
-    id: 2,
-    name: 'Дрова 25 см - 2,60 стера в упаковке',
-    price: 4300,
-    originalPrice: null,
-    image: '/images-product/drova-25-2.6.jpg',
-    rating: 4.9,
-    reviews: 89,
-    badge: null,
-  },
-  {
-    id: 3,
-    name: 'Дрова 30 см - 2,24 стера в упаковке',
-    price: 3980,
-    originalPrice: null,
-    image: '/images-product/drova-30-2.24.jpg',
-    rating: 4.7,
-    reviews: 156,
-    badge: null,
-  },
-  {
-    id: 4,
-    name: 'Палета 1 стер дров - готово к использованию',
-    price: 1600,
-    originalPrice: null,
-    image: '/images-product/paleta-1-ster.jpg',
-    rating: 4.9,
-    reviews: 203,
-    badge: 'Популярное',
-  },
-  {
-    id: 5,
-    name: 'Дрова навалом 1м³',
-    price: 890,
-    originalPrice: null,
-    image: '/images-product/drova-navalom-1m3.jpg',
-    rating: 4.6,
-    reviews: 78,
-    badge: null,
-  },
-  {
-    id: 6,
-    name: 'Пеллеты премиум ENERBIO - 66 мешков 990кг',
-    price: 3950,
-    originalPrice: 4500,
-    image: '/images-product/pellets-enerbio-990kg.jpg',
-    rating: 4.8,
-    reviews: 145,
-    badge: 'Скидка',
-  },
-]
+import { useState, useEffect } from 'react'
 
 export default function FeaturedProducts() {
   const cartStore = useCartStore()
   const favoritesStore = useFavoritesStore()
+  const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Récupérer les produits marqués comme vedettes
+    // Pour l'instant, on utilise des données de test
+    const vedetteProducts = [
+      {
+        id: 1,
+        name: 'Дрова дубовые 30 см - 3,1 стера',
+        price: 4510,
+        originalPrice: null,
+        image: '/images-product/dub-30-3.1.jpg',
+        rating: 4.8,
+        reviews: 124,
+        vedette: true,
+      },
+      {
+        id: 2,
+        name: 'Дрова 25 см - 2,60 стера в упаковке',
+        price: 4300,
+        originalPrice: null,
+        image: '/images-product/drova-25-2.6.jpg',
+        rating: 4.9,
+        reviews: 89,
+        vedette: true,
+      },
+      {
+        id: 4,
+        name: 'Палета 1 стер дров - готово к использованию',
+        price: 1600,
+        originalPrice: null,
+        image: '/images-product/paleta-1-ster.jpg',
+        rating: 4.9,
+        reviews: 203,
+        vedette: true,
+      },
+    ]
+    setProducts(vedetteProducts)
+    setLoading(false)
+  }, [])
 
   const handleAddToCart = async (product: typeof products[0]) => {
     await cartStore.addItem({
@@ -95,6 +74,8 @@ export default function FeaturedProducts() {
       !wasFavorite ? 'Добавлено в избранное' : 'Удалено из избранного'
     )
   }
+
+  if (loading || products.length === 0) return null
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-wood-50 to-white">
@@ -124,13 +105,12 @@ export default function FeaturedProducts() {
               <div className="card group">
                 {/* Image */}
                 <div className="relative overflow-hidden bg-wood-100">
-                  {product.badge && (
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="bg-fire-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        {product.badge}
-                      </span>
-                    </div>
-                  )}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+                      <Star size={14} fill="white" />
+                      Vedette
+                    </span>
+                  </div>
                   <div className="absolute top-4 right-4 z-10">
                     <button
                       onClick={() => handleToggleFavorite(product)}

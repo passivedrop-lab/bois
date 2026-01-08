@@ -26,6 +26,7 @@ export default function NewProductPage() {
     promoPrice: '',
     description: '',
     image: null as File | null,
+    vedette: false,
   })
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -226,6 +227,20 @@ export default function NewProductPage() {
                 className="w-full px-4 py-2 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600"
                 placeholder="Décrivez le produit en détail..."
               />
+            </div>
+
+            {/* Vedette */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="vedette"
+                checked={formData.vedette}
+                onChange={(e) => setFormData({ ...formData, vedette: e.target.checked })}
+                className="w-4 h-4 text-amber-600 border-wood-300 rounded focus:ring-amber-500"
+              />
+              <label htmlFor="vedette" className="ml-3 text-sm font-medium text-wood-900">
+                Afficher ce produit sur la page d'accueil comme vedette ⭐
+              </label>
             </div>
 
             {/* Actions */}
