@@ -15,8 +15,7 @@ export default function Footer() {
               <h3 className="text-lg sm:text-xl font-serif font-bold">TsarstvoDereva</h3>
             </div>
             <p className="text-sm sm:text-base text-wood-300 mb-3 sm:mb-4">
-              TsarstvoDereva — качественные дрова для отопления с доставкой по всей России.
-              Премиальное качество, доступные цены.
+              TsarstvoDereva — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
             </p>
             <div className="flex gap-3 sm:gap-4">
               <a href="#" className="hover:text-fire-400 transition" aria-label="Facebook">

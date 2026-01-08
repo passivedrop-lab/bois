@@ -29,14 +29,14 @@ export default function Hero() {
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-white mb-4 sm:mb-6 leading-tight px-2">
-              Тепло и уют
+              Качественный лес
               <br />
-              <span className="text-fire-400">в каждом доме</span>
+              <span className="text-fire-400">для любых проектов</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-wood-200 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-              Премиальные дрова для отопления, пеллеты и печи высочайшего качества. 
-              Доставка по всей России. Заботимся о вашем комфорте.
+              Премиальные пиломатериалы высочайшего качества: брус, доска, бревна, дрова, панели и декоративные решения. 
+              Доставка по всей России. Гарантия качества и профессионализм.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
