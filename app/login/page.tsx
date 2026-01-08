@@ -33,14 +33,14 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Erreur lors de l\'envoi du code')
+        setError(data.error || 'Ошибка при отправке кода')
         return
       }
 
-      setSuccess('Code OTP envoyé à votre email!')
+      setSuccess('Код OTP отправлен на вашу почту!')
       setStep('otp')
     } catch (err) {
-      setError('Erreur de connexion')
+      setError('Ошибка подключения')
     } finally {
       setLoading(false)
     }
@@ -63,7 +63,7 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Code invalide')
+        setError(data.error || 'Неверный код')
         return
       }
 
@@ -81,7 +81,7 @@ export default function LoginPage() {
         await handleCompleteRegistration()
       }
     } catch (err) {
-      setError('Erreur lors de la vérification')
+      setError('Ошибка при проверке кода')
     } finally {
       setLoading(false)
     }
@@ -108,7 +108,7 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Erreur lors de l\'inscription')
+        setError(data.error || 'Ошибка при регистрации')
         return
       }
 
@@ -118,7 +118,7 @@ export default function LoginPage() {
       localStorage.setItem('userEmail', email)
       window.location.href = '/profile/orders'
     } catch (err) {
-      setError('Erreur lors de l\'inscription')
+      setError('Ошибка при регистрации')
     } finally {
       setLoading(false)
     }
@@ -159,7 +159,7 @@ export default function LoginPage() {
               }`}
             >
               <LogIn size={20} />
-              Connexion
+              Вход
             </button>
             <button
               onClick={() => handleSwitchMode('register')}
@@ -170,7 +170,7 @@ export default function LoginPage() {
               }`}
             >
               <UserPlus size={20} />
-              S'inscrire
+              Зарегистрироваться
             </button>
           </div>
 
@@ -178,12 +178,12 @@ export default function LoginPage() {
           <div className="text-center mb-8">
             <Mail className="w-12 h-12 mx-auto text-fire-600 mb-4" />
             <h1 className="text-2xl font-bold text-wood-900">
-              {step === 'form' && (mode === 'login' ? 'Connexion' : 'Créer un compte')}
-              {step === 'otp' && 'Vérification du code'}
+              {step === 'form' && (mode === 'login' ? 'Вход' : 'Создать аккаунт')}
+              {step === 'otp' && 'Проверка кода'}
             </h1>
             <p className="text-wood-600 mt-2 text-sm">
-              {step === 'form' && (mode === 'login' ? 'Entrez votre email' : 'Complétez vos informations')}
-              {step === 'otp' && 'Entrez le code reçu par email'}
+              {step === 'form' && (mode === 'login' ? 'Введите вашу почту' : 'Заполните свои данные')}
+              {step === 'otp' && 'Введите код, полученный по почте'}
             </p>
           </div>
 
@@ -205,11 +205,11 @@ export default function LoginPage() {
             <form onSubmit={handleSendOtp} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Email *
+                  Почта *
                 </label>
                 <input
                   type="email"
-                  placeholder="votre@email.com"
+                  placeholder="ваша@почта.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -222,11 +222,11 @@ export default function LoginPage() {
                 <>
                   <div>
                     <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Prénom *
+                      Имя *
                     </label>
                     <input
                       type="text"
-                      placeholder="Jean"
+                      placeholder="Иван"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
@@ -236,11 +236,11 @@ export default function LoginPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Nom *
+                      Фамилия *
                     </label>
                     <input
                       type="text"
-                      placeholder="Dupont"
+                      placeholder="Петров"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       required
@@ -250,11 +250,11 @@ export default function LoginPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Téléphone *
+                      Телефон *
                     </label>
                     <input
                       type="tel"
-                      placeholder="+33 6 12 34 56 78"
+                      placeholder="+7 999 123 45 67"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
@@ -264,11 +264,11 @@ export default function LoginPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Ville *
+                      Город *
                     </label>
                     <input
                       type="text"
-                      placeholder="Paris"
+                      placeholder="Москва"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       required
@@ -284,7 +284,7 @@ export default function LoginPage() {
                 className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                Envoyer le code
+                Отправить код
               </button>
             </form>
           )}
@@ -294,10 +294,10 @@ export default function LoginPage() {
             <form onSubmit={handleVerifyOtp} className="space-y-4">
               <div>
                 <p className="text-sm text-wood-600 mb-4">
-                  Un code à 6 chiffres a été envoyé à <strong>{email}</strong>
+                  Код из 6 цифр отправлен на <strong>{email}</strong>
                 </p>
                 <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Code de vérification *
+                  Код проверки *
                 </label>
                 <input
                   type="text"
@@ -316,7 +316,7 @@ export default function LoginPage() {
                 className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {loading && <Loader className="w-4 h-4 animate-spin" />}
-                Vérifier le code
+                Проверить код
               </button>
 
               <button
@@ -324,7 +324,7 @@ export default function LoginPage() {
                 onClick={handleBackToForm}
                 className="w-full border border-wood-300 text-wood-700 py-2 rounded-lg hover:bg-wood-50 transition font-medium"
               >
-                ← Retour
+                ← Назад
               </button>
             </form>
           )}
