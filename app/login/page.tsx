@@ -218,12 +218,11 @@ export default function LoginPage() {
               </div>
 
               {/* Поля регистрации */}
+
               {mode === 'register' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Имя *
-                    </label>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Имя *</label>
                     <input
                       type="text"
                       placeholder="Иван"
@@ -233,11 +232,8 @@ export default function LoginPage() {
                       className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                     />
                   </div>
-
                   <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Фамилия *
-                    </label>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Фамилия *</label>
                     <input
                       type="text"
                       placeholder="Петров"
@@ -247,11 +243,8 @@ export default function LoginPage() {
                       className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                     />
                   </div>
-
                   <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Телефон *
-                    </label>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Телефон *</label>
                     <input
                       type="tel"
                       placeholder="+7 999 123 45 67"
@@ -261,16 +254,35 @@ export default function LoginPage() {
                       className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                     />
                   </div>
-
                   <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">
-                      Город *
-                    </label>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Город *</label>
                     <input
                       type="text"
                       placeholder="Москва"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Пароль *</label>
+                    <input
+                      type="password"
+                      placeholder="Введите пароль"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-wood-900 mb-2">Подтвердите пароль *</label>
+                    <input
+                      type="password"
+                      placeholder="Повторите пароль"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                       className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                     />
