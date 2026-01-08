@@ -1,8 +1,10 @@
-export default function BoisDecoratif() {
+export default function CategoryPage() {
   return (
-    <>
-      <h1>Bois décoratif</h1>
-      <p>Page dédiée au bois décoratif.</p>
-    </>
+    <div className="py-12">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold text-wood-900 mb-4">Catégorie produits</h1>
+        <p className="text-wood-600 mb-8">Découvrez notre sélection de produits de qualité.</p>
+      </div>
+    </div>
   )
 }

@@ -15,23 +15,23 @@ export default function Header() {
   const pathname = usePathname()
 
   const menuItems = [
-    { name: 'Главная', href: '/' },
-    { name: 'Каталог', href: '/products' },
-    { name: 'Услуги', href: '/services' },
-    { name: 'Доставка', href: '/delivery' },
-    { name: 'О компании', href: '/about' },
-    { name: 'Контакты', href: '/contact' },
+    { name: 'Accueil', href: '/' },
+    { name: 'Catalogue', href: '/catalogue' },
+    { name: 'Services', href: '/services' },
+    { name: 'Livraison', href: '/livraison' },
+    { name: 'À propos', href: '/a-propos' },
+    { name: 'Contacts', href: '/contacts' },
   ]
 
   const categories = [
-    { name: 'Строительный лес', href: '/products/construction' },
-    { name: 'Пиломатериалы', href: '/products/sawn' },
-    { name: 'Дрова / Биотопливо', href: '/products/firewood' },
-    { name: 'Для бани и сауны', href: '/products/sauna' },
-    { name: 'Декоративное дерево', href: '/products/decorative' },
-    { name: 'Панели и щиты', href: '/products/panels' },
-    { name: 'Экстерьер', href: '/products/exterior' },
-    { name: 'Техническое дерево', href: '/products/industrial' },
+    { name: 'Bois de construction', href: '/catalogue/bois-de-construction' },
+    { name: 'Bois scié', href: '/catalogue/bois-scié' },
+    { name: 'Bois de chauffage', href: '/catalogue/bois-de-chauffage' },
+    { name: 'Bois sauna', href: '/catalogue/bois-sauna' },
+    { name: 'Bois décoratif', href: '/catalogue/bois-decoratif' },
+    { name: 'Panneaux', href: '/catalogue/panneaux' },
+    { name: 'Bois extérieur', href: '/catalogue/bois-exterieur' },
+    { name: 'Bois brut / industriel', href: '/catalogue/bois-brut-industriel' },
   ]
 
   return (
