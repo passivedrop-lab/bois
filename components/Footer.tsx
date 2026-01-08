@@ -76,7 +76,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/legal" className="hover:text-fire-400 transition">
-                  Mentions légales
+                  Правовая информация
                 </Link>
               </li>
               <li>

@@ -3,12 +3,12 @@ export default function LegalPage() {
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-wood-900 mb-8">Mentions Légales</h1>
+          <h1 className="text-4xl font-bold text-wood-900 mb-8">Правовая информация</h1>
           
           <div className="space-y-8 text-wood-700">
             {/* Entreprise */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Informations sur l'entreprise</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">О компании</h2>
               <p className="mb-2"><strong>Nom:</strong> TsarstvoDereva</p>
               <p className="mb-2"><strong>Adresse:</strong> Москва, ул. Лесная, д. 15</p>
               <p className="mb-2"><strong>Téléphone:</strong> +7 (999) 123-45-67</p>
@@ -17,7 +17,7 @@ export default function LegalPage() {
 
             {/* Droits de vente */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Droits de vente et conformité légale</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">Права на реализацию и юридическое соответствие</h2>
               <p className="mb-4">
                 TsarstvoDereva est pleinement agréée et autorisée à commercialiser l'ensemble des produits listés sur notre plateforme. 
                 Notre entreprise possède toutes les certifications, permis et autorisations nécessaires pour la vente de bois et piolomatériaux.
@@ -32,9 +32,9 @@ export default function LegalPage() {
               </ul>
             </section>
 
-            {/* Conditions de vente */}
+            {/* Условия продажи */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Conditions de vente</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">Условия продажи</h2>
               <p className="mb-4">
                 En passant une commande sur notre plateforme, vous acceptez nos conditions de vente générales.
               </p>
@@ -49,7 +49,7 @@ export default function LegalPage() {
 
             {/* Paiement */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Modalités de paiement</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">Условия оплаты</h2>
               <p className="mb-4">
                 Nous acceptons uniquement les virements bancaires instantanés. Le processus est sécurisé et transparent :
               </p>
@@ -67,7 +67,7 @@ export default function LegalPage() {
 
             {/* Responsabilité */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Limitation de responsabilité</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">Ограничение ответственности</h2>
               <p className="mb-4">
                 TsarstvoDereva décline toute responsabilité pour:
               </p>
@@ -81,7 +81,7 @@ export default function LegalPage() {
 
             {/* Protection des données */}
             <section className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-wood-900 mb-4">Protection des données personnelles</h2>
+              <h2 className="text-2xl font-bold text-wood-900 mb-4">Защита личных данных</h2>
               <p className="mb-4">
                 Vos données personnelles sont collectées et traitées conformément à la législation applicable en matière de protection des données. 
                 Nous ne partagerons jamais vos informations avec des tiers sans votre consentement explicite.
@@ -93,7 +93,7 @@ export default function LegalPage() {
 
             {/* Contact */}
             <section className="bg-fire-50 rounded-lg p-6 border border-fire-200">
-              <h2 className="text-xl font-bold text-wood-900 mb-2">Questions supplémentaires?</h2>
+              <h2 className="text-xl font-bold text-wood-900 mb-2">Дополнительные вопросы?</h2>
               <p>
                 Contactez notre service client pour toute question concernant ces mentions légales.
               </p>

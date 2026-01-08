@@ -8,52 +8,52 @@ export default function FAQPage() {
 
   const faqs = [
     {
-      question: "Quels types de bois proposez-vous?",
-      answer: "Nous proposons une large gamme de piolomatériaux: bois de construction, bois scié, bois de chauffage, bois sauna, bois décoratif, panneaux, bois d'extérieur et bois brut/industriel. Consultez notre catalogue complet pour voir tous les produits disponibles."
+      question: "Какие типы древесины вы предлагаете?",
+      answer: "Мы предлагаем широкий спектр пиломатериалов: строительная древесина, пиломатериалы, дрова, древесина для сауны, декоративная древесина, панели, внешняя древесина и сырая/промышленная древесина. Посетите наш полный каталог, чтобы увидеть все доступные продукты."
     },
     {
-      question: "Livrez-vous en France?",
-      answer: "Notre service de livraison couvre actuellement la Fédération de Russie. Pour les demandes de livraison internationale, veuillez nous contacter directement."
+      question: "Доставляете ли вы в другие страны?",
+      answer: "Наша служба доставки в настоящее время охватывает Российскую Федерацию. Для запросов международной доставки, пожалуйста, свяжитесь с нами напрямую."
     },
     {
-      question: "Comment passer une commande?",
-      answer: "1. Sélectionnez vos produits et ajoutez-les au panier. 2. Cliquez sur 'Passer la commande'. 3. Remplissez vos informations de livraison et personnelles. 4. Recevez les coordonnées bancaires pour le virement. 5. Effectuez le virement et téléversez le reçu. 6. Votre commande sera validée et traitée."
+      question: "Как разместить заказ?",
+      answer: "1. Выберите свои продукты и добавьте их в корзину. 2. Нажмите на \"Оформить заказ\". 3. Заполните информацию о доставке и личные данные. 4. Получите банковские реквизиты для перевода. 5. Осуществите перевод и загрузите квитанцию. 6. Ваш заказ будет проверен и обработан."
     },
     {
-      question: "Quelles sont vos modalités de paiement?",
-      answer: "Nous acceptons uniquement les virements bancaires instantanés. C'est un processus sécurisé et transparent qui vous permet de recevoir une preuve de paiement immédiatement."
+      question: "Какие условия оплаты?",
+      answer: "Мы принимаем только быстрые банковские переводы. Это безопасный и прозрачный процесс, который позволяет вам получить доказательство платежа немедленно."
     },
     {
-      question: "Comment fonctionne le virement bancaire?",
-      answer: "Après confirmation de votre panier et adresse de livraison, vous recevrez les coordonnées bancaires pour effectuer un virement instantané. Vous devez téléverser le reçu du virement sur notre plateforme pour que nous valitions et traitions votre commande."
+      question: "Как работает банковский перевод?",
+      answer: "После подтверждения вашей корзины и адреса доставки вы получите банковские реквизиты для быстрого перевода. Вам необходимо загрузить квитанцию о переводе на нашу платформу, чтобы мы могли подтвердить и обработать ваш заказ."
     },
     {
-      question: "Combien de temps prend la livraison?",
-      answer: "Les délais de livraison varient selon votre localisation et le volume de commande. Généralement, les livraisons sont effectuées dans un délai de 5 à 14 jours ouvrables. Un délai précis sera communiqué lors de la confirmation de votre commande."
+      question: "Сколько времени занимает доставка?",
+      answer: "Сроки доставки варьируются в зависимости от вашего местоположения и объема заказа. Как правило, доставка осуществляется в течение 5-14 рабочих дней. Точный срок будет сообщен при подтверждении вашего заказа."
     },
     {
-      question: "Que faire en cas de problème avec ma commande?",
-      answer: "En cas de problème ou de dommage lors de la livraison, veuillez nous contacter dans les 14 jours suivant la réception du colis avec photos à l'appui. Notre équipe analysera votre réclamation et trouvera une solution appropriée."
+      question: "Что делать, если возникли проблемы с заказом?",
+      answer: "В случае возникновения проблем или повреждений при доставке, пожалуйста, свяжитесь с нами в течение 14 дней после получения посылки с фотографиями. Наша команда рассмотрит вашу жалобу и найдет подходящее решение."
     },
     {
-      question: "Puis-je annuler ou modifier ma commande?",
-      answer: "Vous pouvez annuler votre commande avant que le paiement ne soit validé. Une fois le reçu de virement accepté et la commande en traitement, les modifications ne sont plus possibles. Pour les annulations, contactez notre service client."
+      question: "Могу ли я отменить или изменить мой заказ?",
+      answer: "Вы можете отменить заказ до подтверждения платежа. После того, как квитанция о переводе принята и заказ обрабатывается, изменения больше невозможны. Для отмены обратитесь в нашу службу поддержки."
     },
     {
-      question: "Avez-vous des certifications de qualité?",
-      answer: "Oui, tous nos produits respectent les normes GOST et ISO. TsarstvoDereva est pleinement agréée et autorisée à commercialiser l'ensemble de nos piolomatériaux. Consultez nos mentions légales pour plus de détails sur nos certifications."
+      question: "Есть ли у вас сертификаты качества?",
+      answer: "Да, все наши продукты соответствуют стандартам GOST и ISO. TsarstvoDereva полностью лицензирована и авторизована на продажу всех наших пиломатериалов. Обратитесь к нашей правовой информации для получения дополнительных сведений о сертификации."
     },
     {
-      question: "Comment puis-je suivre ma commande?",
-      answer: "Une fois votre commande validée, vous pouvez suivre son statut dans votre profil, section 'Mes Commandes'. Vous verrez l'évolution: En attente de vérification → En cours de préparation → Expédiée → Livrée."
+      question: "Как я могу отследить свой заказ?",
+      answer: "После подтверждения вашего заказа вы можете отследить его статус в своем профиле в разделе \"Мои заказы\". Вы увидите ход: Ожидание проверки → В процессе подготовки → Отправлено → Доставлено."
     },
     {
-      question: "Y a-t-il des frais de livraison?",
-      answer: "Les frais de livraison dépendent de votre localisation et du volume de la commande. Ils vous seront communiqués avant confirmation du paiement."
+      question: "Есть ли расходы на доставку?",
+      answer: "Расходы на доставку зависят от вашего местоположения и объема заказа. Они будут сообщены вам перед подтверждением платежа."
     },
     {
-      question: "Qui puis-je contacter pour d'autres questions?",
-      answer: "Notre équipe est disponible par email à info@tsarstvadereva.ru ou par téléphone au +7 (999) 123-45-67. Nous répondons généralement dans les 24 heures."
+      question: "Кого я могу контактировать для других вопросов?",
+      answer: "Наша команда доступна по электронной почте info@tsarstvadereva.ru или по телефону +7 (999) 123-45-67. Мы обычно отвечаем в течение 24 часов."
     }
   ]
 
@@ -61,9 +61,9 @@ export default function FAQPage() {
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-wood-900 mb-4">Questions Fréquemment Posées</h1>
+          <h1 className="text-4xl font-bold text-wood-900 mb-4">Часто задаваемые вопросы</h1>
           <p className="text-lg text-wood-600 mb-12">
-            Trouvez les réponses à vos questions sur nos produits, livraisons et processus de commande.
+            Найдите ответы на вопросы о наших продуктах, доставке и процессе заказа.
           </p>
 
           <div className="space-y-3">
@@ -93,16 +93,16 @@ export default function FAQPage() {
 
           {/* Contact CTA */}
           <div className="mt-12 bg-fire-50 rounded-lg p-8 border border-fire-200 text-center">
-            <h2 className="text-2xl font-bold text-wood-900 mb-4">Vous ne trouvez pas votre réponse?</h2>
+            <h2 className="text-2xl font-bold text-wood-900 mb-4">Не нашли свой ответ?</h2>
             <p className="text-wood-700 mb-6">
-              Notre équipe est prête à vous aider. Contactez-nous par email ou téléphone.
+              Наша команда готова вам помочь. Свяжитесь с нами по электронной почте или телефону.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="mailto:info@tsarstvadereva.ru"
                 className="bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
               >
-                Envoyer un email
+                Отправить письмо
               </a>
               <a
                 href="tel:+79991234567"
