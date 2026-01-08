@@ -22,11 +22,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Erreur lors de l\'envoi du code' }, { status: 500 })
     }
 
-    // En développement, retourner le code. En production, le code est envoyé par email (job externe)
-    if (process.env.NODE_ENV === 'development') {
-      return NextResponse.json({ success: true, message: 'Code OTP envoyé (dev mode)', code })
-    }
-
+    // Le code OTP est envoyé par Supabase automatiquement via email
     return NextResponse.json({ success: true, message: 'Code OTP envoyé à votre email' })
   } catch (error) {
     console.error('Erreur send-otp:', error)

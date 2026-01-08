@@ -282,13 +282,6 @@ export default function LoginPage() {
             </form>
           )}
         </div>
-
-        {/* Info box */}
-        <div className="max-w-md mx-auto mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <strong>Test:</strong> Email de test: test@example.com | Code: 123456
-          </p>
-        </div>
       </div>
     </div>
   )
