@@ -58,8 +58,8 @@ export default function ReceiptPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Téléversez votre reçu</h1>
-        <p className="text-wood-600 mb-12">Dernière étape pour valider votre commande</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Загрузите ваш чек</h1>
+        <p className="text-wood-600 mb-12">Последний этап для валидации вашего заказа</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Zone de téléversement */}
@@ -67,17 +67,17 @@ export default function ReceiptPage() {
             {!showSuccess ? (
               <>
                 <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                  <h2 className="text-2xl font-bold text-wood-900 mb-6">Téléversez votre preuve de paiement</h2>
+                  <h2 className="text-2xl font-bold text-wood-900 mb-6">Загрузите ваше подтверждение о платеже</h2>
 
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
                     <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
                       <AlertCircle size={20} />
-                      Que téléverser?
+                      Что загружать?
                     </h3>
                     <ul className="text-blue-900 text-sm space-y-2 list-disc list-inside">
-                      <li>Une capture d'écran du reçu de virement bancaire</li>
-                      <li>Ou un PDF du reçu reçu par email de votre banque</li>
-                      <li>Le reçu doit montrer clairement: montant, bénéficiaire, date et heure</li>
+                      <li>Нснимок экрана квитанции банковского перевода</li>
+                      <li>Либо PDF квитанции сообщенных вашем банком</li>
+                      <li>На квитанции должны быть четко: сумма, получатель, дата и час</li>
                     </ul>
                   </div>
 

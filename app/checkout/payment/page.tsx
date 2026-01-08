@@ -97,46 +97,46 @@ export default function PaymentPage() {
                 <h3 className="font-bold text-wood-900 mb-4">Этапы перевода:</h3>
                 <ol className="list-decimal list-inside space-y-3 text-wood-700">
                   <li>Откройте свое банковское приложение или веб-платформу</li>
-                  <li>Выберите "Осуществить перевод" или "Быстрый паятеж"
-                  <li>Entrez les coordonnées ci-dessus (IBAN et BIC)</li>
-                  <li>Confirmer le montant: <strong>50,000 RUB</strong></li>
-                  <li>Complétez l'authentification (code OTP, empreinte digitale, etc.)</li>
-                  <li>Conservez ou téléchargez le reçu de confirmation</li>
+                  <li>Выберите "Осуществить перевод" или "Быстрый платеж"</li>
+                  <li>Выберите координаты (расчётный счёт и корреспондентский)</li>
+                  <li>Подтвердите сумму: <strong>50,000 RUB</strong></li>
+                  <li>Осуществите автентификацию (код OTP, пальцевая сяним и т.д.)</li>
+                  <li>Сохраните или скачайте ничего подтверждения</li>
                 </ol>
               </div>
             </div>
 
-            {/* Avertissement */}
+            {/* Предупреждение */}
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded mb-8">
-              <h3 className="font-bold text-yellow-900 mb-2">⚠️ Important</h3>
+              <h3 className="font-bold text-yellow-900 mb-2">⚠️ Важно</h3>
               <p className="text-yellow-800 text-sm mb-4">
-                Après avoir effectué le virement, vous serez redirigé vers une page de téléversement. 
-                <strong> Vous DEVEZ téléverser le reçu ou une capture d'écran du virement</strong> pour que votre commande soit validée.
+                После осуществления перевода, вы будете перенаправлены на страницу загружения. 
+                <strong> Вы ДОЛЖНЫ загрузить квитанцию или снимок экрана перевода</strong> для того, чтобы ваш заказ был валидирован.
               </p>
               <p className="text-yellow-800 text-sm">
-                Sans preuve de paiement, nous ne pouvons pas traiter votre commande. Conservez une trace de votre transaction!
+                Без подтверждения платежа, мы не можем обработать ваш заказ. Сохраните рекорд трансакции!
               </p>
             </div>
           </div>
 
-          {/* Récapitulatif */}
+          {/* Объем */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-6 sticky top-20">
-              <h3 className="text-lg font-bold text-wood-900 mb-4">Récapitulatif</h3>
+              <h3 className="text-lg font-bold text-wood-900 mb-4">Объем</h3>
               
               <div className="space-y-3 pb-6 border-b border-wood-200">
                 <div className="flex justify-between">
-                  <span className="text-wood-700">Produits</span>
+                  <span className="text-wood-700">Продукты</span>
                   <span className="font-semibold">45,000₽</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-wood-700">Livraison</span>
+                  <span className="text-wood-700">Доставка</span>
                   <span className="font-semibold">5,000₽</span>
                 </div>
               </div>
 
               <div className="flex justify-between font-bold text-wood-900 mb-8 pt-4">
-                <span>Total:</span>
+                <span>Итого:</span>
                 <span className="text-2xl text-fire-600">50,000₽</span>
               </div>
 
@@ -144,7 +144,7 @@ export default function PaymentPage() {
                 <div className="flex items-start gap-2">
                   <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-green-900">
-                    Votre commande sera confirmée dès réception de la preuve de paiement.
+                    Ваш заказ будет подтвержден сразу после получения ничего платежа.
                   </p>
                 </div>
               </div>
@@ -153,7 +153,7 @@ export default function PaymentPage() {
                 href="/checkout/receipt"
                 className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2 mb-3"
               >
-                Virement effectué
+                Перевод осуществлен
                 <ArrowRight size={18} />
               </Link>
 
@@ -161,12 +161,12 @@ export default function PaymentPage() {
                 href="/checkout"
                 className="w-full border-2 border-wood-300 text-wood-900 py-3 rounded-lg hover:bg-wood-50 transition font-semibold text-center"
               >
-                Retour
+                Назад
               </Link>
 
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <p className="text-xs text-blue-900">
-                  💡 <strong>Conseil:</strong> Prenez une capture d'écran du reçu avant de continuer, vous en aurez besoin à l'étape suivante.
+                  💡 <strong>Повет:</strong> Снимите снимок с экрана квитанции при продолжении, вы это нужны на следующем этапе.
                 </p>
               </div>
             </div>
