@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
         const html = `<p>Reçu uploadé pour la commande <strong>#${orderId}</strong></p>
           <p>Client: ${customerEmail || '—'}</p>`
 
-        await resend.emails.send({
+        const payload: any = {
           from: process.env.SENDER_EMAIL || `no-reply@${new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost').hostname.replace(/^www\./, '')}`,
           to: adminEmail,
           subject,
@@ -36,11 +36,13 @@ export async function POST(request: NextRequest) {
           attachments: [
             {
               filename: file.name,
-              type: file.type || 'application/octet-stream',
+              content_type: file.type || 'application/octet-stream',
               data: base64File,
             },
           ],
-        })
+        }
+
+        await (resend as any).emails.send(payload)
 
         console.log('Reçu envoyé à', adminEmail)
         return NextResponse.json({ success: true, message: 'Reçu envoyé à l\'admin avec succès', orderId }, { status: 200 })

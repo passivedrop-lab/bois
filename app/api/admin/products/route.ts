@@ -17,7 +17,7 @@ export async function GET() {
             const { data: urlData, error: urlError } = await supabase.storage
               .from(BUCKET)
               .createSignedUrl(p.image_path, 60 * 60) // 1 hour
-            if (!urlError && urlData) p.image_url = urlData.signedURL
+            if (!urlError && urlData) p.image_url = urlData.signedUrl
           } catch (e) {
             // ignore
           }
