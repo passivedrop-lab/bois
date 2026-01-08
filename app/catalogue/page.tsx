@@ -19,9 +19,9 @@ export default function CataloguePage() {
   return (
     <div className="py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Catalogue</h1>
-        <p className="text-wood-600 mb-8">Découvrez notre large gamme de produits en bois de qualité</p>
-        
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Каталог</h1>
+        <p className="text-wood-600 mb-8">Откройте для себя широкий ассортимент качественной древесины</p>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category) => (
             <Link
@@ -32,7 +32,7 @@ export default function CataloguePage() {
               <div className="text-4xl mb-3">{category.icon}</div>
               <h3 className="text-lg font-semibold text-wood-900 mb-2">{category.name}</h3>
               <div className="flex items-center text-fire-600 group-hover:text-fire-700">
-                <span className="text-sm">Voir plus</span>
+                <span className="text-sm">Подробнее</span>
                 <ChevronRight size={16} className="ml-1" />
               </div>
             </Link>

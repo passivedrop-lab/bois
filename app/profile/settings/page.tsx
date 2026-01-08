@@ -1,81 +1,146 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Lock, Bell } from 'lucide-react'
+import { ArrowLeft, User, Save, Loader } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
+import { useAuth } from '@/components/AuthProvider'
+import toast from 'react-hot-toast'
 
 export default function SettingsPage() {
+  const { user } = useAuth()
+  const supabase = createClient()
+
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    city: ''
+  })
+
+  useEffect(() => {
+    if (user) {
+      const loadProfile = async () => {
+        const { data } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+
+        if (data) {
+          setFormData({
+            fullName: data.full_name || '',
+            phone: data.phone || '',
+            city: data.city || ''
+          })
+        }
+        setLoading(false)
+      }
+      loadProfile()
+    }
+  }, [user, supabase])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!user) return
+
+    setSaving(true)
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          full_name: formData.fullName,
+          phone: formData.phone,
+          city: formData.city,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id)
+
+      if (error) throw error
+      toast.success('Profil mis à jour avec succès')
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      toast.error('Erreur lors de la mise à jour')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-wood-50 flex items-center justify-center">
+        <Loader className="w-8 h-8 text-fire-600 animate-spin" />
+      </div>
+    )
+  }
+
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <Link 
-          href="/profile" 
+        <Link
+          href="/profile"
           className="inline-flex items-center gap-2 text-fire-600 hover:text-fire-700 mb-6"
         >
           <ArrowLeft size={18} />
           Назад к профилю
         </Link>
-        
+
         <h1 className="text-4xl font-bold text-wood-900 mb-2">Настройки</h1>
-        <p className="text-wood-600 mb-8">Управляйте своими данными и безопасностью</p>
-        
-        <div className="max-w-2xl space-y-6">
-          {/* Change Password */}
+        <p className="text-wood-600 mb-8">Редактирование личных данных</p>
+
+        <div className="max-w-2xl">
           <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-wood-900 mb-4 flex items-center gap-2">
-              <Lock className="text-fire-600" size={24} />
-              Изменить пароль
+            <h2 className="text-xl font-bold text-wood-900 mb-6 flex items-center gap-2">
+              <User className="text-fire-600" size={24} />
+              Личные данные
             </h2>
-            <form className="space-y-4">
+
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-wood-900 mb-2">Текущий пароль</label>
-                <input 
-                  type="password"
+                <label className="block text-sm font-medium text-wood-900 mb-2">Имя и Фамилия</label>
+                <input
+                  type="text"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                  placeholder="Иван Петров"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-wood-900 mb-2">Nouveau mot de passe</label>
-                <input 
-                  type="password"
+                <label className="block text-sm font-medium text-wood-900 mb-2">Телефон</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                  placeholder="+7 (999) 000-00-00"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-wood-900 mb-2">Confirmer le mot de passe</label>
-                <input 
-                  type="password"
+                <label className="block text-sm font-medium text-wood-900 mb-2">Город</label>
+                <input
+                  type="text"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                  placeholder="Москва"
                 />
               </div>
-              <button 
-                type="submit"
-                className="bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
-              >
-                Mettre à jour
-              </button>
+
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="flex items-center gap-2 bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold disabled:opacity-70"
+                >
+                  {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save size={18} />}
+                  Сохранить
+                </button>
+              </div>
             </form>
-          </div>
-          
-          {/* Notifications */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-wood-900 mb-4 flex items-center gap-2">
-              <Bell className="text-fire-600" size={24} />
-              Notifications
-            </h2>
-            <div className="space-y-3">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" defaultChecked className="w-4 h-4" />
-                <span className="text-wood-700">Recevoir les notifications par email</span>
-              </label>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" defaultChecked className="w-4 h-4" />
-                <span className="text-wood-700">Notifications de commande</span>
-              </label>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4" />
-                <span className="text-wood-700">Offres spéciales et promotions</span>
-              </label>
-            </div>
           </div>
         </div>
       </div>

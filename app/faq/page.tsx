@@ -76,9 +76,8 @@ export default function FAQPage() {
                   <h3 className="font-semibold text-wood-900">{faq.question}</h3>
                   <ChevronDown
                     size={20}
-                    className={`text-fire-600 flex-shrink-0 transition-transform ${
-                      openIndex === index ? 'transform rotate-180' : ''
-                    }`}
+                    className={`text-fire-600 flex-shrink-0 transition-transform ${openIndex === index ? 'transform rotate-180' : ''
+                      }`}
                   />
                 </button>
 
@@ -108,7 +107,7 @@ export default function FAQPage() {
                 href="tel:+79991234567"
                 className="bg-white border-2 border-fire-600 text-fire-600 px-6 py-2 rounded-lg hover:bg-fire-50 transition font-semibold"
               >
-                Appeler
+                Позвонить
               </a>
             </div>
           </div>

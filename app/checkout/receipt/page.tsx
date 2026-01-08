@@ -1,10 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Upload, CheckCircle, AlertCircle } from 'lucide-react'
+import { useAuth } from '@/components/AuthProvider'
 
-export default function ReceiptPage() {
+function ReceiptContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const orderId = searchParams.get('orderId') || ''
+  const amount = searchParams.get('amount') || ''
+  const { user } = useAuth()
+
   const [file, setFile] = useState<File | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -18,19 +26,17 @@ export default function ReceiptPage() {
   }
 
   const handleSubmit = async () => {
-    if (!file) return
+    if (!file || !orderId) return
 
     setUploading(true)
     setError('')
 
     try {
-      // Créer un FormData avec le fichier
       const formData = new FormData()
       formData.append('file', file)
-      formData.append('orderId', '003') // À remplacer par l'ID réel de la commande
-      formData.append('customerEmail', 'customer@example.com') // À remplacer par l'email réel
+      formData.append('orderId', orderId)
+      formData.append('customerEmail', user?.email || 'admin@tsarstvo')
 
-      // Envoyer le fichier à l'API
       const response = await fetch('/api/receipts/upload', {
         method: 'POST',
         body: formData,
@@ -40,12 +46,9 @@ export default function ReceiptPage() {
         throw new Error('Erreur lors de l\'upload du reçu')
       }
 
-      const data = await response.json()
-      console.log('Reçu envoyé à l\'admin:', data)
-
       setShowSuccess(true)
       setTimeout(() => {
-        window.location.href = '/profile/orders'
+        router.push('/profile/orders')
       }, 3000)
     } catch (err) {
       setError('Erreur lors du téléversement. Veuillez réessayer.')
@@ -55,14 +58,21 @@ export default function ReceiptPage() {
     }
   }
 
+  if (!orderId) {
+    return (
+      <div className="py-20 text-center">
+        <p>Commande non spécifiée. Veuillez retourner à <Link href="/profile/orders" className="text-fire-600 underline">vos commandes</Link>.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         <h1 className="text-4xl font-bold text-wood-900 mb-2">Загрузите ваш чек</h1>
-        <p className="text-wood-600 mb-12">Последний этап для валидации вашего заказа</p>
+        <p className="text-wood-600 mb-12">Последний этап для валидации вашего заказа #{orderId}</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Zone de téléversement */}
           <div className="lg:col-span-2">
             {!showSuccess ? (
               <>
@@ -81,7 +91,6 @@ export default function ReceiptPage() {
                     </ul>
                   </div>
 
-                  {/* Drag & Drop */}
                   <div className="border-2 border-dashed border-fire-300 rounded-lg p-12 text-center bg-fire-50 mb-6 cursor-pointer hover:bg-fire-100 transition"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
@@ -109,7 +118,6 @@ export default function ReceiptPage() {
                     />
                   </div>
 
-                  {/* Fichier sélectionné */}
                   {file && (
                     <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-6 flex items-center gap-3">
                       <CheckCircle size={24} className="text-green-600" />
@@ -132,38 +140,20 @@ export default function ReceiptPage() {
                     </div>
                   )}
 
-                  {/* Bouton valider */}
                   <button
                     onClick={handleSubmit}
                     disabled={!file || uploading}
-                    className={`w-full py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition ${
-                      file && !uploading
+                    className={`w-full py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition ${file && !uploading
                         ? 'bg-fire-600 text-white hover:bg-fire-700 cursor-pointer'
                         : 'bg-wood-200 text-wood-400 cursor-not-allowed'
-                    }`}
+                      }`}
                   >
                     <CheckCircle size={20} />
                     {uploading ? 'Téléversement en cours...' : 'Valider ma commande'}
                   </button>
-
-                  <p className="text-xs text-wood-600 mt-4 text-center">
-                    En cliquant sur "Valider ma commande", vous confirmez que le reçu fourni est authentique et correspond à votre transaction.
-                  </p>
-                </div>
-
-                {/* Informations complémentaires */}
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-                  <h3 className="font-bold text-yellow-900 mb-3">⏱️ Délai de validation</h3>
-                  <p className="text-yellow-800 text-sm mb-3">
-                    Une fois votre reçu téléversé, notre équipe examinera votre paiement dans un délai de 2-4 heures (jours ouvrables).
-                  </p>
-                  <p className="text-yellow-800 text-sm">
-                    Vous recevrez une confirmation par email une fois votre commande validée et en cours de préparation.
-                  </p>
                 </div>
               </>
             ) : (
-              /* Écran de succès */
               <div className="bg-green-50 border-2 border-green-300 rounded-lg p-12 text-center">
                 <div className="flex justify-center mb-6">
                   <div className="bg-green-100 rounded-full p-4">
@@ -176,24 +166,6 @@ export default function ReceiptPage() {
                 <p className="text-green-800 text-lg mb-8">
                   Votre reçu a été téléversé avec succès. Nous allons maintenant vérifier votre paiement.
                 </p>
-
-                <div className="bg-white rounded-lg p-6 mb-8">
-                  <h3 className="font-semibold text-wood-900 mb-4">Prochaines étapes:</h3>
-                  <ol className="text-left text-wood-700 space-y-3">
-                    <li className="flex items-start gap-3">
-                      <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-sm font-bold">1</span>
-                      <span>Notre équipe examinera votre paiement (2-4 heures)</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-sm font-bold">2</span>
-                      <span>Vous recevrez une confirmation par email</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-sm font-bold">3</span>
-                      <span>Votre commande sera préparée et expédiée</span>
-                    </li>
-                  </ol>
-                </div>
 
                 <p className="text-wood-600 text-sm mb-6">
                   Redirection vers votre historique de commandes dans 3 secondes...
@@ -209,7 +181,6 @@ export default function ReceiptPage() {
             )}
           </div>
 
-          {/* Récapitulatif */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-6 sticky top-20">
               <h3 className="text-lg font-bold text-wood-900 mb-6">Récapitulatif commande</h3>
@@ -217,7 +188,7 @@ export default function ReceiptPage() {
               <div className="space-y-4 pb-6 border-b border-wood-200">
                 <div>
                   <p className="text-sm text-wood-600">Montant payé</p>
-                  <p className="text-2xl font-bold text-fire-600">50,000₽</p>
+                  <p className="text-2xl font-bold text-fire-600">{amount ? `${parseInt(amount).toLocaleString()}₽` : '-'}</p>
                 </div>
 
                 <div>
@@ -228,17 +199,18 @@ export default function ReceiptPage() {
                   </div>
                 </div>
               </div>
-
-              <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                <p className="text-xs text-green-900 font-semibold mb-2">✓ Statut après vérification:</p>
-                <p className="text-xs text-green-800">
-                  Votre commande passera à "En cours de préparation" une fois validée.
-                </p>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ReceiptPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ReceiptContent />
+    </Suspense>
   )
 }

@@ -2,8 +2,20 @@ export default function Page() {
   return (
     <div className="py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-wood-900 mb-4">Page</h1>
-        <p className="text-wood-600 mb-8">Contenu à venir.</p>
+        <h1 className="text-4xl font-bold text-wood-900 mb-6">О компании</h1>
+        <div className="prose max-w-none text-wood-700">
+          <p className="mb-4">
+            TsarstvoDereva — ваш надежный партнер в мире качественной древесины. Мы работаем более 10 лет,
+            обеспечивая наших клиентов лучшими материалами для строительства и отопления.
+          </p>
+          <p className="mb-4">
+            Наша миссия — предоставить каждому дому тепло и уют натурального дерева.
+            Мы контролируем каждый этап производства, от заготовки до доставки, чтобы гарантировать высшее качество.
+          </p>
+          <p>
+            Мы гордимся тем, что используем экологически чистые методы заготовки и поддерживаем устойчивое лесопользование.
+          </p>
+        </div>
       </div>
     </div>
   )

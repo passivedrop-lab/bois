@@ -10,9 +10,9 @@ export default function CartPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
-        <h1 className="text-4xl font-bold text-wood-900 mb-2">Мой Карзина</h1>
-        <p className="text-wood-600 mb-8">Проверьте и измените ваши товары</p>
-        
+        <h1 className="text-4xl font-bold text-wood-900 mb-2">Корзина</h1>
+        <p className="text-wood-600 mb-8">Проверьте и подтвердите ваши товары</p>
+
         {cartItems.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Items */}
@@ -29,21 +29,21 @@ export default function CartPage() {
                     <p className="text-sm text-wood-600">Цена: {item.price}₽</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button 
+                    <button
                       onClick={() => item.quantity > 1 && updateQuantity(item.id, item.quantity - 1)}
                       className="p-1 hover:bg-wood-100 rounded"
                     >
                       <Minus size={18} className="text-wood-600" />
                     </button>
                     <span className="px-4 font-semibold">{item.quantity}</span>
-                    <button 
+                    <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       className="p-1 hover:bg-wood-100 rounded"
                     >
                       <Plus size={18} className="text-wood-600" />
                     </button>
                   </div>
-                  <button 
+                  <button
                     onClick={() => removeItem(item.id)}
                     className="p-1 hover:bg-red-100 rounded ml-4"
                   >
@@ -52,18 +52,18 @@ export default function CartPage() {
                 </div>
               ))}
             </div>
-            
+
             {/* Summary */}
             <div className="bg-white rounded-lg shadow p-6 h-fit">
               <h2 className="text-xl font-bold text-wood-900 mb-4">Объемы</h2>
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-wood-600">
-                  <span>Подитог</span>
+                  <span>Подытог</span>
                   <span>{getTotal()}₽</span>
                 </div>
                 <div className="flex justify-between text-wood-600">
                   <span>Доставка</span>
-                  <span>Неопределено</span>
+                  <span>Рассчитывается далее</span>
                 </div>
                 <div className="border-t border-wood-200 pt-3 flex justify-between font-bold text-wood-900">
                   <span>Итого</span>
@@ -75,18 +75,18 @@ export default function CartPage() {
                   Оформить заказ
                 </Link>
               </button>
-              <button 
+              <button
                 onClick={() => clearCart()}
                 className="w-full border border-wood-300 text-wood-700 py-2 rounded-lg hover:bg-wood-50 transition font-semibold"
               >
-                Очистить карзину
+                Очистить корзину
               </button>
             </div>
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <ShoppingCart className="mx-auto text-wood-300 mb-4" size={48} />
-            <p className="text-wood-600 mb-6">Ваш карзина пуста</p>
+            <p className="text-wood-600 mb-6">Ваша корзина пуста</p>
             <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
               Продолжить покупки
             </Link>

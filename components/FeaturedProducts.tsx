@@ -108,7 +108,7 @@ export default function FeaturedProducts() {
                   <div className="absolute top-4 left-4 z-10">
                     <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
                       <Star size={14} fill="white" />
-                      Vedette
+                      Хит
                     </span>
                   </div>
                   <div className="absolute top-4 right-4 z-10">

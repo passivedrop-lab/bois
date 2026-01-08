@@ -1,345 +1,360 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Loader, LogIn, UserPlus } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
+import { Loader, Mail, CheckCircle, Lock, KeyRound } from 'lucide-react'
 
-export default function LoginPage() {
+export default function AuthPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
-  const [step, setStep] = useState<'form' | 'otp'>('form')
+  const [loginMethod, setLoginMethod] = useState<'password' | 'code'>('password') // New choice
+
+  // Form States
   const [email, setEmail] = useState('')
-  const [otp, setOtp] = useState('')
+  const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [city, setCity] = useState('')
+
+  // Code Verification State
+  const [showCodeInput, setShowCodeInput] = useState(false)
+  const [otpCode, setOtpCode] = useState('')
+
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const supabase = createClient()
+  const router = useRouter()
 
-  // Отправка OTP
-  const handleSendOtp = async (e: React.FormEvent) => {
+  // 1. Handle Registration (Sign Up with Password -> Expect Code)
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
-    setSuccess('')
 
     try {
-      const response = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: `${firstName} ${lastName}`.trim(),
+            phone: phone,
+            city: city,
+          },
+          // IMPORTANT: To force code validation, we rely on Supabase sending a confirmation email.
+          // If the project is set to default (Link), the user will receive a link.
+          // If the user wants a CODE, they must change the Supabase Template to use {{ .Token }} instead of {{ .ConfirmationURL }}
+          // We will show the Code Input screen regardless, hoping they get a code.
+        },
       })
 
-      const data = await response.json()
+      if (error) throw error
 
-      if (!response.ok) {
-        setError(data.error || 'Ошибка при отправке кода')
-        return
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        toast.error('Cet email est déjà utilisé.')
+      } else {
+        toast.success('Compte créé ! Veuillez vérifier votre email pour le code.')
+        setShowCodeInput(true) // Move to code entry
       }
-
-      setSuccess('Код OTP отправлен на вашу почту!')
-      setStep('otp')
-    } catch (err) {
-      setError('Ошибка подключения')
+    } catch (error: any) {
+      toast.error(error.message)
     } finally {
       setLoading(false)
     }
   }
 
-  // Проверка OTP
-  const handleVerifyOtp = async (e: React.FormEvent) => {
+  // 2. Handle Login (Password or Code)
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
-    setSuccess('')
 
     try {
-      const response = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.error || 'Неверный код')
-        return
-      }
-
-      // Режим входа: пользователь уже существует
-      if (mode === 'login') {
-        localStorage.setItem('authToken', data.token)
-        localStorage.setItem('userId', data.userId)
-        localStorage.setItem('userEmail', email)
-        window.location.href = '/profile/orders'
-        return
-      }
-
-      // Режим регистрации: создать аккаунт
-      if (mode === 'register') {
-        await handleCompleteRegistration()
-      }
-    } catch (err) {
-      setError('Ошибка при проверке кода')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Завершить регистрацию
-  const handleCompleteRegistration = async () => {
-    setLoading(true)
-    setError('')
-
-    try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      if (loginMethod === 'password') {
+        // Login with Password
+        const { error } = await supabase.auth.signInWithPassword({
           email,
-          firstName,
-          lastName,
-          phone,
-          city,
-        }),
+          password,
+        })
+        if (error) throw error
+        router.push('/profile')
+        router.refresh()
+      } else {
+        // Login with Code (Magic Link/Code)
+        const { error } = await supabase.auth.signInWithOtp({
+          email,
+          options: {
+            // If we want to support clicking a link too, we can leave this.
+            // But if we want *Code* entry manual:
+            shouldCreateUser: false,
+          }
+        })
+        if (error) throw error
+        setLoading(false)
+        setShowCodeInput(true) // Show input to enter the code they just received
+        toast.success('Code envoyé par email !')
+        return // Don't stop loading yet? No, we need to let them enter code.
+      }
+    } catch (error: any) {
+      toast.error(error.message)
+      setLoading(false)
+    }
+  }
+
+  // 3. Verify Code (For Registration Confirmation OR Login with Code)
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      // Determine type: if we came from Register, it's 'signup'. If Login, it's 'magiclink' or 'email'.
+      // Note: 'signup' type verifies the email confirmation token. 'magiclink'/'email' logs in.
+      const type = mode === 'register' ? 'signup' : 'email'
+
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token: otpCode,
+        type: type as any,
       })
 
-      const data = await response.json()
+      if (error) throw error
 
-      if (!response.ok) {
-        setError(data.error || 'Ошибка при регистрации')
-        return
-      }
-
-      // Inscription réussie
-      localStorage.setItem('authToken', data.token)
-      localStorage.setItem('userId', data.userId)
-      localStorage.setItem('userEmail', email)
-      window.location.href = '/profile/orders'
-    } catch (err) {
-      setError('Ошибка при регистрации')
+      toast.success('Vérification réussie !')
+      router.push('/profile')
+      router.refresh()
+    } catch (error: any) {
+      toast.error(error.message || 'Code invalide')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleBackToForm = () => {
-    setStep('form')
-    setOtp('')
-    setError('')
-    setSuccess('')
-  }
+  // --- RENDER ---
 
-  const handleSwitchMode = (newMode: 'login' | 'register') => {
-    setMode(newMode)
-    setStep('form')
-    setEmail('')
-    setOtp('')
-    setFirstName('')
-    setLastName('')
-    setPhone('')
-    setCity('')
-    setError('')
-    setSuccess('')
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-wood-50 to-white py-12 sm:py-16 md:py-20">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl p-8">
-          {/* Tabs */}
-          <div className="flex gap-4 mb-8">
-            <button
-              onClick={() => handleSwitchMode('login')}
-              className={`flex-1 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
-                mode === 'login'
-                  ? 'bg-fire-600 text-white'
-                  : 'bg-wood-100 text-wood-700 hover:bg-wood-200'
-              }`}
-            >
-              <LogIn size={20} />
-              Вход
-            </button>
-            <button
-              onClick={() => handleSwitchMode('register')}
-              className={`flex-1 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
-                mode === 'register'
-                  ? 'bg-fire-600 text-white'
-                  : 'bg-wood-100 text-wood-700 hover:bg-wood-200'
-              }`}
-            >
-              <UserPlus size={20} />
-              Зарегистрироваться
-            </button>
+  // Screen: Enter Code
+  if (showCodeInput) {
+    return (
+      <div className="min-h-screen bg-wood-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <KeyRound className="w-8 h-8 text-blue-600" />
           </div>
+          <h2 className="text-2xl font-bold text-wood-900 mb-4">Entrez le code</h2>
+          <p className="text-wood-600 mb-6">
+            Nous avons envoyé un code à 6 chiffres à <strong>{email}</strong>.
+          </p>
+
+          <form onSubmit={handleVerifyCode} className="space-y-4">
+            <input
+              type="text"
+              value={otpCode}
+              onChange={(e) => setOtpCode(e.target.value)}
+              placeholder="123456"
+              className="w-full text-center text-2xl tracking-widest px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold"
+            >
+              {loading ? <Loader className="animate-spin mx-auto" /> : 'Vérifier'}
+            </button>
+          </form>
+
+          <button
+            onClick={() => setShowCodeInput(false)}
+            className="mt-6 text-sm text-wood-500 hover:text-wood-700 underline"
+          >
+            Retour
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Screen: Main Form
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-wood-50 to-white py-12 sm:py-16 md:py-20 flex items-center justify-center">
+      <div className="container mx-auto px-4 max-w-md">
+        <div className="bg-white rounded-xl shadow-2xl p-8 border border-wood-100">
 
           {/* Header */}
           <div className="text-center mb-8">
-            <Mail className="w-12 h-12 mx-auto text-fire-600 mb-4" />
-            <h1 className="text-2xl font-bold text-wood-900">
-              {step === 'form' && (mode === 'login' ? 'Вход' : 'Создать аккаунт')}
-              {step === 'otp' && 'Проверка кода'}
+            <div className="w-12 h-12 bg-fire-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-6 h-6 text-fire-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-wood-900 mb-2">
+              {mode === 'login' ? 'Connexion' : 'Créer un compte'}
             </h1>
-            <p className="text-wood-600 mt-2 text-sm">
-              {step === 'form' && (mode === 'login' ? 'Введите вашу почту' : 'Заполните свои данные')}
-              {step === 'otp' && 'Введите код, полученный по почте'}
+            <p className="text-wood-600 text-sm">
+              Tsarstvo Dereva - Espace Client
             </p>
           </div>
 
-          {/* Messages */}
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-              {error}
-            </div>
-          )}
+          {/* Mode Toggle (Login vs Register) */}
+          <div className="flex bg-wood-100 p-1 rounded-lg mb-8">
+            <button
+              onClick={() => { setMode('login'); setShowCodeInput(false); }}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition ${mode === 'login'
+                ? 'bg-white text-wood-900 shadow-sm'
+                : 'text-wood-600 hover:text-wood-900'
+                }`}
+            >
+              Connexion
+            </button>
+            <button
+              onClick={() => { setMode('register'); setShowCodeInput(false); }}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition ${mode === 'register'
+                ? 'bg-white text-wood-900 shadow-sm'
+                : 'text-wood-600 hover:text-wood-900'
+                }`}
+            >
+              Inscription
+            </button>
+          </div>
 
-          {success && (
-            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
-              {success}
-            </div>
-          )}
+          {/* LOGIN FORM */}
+          {mode === 'login' && (
+            <form onSubmit={handleLogin} className="space-y-4">
+              {/* Login Method Tabs */}
+              <div className="flex gap-4 mb-4 text-sm border-b border-wood-100 pb-2">
+                <button
+                  type="button"
+                  onClick={() => setLoginMethod('password')}
+                  className={`pb-1 px-2 ${loginMethod === 'password' ? 'text-fire-600 border-b-2 border-fire-600 font-semibold' : 'text-wood-500'}`}
+                >
+                  Mot de passe
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLoginMethod('code')}
+                  className={`pb-1 px-2 ${loginMethod === 'code' ? 'text-fire-600 border-b-2 border-fire-600 font-semibold' : 'text-wood-500'}`}
+                >
+                  Code unique
+                </button>
+              </div>
 
-          {/* FORM STEP */}
-          {step === 'form' && (
-            <form onSubmit={handleSendOtp} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Почта *
-                </label>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Email</label>
                 <input
                   type="email"
-                  placeholder="ваша@почта.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
+                  className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 transition"
                 />
               </div>
 
-              {/* Поля регистрации */}
-
-              {mode === 'register' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Имя *</label>
-                    <input
-                      type="text"
-                      placeholder="Иван"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Фамилия *</label>
-                    <input
-                      type="text"
-                      placeholder="Петров"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Телефон *</label>
-                    <input
-                      type="tel"
-                      placeholder="+7 999 123 45 67"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Город *</label>
-                    <input
-                      type="text"
-                      placeholder="Москва"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Пароль *</label>
-                    <input
-                      type="password"
-                      placeholder="Введите пароль"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-wood-900 mb-2">Подтвердите пароль *</label>
-                    <input
-                      type="password"
-                      placeholder="Повторите пароль"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
-                    />
-                  </div>
-                </>
+              {loginMethod === 'password' && (
+                <div>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Mot de passe</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 transition"
+                  />
+                </div>
               )}
 
               <button
                 type="submit"
-                disabled={loading || (mode === 'register' && (!email || !firstName || !lastName || !phone || !city))}
-                className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+                disabled={loading}
+                className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2"
               >
-                {loading && <Loader className="w-4 h-4 animate-spin" />}
-                Отправить код
+                {loading ? <Loader className="animate-spin" /> : (loginMethod === 'password' ? 'Se connecter' : 'Recevoir le code')}
               </button>
             </form>
           )}
 
-          {/* OTP STEP */}
-          {step === 'otp' && (
-            <form onSubmit={handleVerifyOtp} className="space-y-4">
+          {/* REGISTER FORM */}
+          {mode === 'register' && (
+            <form onSubmit={handleRegister} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Prénom</label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Nom</label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                  />
+                </div>
+              </div>
+
               <div>
-                <p className="text-sm text-wood-600 mb-4">
-                  Код из 6 цифр отправлен на <strong>{email}</strong>
-                </p>
-                <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Код проверки *
-                </label>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Téléphone</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  placeholder="+7 (999) 000-00-00"
+                  className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Ville</label>
                 <input
                   type="text"
-                  placeholder="000000"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                  maxLength={6}
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100 text-center text-2xl tracking-widest"
+                  placeholder="Moscou"
+                  className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Mot de passe</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
+                />
+                <p className="text-xs text-wood-500 mt-1">Minimum 6 caractères</p>
               </div>
 
               <button
                 type="submit"
-                disabled={loading || otp.length !== 6}
-                className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+                disabled={loading}
+                className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2"
               >
-                {loading && <Loader className="w-4 h-4 animate-spin" />}
-                Проверить код
-              </button>
-
-              <button
-                type="button"
-                onClick={handleBackToForm}
-                className="w-full border border-wood-300 text-wood-700 py-2 rounded-lg hover:bg-wood-50 transition font-medium"
-              >
-                ← Назад
+                {loading ? <Loader className="animate-spin" /> : 'Créer mon compte'}
               </button>
             </form>
           )}
+
+          <div className="mt-6 text-center text-xs text-wood-500">
+            En continuant, vous acceptez nos CGU et Politique de confidentialité.
+          </div>
         </div>
       </div>
     </div>

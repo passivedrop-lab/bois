@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     // Delete previous OTP if exists
     await supabase.from('otps').delete().eq('email', email)
 
-    // Insert new OTP - Supabase will send the email automatically
+    // Insert new OTP - Supabase envoie l'email automatiquement via un trigger
     const { error: insertError } = await supabase
       .from('otps')
       .insert([{ email, code, expires_at: expiresAt }])
@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Supabase envoie automatiquement l'email OTP via son système de notification
     return NextResponse.json(
       { success: true, message: 'Code OTP envoyé à votre email' },
       { status: 200 }
