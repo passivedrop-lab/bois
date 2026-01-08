@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Save } from 'lucide-react'
+import { ArrowLeft, Save, Upload, X } from 'lucide-react'
 
 const categories = [
   'Bois de construction',
@@ -25,7 +25,9 @@ export default function NewProductPage() {
     price: '',
     promoPrice: '',
     description: '',
+    image: null as File | null,
   })
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -38,8 +40,43 @@ export default function NewProductPage() {
     }
   }, [router])
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Vérifier le type de fichier
+      if (!file.type.startsWith('image/')) {
+        alert('Veuillez sélectionner une image valide')
+        return
+      }
+      // Vérifier la taille (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('L\'image doit faire moins de 5MB')
+        return
+      }
+      setFormData({ ...formData, image: file })
+      
+      // Créer une prévisualisation
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleRemoveImage = () => {
+    setFormData({ ...formData, image: null })
+    setImagePreview(null)
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!formData.image) {
+      alert('Veuillez sélectionner une image')
+      return
+    }
+    
     // Sauvegarder le produit
     alert('Produit ajouté avec succès!')
     router.push('/admin/products')
@@ -62,6 +99,57 @@ export default function NewProductPage() {
       <div className="p-6">
         <div className="bg-white rounded-lg shadow max-w-2xl">
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
+            {/* Image du produit */}
+            <div>
+              <label className="block text-sm font-bold text-wood-900 mb-2">
+                Image du produit *
+              </label>
+              
+              {!imagePreview ? (
+                <label className="w-full flex flex-col items-center justify-center border-2 border-dashed border-wood-300 rounded-lg p-8 cursor-pointer hover:border-fire-500 hover:bg-fire-50 transition">
+                  <Upload size={32} className="text-wood-600 mb-2" />
+                  <span className="text-wood-900 font-semibold">Cliquez pour sélectionner une image</span>
+                  <span className="text-wood-600 text-sm mt-1">PNG, JPG, WebP (max 5MB)</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    required
+                  />
+                </label>
+              ) : (
+                <div className="space-y-4">
+                  <div className="relative inline-block">
+                    <img
+                      src={imagePreview}
+                      alt="Prévisualisation"
+                      className="max-w-sm rounded-lg border border-wood-300"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+                  <label className="block">
+                    <span className="inline-flex items-center gap-2 bg-wood-100 hover:bg-wood-200 text-wood-900 px-4 py-2 rounded-lg cursor-pointer transition font-semibold">
+                      <Upload size={18} />
+                      Changer l'image
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+
             {/* Nom */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
