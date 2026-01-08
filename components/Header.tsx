@@ -25,7 +25,7 @@ export default function Header() {
 
   const categories = [
     { name: 'Строительная древесина', href: '/catalogue/bois-de-construction' },
-    { name: 'Пиломатериалы', href: '/catalogue/bois-scie' },
+    { name: 'Пиломатериалы', href: '/catalogue/bois-scié' },
     { name: 'Дрова', href: '/catalogue/bois-de-chauffage' },
     { name: 'Древесина для сауны', href: '/catalogue/bois-sauna' },
     { name: 'Декоративная древесина', href: '/catalogue/bois-decoratif' },

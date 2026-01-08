@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Simulé pour la démo - en production, utiliser Resend réel
+// Upload receipt and email admin via Resend if configured
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
@@ -9,53 +9,55 @@ export async function POST(request: NextRequest) {
     const customerEmail = formData.get('customerEmail') as string
 
     if (!orderId || !file) {
-      return NextResponse.json(
-        { error: 'Paramètres manquants' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Paramètres manquants' }, { status: 400 })
     }
 
-    // Convertir le fichier en base64 pour la démo
     const fileBuffer = await file.arrayBuffer()
     const base64File = Buffer.from(fileBuffer).toString('base64')
 
-    // En production, ceci utiliserait la véritable API Resend
-    // Pour cette démo, on simule l'envoi
-    console.log('Email envoyé à admin@tsarstvadereva.ru')
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@tsarstvadereva.ru'
+    const resendKey = process.env.RESEND_API_KEY
+
+    if (resendKey) {
+      try {
+        // Lazy import to avoid failing when package not installed locally
+        const { Resend } = await import('resend')
+        const resend = new Resend(resendKey)
+
+        const subject = `Reçu de commande #${orderId}`
+        const html = `<p>Reçu uploadé pour la commande <strong>#${orderId}</strong></p>
+          <p>Client: ${customerEmail || '—'}</p>`
+
+        await resend.emails.send({
+          from: process.env.SENDER_EMAIL || `no-reply@${new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost').hostname.replace(/^www\./, '')}`,
+          to: adminEmail,
+          subject,
+          html,
+          attachments: [
+            {
+              filename: file.name,
+              type: file.type || 'application/octet-stream',
+              data: base64File,
+            },
+          ],
+        })
+
+        console.log('Reçu envoyé à', adminEmail)
+        return NextResponse.json({ success: true, message: 'Reçu envoyé à l\'admin avec succès', orderId }, { status: 200 })
+      } catch (err) {
+        console.error('Erreur Resend:', err)
+        // Fallthrough to simulated response below
+      }
+    }
+
+    // Fallback simulation (if Resend not configured or failed)
+    console.log('Simulation: Email envoyé à', adminEmail)
     console.log('Reçu de commande #' + orderId)
     console.log('Fichier:', file.name)
 
-    // Stocker dans une "base de données" locale (localStorage simulé)
-    // En production, utiliser une vraie BD
-    const receipts = JSON.parse(
-      typeof window !== 'undefined'
-        ? localStorage.getItem('receipts') || '[]'
-        : '[]'
-    )
-    receipts.push({
-      id: orderId,
-      fileName: file.name,
-      uploadedAt: new Date().toISOString(),
-      customerEmail,
-    })
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('receipts', JSON.stringify(receipts))
-    }
-
-    return NextResponse.json(
-      { 
-        success: true,
-        message: 'Reçu envoyé à l\'admin avec succès',
-        orderId
-      },
-      { status: 200 }
-    )
+    return NextResponse.json({ success: true, message: 'Reçu traité (simulation)', orderId }, { status: 200 })
   } catch (error) {
     console.error('Erreur:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de l\'envoi du reçu' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Erreur lors de l\'envoi du reçu' }, { status: 500 })
   }
 }

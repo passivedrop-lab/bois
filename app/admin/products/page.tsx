@@ -39,6 +39,8 @@ export default function AdminProducts() {
   ])
   const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(true)
+  const [deletingAll, setDeletingAll] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
@@ -46,22 +48,60 @@ export default function AdminProducts() {
       router.push('/admin/login')
     } else {
       setIsAuthenticated(true)
-      setLoading(false)
+      // Load products via server API (returns signed URLs for private images)
+      ;(async () => {
+        try {
+          const res = await fetch('/api/admin/products')
+          const json = await res.json()
+          if (res.ok && json.products) setProducts(json.products)
+        } catch (err) {
+          console.error('Erreur chargement produits:', err)
+        } finally {
+          setLoading(false)
+        }
+      })()
     }
   }, [router])
 
   const handleDelete = (id: string) => {
-    if (confirm('Вы уверены, что хотите удалить этот товар?')) {
-      setProducts(products.filter((p) => p.id !== id))
+      if (confirm('Вы уверены, что хотите удалить этот товар?')) {
+      ;(async () => {
+        try {
+          const res = await fetch(`/api/admin/products?id=${encodeURIComponent(id)}`, {
+            method: 'DELETE',
+          })
+          const json = await res.json()
+          if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+          setProducts(products.filter((p) => p.id !== id))
+        } catch (err) {
+          console.error('Erreur suppression produit:', err)
+          alert('Erreur lors de la suppression')
+        }
+      })()
     }
   }
 
   const toggleVedette = (id: string) => {
-    setProducts(
-      products.map((p) =>
-        p.id === id ? { ...p, vedette: !p.vedette } : p
-      )
-    )
+    ;(async () => {
+      try {
+        const prod = products.find((p) => p.id === id)
+        if (!prod) return
+        const newVedette = !prod.vedette
+        const res = await fetch('/api/admin/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, vedette: newVedette }),
+        })
+        const json = await res.json()
+        if (!res.ok) throw new Error(json.error || 'Erreur update')
+        setProducts(
+          products.map((p) => (p.id === id ? { ...p, vedette: newVedette } : p))
+        )
+      } catch (err) {
+        console.error('Erreur toggle vedette:', err)
+        alert('Erreur lors de la mise à jour')
+      }
+    })()
   }
 
   const filteredProducts = products.filter(
@@ -93,6 +133,64 @@ export default function AdminProducts() {
             <Plus size={20} />
             Добавить товар
           </Link>
+        </div>
+
+        <div className="flex justify-end items-center gap-3 mb-4">
+          <button
+            onClick={async () => {
+              if (!confirm('Вы уверены? Это удалит ВСЕ товары (операция необратима).')) return
+              const token = prompt('Введите ADMIN_DELETE_TOKEN для подтверждения удаления:')
+              if (!token) return alert('Токен не введён')
+              setDeletingAll(true)
+              try {
+                const res = await fetch('/api/admin/products/delete-all', {
+                  method: 'POST',
+                  headers: { 'x-admin-delete-token': token },
+                })
+                const json = await res.json()
+                if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+                setProducts([])
+                alert(json.message || 'Tous les produits ont été supprimés')
+              } catch (err) {
+                console.error('Erreur suppression globale:', err)
+                alert('Erreur lors de la suppression')
+              } finally {
+                setDeletingAll(false)
+              }
+            }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-semibold"
+            disabled={deletingAll}
+          >
+            {deletingAll ? 'Suppression en cours...' : 'Supprimer tous les produits'}
+          </button>
+          <button
+            onClick={async () => {
+              if (selectedIds.length === 0) return alert('Aucun produit sélectionné')
+              if (!confirm(`Вы уверены, что хотите удалить ${selectedIds.length} выбранных товаров?`)) return
+              setDeletingAll(true)
+              try {
+                const res = await fetch('/api/admin/products/delete-multiple', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ ids: selectedIds }),
+                })
+                const json = await res.json()
+                if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+                setProducts(products.filter((p) => !selectedIds.includes(p.id)))
+                setSelectedIds([])
+                alert(json.message || 'Sélection supprimée')
+              } catch (err) {
+                console.error('Erreur suppression multiple:', err)
+                alert('Erreur lors de la suppression')
+              } finally {
+                setDeletingAll(false)
+              }
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition font-semibold"
+            disabled={deletingAll}
+          >
+            {deletingAll ? 'Suppression...' : 'Supprimer la sélection'}
+          </button>
         </div>
 
         {/* Search */}
@@ -128,6 +226,18 @@ export default function AdminProducts() {
                   product.vedette ? 'bg-amber-50 border-2 border-amber-400' : 'bg-white'
                 }`}
               >
+                <div className="pr-4">
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.includes(product.id)}
+                    onChange={() => {
+                      setSelectedIds((prev) =>
+                        prev.includes(product.id) ? prev.filter((id) => id !== product.id) : [...prev, product.id]
+                      )
+                    }}
+                    className="w-4 h-4"
+                  />
+                </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-bold text-wood-900 text-lg">{product.name}</h3>

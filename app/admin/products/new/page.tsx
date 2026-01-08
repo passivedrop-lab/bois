@@ -78,9 +78,35 @@ export default function NewProductPage() {
       return
     }
     
-      // Сохранить товар
-      alert('Товар успешно добавлен!')
-    router.push('/admin/products')
+    ;(async () => {
+      setLoading(true)
+      try {
+        const form = new FormData()
+        form.append('name', formData.name)
+        form.append('category', formData.category)
+        form.append('price', String(formData.price))
+        if (formData.promoPrice) form.append('promoPrice', String(formData.promoPrice))
+        form.append('description', formData.description)
+        form.append('vedette', String(formData.vedette))
+        if (formData.image) form.append('image', formData.image)
+
+        const res = await fetch('/api/admin/products', {
+          method: 'POST',
+          body: form,
+        })
+
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Erreur création')
+
+        alert('Товар успешно добавлен!')
+        router.push('/admin/products')
+      } catch (err) {
+        console.error('Erreur création produit:', err)
+        alert('Ошибка при создании товара')
+      } finally {
+        setLoading(false)
+      }
+    })()
   }
 
   if (loading) return null
