@@ -7,8 +7,10 @@ export default function LoginPage() {
   const [step, setStep] = useState<'email' | 'otp' | 'register'>('email')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const [fullName, setFullName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
+  const [city, setCity] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -98,9 +100,10 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          otp,
-          fullName,
+          firstName,
+          lastName,
           phone,
+          city,
         }),
       })
 
@@ -238,13 +241,13 @@ export default function LoginPage() {
             <form onSubmit={handleCompleteRegistration} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Nom complet *
+                  Prénom *
                 </label>
                 <input
                   type="text"
-                  placeholder="Jean Dupont"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Jean"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   required
                   className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                 />
@@ -252,13 +255,42 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-sm font-medium text-wood-900 mb-2">
-                  Téléphone
+                  Nom *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Dupont"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-wood-900 mb-2">
+                  Téléphone *
                 </label>
                 <input
                   type="tel"
                   placeholder="+33 6 12 34 56 78"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-wood-900 mb-2">
+                  Ville *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Paris"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
                   className="w-full px-4 py-3 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-100"
                 />
               </div>

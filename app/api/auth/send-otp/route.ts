@@ -19,11 +19,11 @@ export async function POST(request: NextRequest) {
     const { error } = await supabase.from('otps').insert([{ email, code, expires_at: expiresAt }])
     if (error) {
       console.error('Erreur insertion OTP:', error)
-      return NextResponse.json({ error: 'Erreur lors de l\'envoi du code' }, { status: 500 })
+      return NextResponse.json({ error: 'Erreur lors de l\'envoi du code. Réessayez.' }, { status: 500 })
     }
 
     // Le code OTP est envoyé par Supabase automatiquement via email
-    return NextResponse.json({ success: true, message: 'Code OTP envoyé à votre email' })
+    return NextResponse.json({ success: true, message: 'Code OTP envoyé à votre email' }, { status: 200 })
   } catch (error) {
     console.error('Erreur send-otp:', error)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })

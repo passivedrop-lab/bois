@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, fullName, phone } = await request.json()
+    const { email, firstName, lastName, phone, city } = await request.json()
 
-    if (!email || !fullName) {
+    if (!email || !firstName || !lastName) {
       return NextResponse.json(
-        { error: 'Email et nom requis' },
+        { error: 'Email, prénom et nom requis' },
         { status: 400 }
       )
     }
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
 
     // Créer le profil avec un UUID valide
     const userId = uuidv4()
+    const fullName = `${firstName} ${lastName}`
     const { data: profile, error: insertError } = await supabase
       .from('profiles')
       .insert([
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
           email,
           full_name: fullName,
           phone: phone || null,
+          city: city || null,
           role: 'user',
         },
       ])
@@ -60,7 +62,8 @@ export async function POST(request: NextRequest) {
       success: true,
       token,
       userId: profile.id,
-      message: 'Inscription réussie',
+      email: profile.email,
+      message: 'Inscription réussie!',
     })
   } catch (error) {
     console.error('Erreur register:', error)
