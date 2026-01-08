@@ -2,63 +2,63 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { TreePine, Package, Flame, Wrench, Truck } from 'lucide-react'
+import { TreePine, Package, Flame, Wrench, Truck, Palette, Shield } from 'lucide-react'
 
 const categories = [
   {
     name: 'Строительный лес',
     description: 'Брус, бревно и конструкционные материалы',
-    href: '/products/construction',
+    href: '/catalogue/bois-de-construction',
     icon: TreePine,
     color: 'from-wood-700 to-wood-900',
   },
   {
     name: 'Пиломатериалы',
     description: 'Доска обрезная, брусок и погонаж',
-    href: '/products/sawn',
+    href: '/catalogue/bois-scié',
     icon: Package,
     color: 'from-orange-700 to-orange-900',
   },
   {
     name: 'Дрова и Биотопливо',
     description: 'Колотые дрова, пеллеты и брикеты',
-    href: '/products/firewood',
+    href: '/catalogue/bois-de-chauffage',
     icon: Flame,
     color: 'from-fire-600 to-fire-800',
   },
   {
     name: 'Для бани и сауны',
     description: 'Вагонка, пологи и отделочные материалы',
-    href: '/products/sauna',
+    href: '/catalogue/bois-sauna',
     icon: Wrench,
     color: 'from-amber-600 to-amber-800',
   },
   {
     name: 'Декоративная отделка',
     description: 'Планкен, имитация бруса и декор',
-    href: '/products/decorative',
-    icon: TreePine,
+    href: '/catalogue/bois-decoratif',
+    icon: Palette,
     color: 'from-stone-600 to-stone-800',
   },
   {
     name: 'Панели и щиты',
     description: 'Мебельные щиты, фанера и плиты',
-    href: '/products/panels',
+    href: '/catalogue/panneaux',
     icon: Package,
     color: 'from-brown-600 to-brown-800',
   },
   {
     name: 'Экстерьерные системы',
     description: 'Террасная доска и фасадные решения',
-    href: '/products/exterior',
+    href: '/catalogue/bois-exterieur',
     icon: Truck,
     color: 'from-emerald-700 to-emerald-900',
   },
   {
     name: 'Техническое дерево',
     description: 'Брус для опалубки и промышленные заготовки',
-    href: '/products/industrial',
-    icon: Wrench,
+    href: '/catalogue/bois-brut-industriel',
+    icon: Shield,
     color: 'from-slate-700 to-slate-900',
   },
 ]
