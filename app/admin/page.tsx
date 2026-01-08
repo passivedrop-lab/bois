@@ -3,7 +3,15 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { BarChart3, Package, ShoppingCart, LogOut, Menu, X } from 'lucide-react'
+import { BarChart3, Package, ShoppingCart, LogOut, Menu, X, TrendingUp } from 'lucide-react'
+import { createClient } from '@supabase/supabase-js'
+
+interface Stats {
+  pendingOrders: number
+  totalProducts: number
+  totalOrders: number
+  totalRevenue: number
+}
 
 export default function AdminDashboard() {
   const router = useRouter()
@@ -11,6 +19,12 @@ export default function AdminDashboard() {
   const [adminEmail, setAdminEmail] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [stats, setStats] = useState<Stats>({
+    pendingOrders: 0,
+    totalProducts: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+  })
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
@@ -21,9 +35,54 @@ export default function AdminDashboard() {
     } else {
       setIsAuthenticated(true)
       setAdminEmail(email || '')
-      setLoading(false)
+      loadStats()
     }
   }, [router])
+
+  const loadStats = async () => {
+    try {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        // Mode développement - données simulées
+        setStats({
+          pendingOrders: 3,
+          totalProducts: 24,
+          totalOrders: 142,
+          totalRevenue: 45680,
+        })
+        setLoading(false)
+        return
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+      // Récupérer les statistiques
+      const [ordersRes, productsRes] = await Promise.all([
+        supabase.from('orders').select('id, total, status'),
+        supabase.from('products').select('id'),
+      ])
+
+      const orders = ordersRes.data || []
+      const products = productsRes.data || []
+
+      const pendingOrders = orders.filter((o) => o.status === 'pending').length
+      const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0)
+
+      setStats({
+        pendingOrders,
+        totalProducts: products.length,
+        totalOrders: orders.length,
+        totalRevenue,
+      })
+    } catch (error) {
+      console.error('Erreur chargement stats:', error)
+      // Garder les valeurs par défaut
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
@@ -39,27 +98,34 @@ export default function AdminDashboard() {
     return null
   }
 
-  const stats = [
+  const statCards = [
     {
       label: 'Commandes en attente',
-      value: '3',
+      value: stats.pendingOrders.toString(),
       icon: ShoppingCart,
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-50',
     },
     {
       label: 'Produits',
-      value: '24',
+      value: stats.totalProducts.toString(),
       icon: Package,
       color: 'text-blue-600',
       bgColor: 'bg-blue-50',
     },
     {
       label: 'Commandes totales',
-      value: '142',
+      value: stats.totalOrders.toString(),
       icon: BarChart3,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
+    },
+    {
+      label: 'Revenu total',
+      value: `${(stats.totalRevenue / 1000).toFixed(1)}k₽`,
+      icon: TrendingUp,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
     },
   ]
 
@@ -132,8 +198,8 @@ export default function AdminDashboard() {
 
         {/* Dashboard Content */}
         <div className="flex-1 overflow-auto p-4 sm:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {stats.map((stat, index) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {statCards.map((stat, index) => {
               const Icon = stat.icon
               return (
                 <div key={index} className="bg-white rounded-lg shadow p-6">
@@ -166,22 +232,22 @@ export default function AdminDashboard() {
                   href="/admin/orders"
                   className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition text-center font-semibold"
                 >
-                  Voir les commandes
+                  Gérer les commandes ({stats.pendingOrders})
                 </Link>
               </div>
             </div>
 
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-bold text-wood-900 mb-4">Informations</h3>
+              <h3 className="text-lg font-bold text-wood-900 mb-4">Résumé</h3>
               <div className="space-y-3 text-sm text-wood-700">
                 <p>
-                  <strong>Dernière mise à jour:</strong> À l'instant
+                  <strong>En attente:</strong> <span className="text-yellow-600 font-bold">{stats.pendingOrders} commandes</span>
                 </p>
                 <p>
-                  <strong>Statut:</strong> <span className="text-green-600 font-semibold">En ligne</span>
+                  <strong>Produits:</strong> <span className="text-blue-600 font-bold">{stats.totalProducts}</span>
                 </p>
                 <p>
-                  <strong>Email admin:</strong> {adminEmail}
+                  <strong>Chiffre d'affaires:</strong> <span className="text-purple-600 font-bold">{stats.totalRevenue.toLocaleString()}₽</span>
                 </p>
               </div>
             </div>
