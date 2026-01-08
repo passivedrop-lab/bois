@@ -7,19 +7,51 @@ import { Upload, CheckCircle, AlertCircle } from 'lucide-react'
 export default function ReceiptPage() {
   const [file, setFile] = useState<File | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0])
+      setError('')
     }
   }
 
-  const handleSubmit = () => {
-    if (file) {
+  const handleSubmit = async () => {
+    if (!file) return
+
+    setUploading(true)
+    setError('')
+
+    try {
+      // Créer un FormData avec le fichier
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('orderId', '003') // À remplacer par l'ID réel de la commande
+      formData.append('customerEmail', 'customer@example.com') // À remplacer par l'email réel
+
+      // Envoyer le fichier à l'API
+      const response = await fetch('/api/receipts/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'upload du reçu')
+      }
+
+      const data = await response.json()
+      console.log('Reçu envoyé à l\'admin:', data)
+
       setShowSuccess(true)
       setTimeout(() => {
         window.location.href = '/profile/orders'
       }, 3000)
+    } catch (err) {
+      setError('Erreur lors du téléversement. Veuillez réessayer.')
+      console.error(err)
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -94,18 +126,24 @@ export default function ReceiptPage() {
                     </div>
                   )}
 
+                  {error && (
+                    <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm mb-6">
+                      {error}
+                    </div>
+                  )}
+
                   {/* Bouton valider */}
                   <button
                     onClick={handleSubmit}
-                    disabled={!file}
+                    disabled={!file || uploading}
                     className={`w-full py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition ${
-                      file
+                      file && !uploading
                         ? 'bg-fire-600 text-white hover:bg-fire-700 cursor-pointer'
                         : 'bg-wood-200 text-wood-400 cursor-not-allowed'
                     }`}
                   >
                     <CheckCircle size={20} />
-                    Valider ma commande
+                    {uploading ? 'Téléversement en cours...' : 'Valider ma commande'}
                   </button>
 
                   <p className="text-xs text-wood-600 mt-4 text-center">
