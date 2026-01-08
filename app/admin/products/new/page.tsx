@@ -30,6 +30,8 @@ export default function NewProductPage() {
   })
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
@@ -72,9 +74,11 @@ export default function NewProductPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
+    setSubmitMessage(null)
     
     if (!formData.image) {
-      alert('Veuillez sélectionner une image')
+      setError('Veuillez sélectionner une image')
       return
     }
     
@@ -96,13 +100,16 @@ export default function NewProductPage() {
         })
 
         const data = await res.json()
-        if (!res.ok) throw new Error(data.error || 'Erreur création')
+        if (!res.ok) {
+          throw new Error(data.error || 'Erreur création')
+        }
 
-        alert('Товар успешно добавлен!')
-        router.push('/admin/products')
+        setSubmitMessage('Товар успешно добавлен!')
+        setTimeout(() => router.push('/admin/products'), 1500)
       } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : 'Erreur inconnue'
         console.error('Erreur création produit:', err)
-        alert('Ошибка при создании товара')
+        setError(`Ошибка при создании товара: ${errorMsg}`)
       } finally {
         setLoading(false)
       }
@@ -125,6 +132,20 @@ export default function NewProductPage() {
 
       <div className="p-6">
         <div className="bg-white rounded-lg shadow max-w-2xl">
+          {/* Messages d'erreur et succès */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-t-lg">
+              <p className="font-semibold">Erreur:</p>
+              <p className="text-sm mt-1">{error}</p>
+            </div>
+          )}
+          {submitMessage && (
+            <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-t-lg">
+              <p className="font-semibold">Succès:</p>
+              <p className="text-sm mt-1">{submitMessage}</p>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             {/* Image du produit */}
             <div>

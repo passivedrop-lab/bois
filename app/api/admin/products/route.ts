@@ -48,15 +48,28 @@ export async function POST(request: NextRequest) {
       const vedette = form.get('vedette') === 'true'
       const file = form.get('image') as File | null
 
+      // Validation des champs requis
+      if (!name) throw new Error('Le nom du produit est requis')
+      if (!category) throw new Error('La catégorie est requise')
+      if (price <= 0) throw new Error('Le prix doit être supérieur à 0')
+      if (!file) throw new Error('L\'image est requise')
+
       let image_path: string | null = null
-      if (file && file.name) {
+      if (file && file.size > 0) {
         const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`
         const fileBuffer = Buffer.from(await file.arrayBuffer())
-        const { error: uploadError } = await supabase.storage
+        
+        console.log(`[INFO] Uploading image: ${fileName} to bucket: ${BUCKET}`)
+        const { error: uploadError, data: uploadData } = await supabase.storage
           .from(BUCKET)
           .upload(fileName, fileBuffer, { upsert: false })
-        if (uploadError) throw uploadError
+        
+        if (uploadError) {
+          console.error(`[ERROR] Upload failed for ${fileName}:`, uploadError)
+          throw new Error(`Erreur upload image: ${uploadError.message}`)
+        }
         image_path = fileName
+        console.log(`[SUCCESS] Image uploaded: ${image_path}`)
       }
 
       const payload: any = {
@@ -69,9 +82,16 @@ export async function POST(request: NextRequest) {
         vedette,
       }
 
+      console.log(`[INFO] Inserting product:`, payload)
       const { data: inserted, error: insertError } = await supabase.from('products').insert([payload]).select().single()
-      if (insertError) throw insertError
-      return NextResponse.json({ product: inserted })
+      
+      if (insertError) {
+        console.error('[ERROR] Insert failed:', insertError)
+        throw new Error(`Erreur création produit: ${insertError.message}`)
+      }
+      
+      console.log('[SUCCESS] Product created:', inserted)
+      return NextResponse.json({ product: inserted }, { status: 201 })
     }
 
     // JSON fallback - support update (id present) or insert
@@ -86,16 +106,17 @@ export async function POST(request: NextRequest) {
       if (body.description !== undefined) updates.description = body.description
 
       const { data: updated, error: updateError } = await supabase.from('products').update(updates).eq('id', body.id).select().single()
-      if (updateError) return NextResponse.json({ error: 'Erreur mise à jour' }, { status: 500 })
+      if (updateError) return NextResponse.json({ error: `Erreur mise à jour: ${updateError.message}` }, { status: 500 })
       return NextResponse.json({ product: updated })
     }
 
     const { data, error } = await supabase.from('products').insert([body]).select().single()
-    if (error) return NextResponse.json({ error: 'Erreur création produit' }, { status: 500 })
-    return NextResponse.json({ product: data })
+    if (error) return NextResponse.json({ error: `Erreur création produit: ${error.message}` }, { status: 500 })
+    return NextResponse.json({ product: data }, { status: 201 })
   } catch (err) {
-    console.error('POST /api/admin/products error:', err)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+    const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue'
+    console.error('[ERROR] POST /api/admin/products:', errorMessage)
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
 
