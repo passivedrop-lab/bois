@@ -15,23 +15,23 @@ export default function Header() {
   const pathname = usePathname()
 
   const menuItems = [
-    { name: 'Accueil', href: '/' },
-    { name: 'Catalogue', href: '/catalogue' },
-    { name: 'Services', href: '/services' },
-    { name: 'Livraison', href: '/livraison' },
-    { name: 'À propos', href: '/a-propos' },
-    { name: 'Contacts', href: '/contacts' },
+    { name: 'Главная', href: '/' },
+    { name: 'Каталог', href: '/catalogue' },
+    { name: 'Услуги', href: '/services' },
+    { name: 'Доставка', href: '/livraison' },
+    { name: 'О нас', href: '/a-propos' },
+    { name: 'Контакты', href: '/contacts' },
   ]
 
   const categories = [
-    { name: 'Bois de construction', href: '/catalogue/bois-de-construction' },
-    { name: 'Bois scié', href: '/catalogue/bois-scié' },
-    { name: 'Bois de chauffage', href: '/catalogue/bois-de-chauffage' },
-    { name: 'Bois sauna', href: '/catalogue/bois-sauna' },
-    { name: 'Bois décoratif', href: '/catalogue/bois-decoratif' },
-    { name: 'Panneaux', href: '/catalogue/panneaux' },
-    { name: 'Bois extérieur', href: '/catalogue/bois-exterieur' },
-    { name: 'Bois brut / industriel', href: '/catalogue/bois-brut-industriel' },
+    { name: 'Строительная древесина', href: '/catalogue/bois-de-construction' },
+    { name: 'Пиломатериалы', href: '/catalogue/bois-scie' },
+    { name: 'Дрова', href: '/catalogue/bois-de-chauffage' },
+    { name: 'Древесина для сауны', href: '/catalogue/bois-sauna' },
+    { name: 'Декоративная древесина', href: '/catalogue/bois-decoratif' },
+    { name: 'Панели', href: '/catalogue/panneaux' },
+    { name: 'Древесина для наружных работ', href: '/catalogue/bois-exterieur' },
+    { name: 'Необработанная/промышленная древесина', href: '/catalogue/bois-brut-industriel' },
   ]
 
   return (
@@ -64,9 +64,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main Header */}
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-2 sm:gap-4">
+      {/* Main Menu */}
+      <nav className="bg-white py-3 shadow-md">
+        <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink-0">
             <div className="bg-fire-600 text-white p-2 sm:p-3 rounded-lg flex-shrink-0">
@@ -169,17 +169,19 @@ export default function Header() {
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Categories Bar */}
-        <div className="hidden md:flex items-center justify-between gap-4 lg:gap-6 mt-3 sm:mt-4 pb-2 border-b border-wood-200 overflow-x-auto no-scrollbar">
+      {/* Categories */}
+      <div className="bg-gray-100 py-2">
+        <div className="container mx-auto px-4 flex gap-4 overflow-x-auto">
           {categories.map((category) => (
-            <Link
-              key={category.name}
+            <a
+              key={category.href}
               href={category.href}
-              className="text-[10px] lg:text-xs uppercase tracking-wider font-bold text-wood-600 hover:text-fire-600 transition-colors whitespace-nowrap"
+              className="text-sm text-gray-700 hover:text-fire-400 whitespace-nowrap"
             >
               {category.name}
-            </Link>
+            </a>
           ))}
         </div>
       </div>

@@ -51,7 +51,7 @@ export default function AdminProducts() {
   }, [router])
 
   const handleDelete = (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce produit?')) {
+    if (confirm('Вы уверены, что хотите удалить этот товар?')) {
       setProducts(products.filter((p) => p.id !== id))
     }
   }
@@ -84,14 +84,14 @@ export default function AdminProducts() {
             >
               <ArrowLeft size={20} />
             </Link>
-            <h1 className="text-3xl font-bold text-wood-900">Gestion des produits</h1>
+            <h1 className="text-3xl font-bold text-wood-900">Управление товарами</h1>
           </div>
           <Link
             href="/admin/products/new"
             className="flex items-center gap-2 bg-fire-600 text-white px-4 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
           >
             <Plus size={20} />
-            Ajouter un produit
+            Добавить товар
           </Link>
         </div>
 
@@ -100,7 +100,7 @@ export default function AdminProducts() {
           <Search className="absolute left-3 top-3 text-wood-400" size={20} />
           <input
             type="text"
-            placeholder="Rechercher un produit..."
+            placeholder="Поиск товара..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600"
@@ -111,12 +111,12 @@ export default function AdminProducts() {
       <div className="p-6">
         {filteredProducts.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-12 text-center">
-            <p className="text-wood-600 mb-4">Aucun produit trouvé</p>
+            <p className="text-wood-600 mb-4">Товары не найдены</p>
             <Link
               href="/admin/products/new"
               className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition"
             >
-              Créer le premier produit
+              Создать первый товар
             </Link>
           </div>
         ) : (
@@ -134,7 +134,7 @@ export default function AdminProducts() {
                     {product.vedette && (
                       <span className="bg-amber-400 text-amber-900 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
                         <Star size={14} fill="currentColor" />
-                        Vedette
+                        Избранное
                       </span>
                     )}
                   </div>
@@ -157,7 +157,7 @@ export default function AdminProducts() {
                         ? 'bg-amber-100 hover:bg-amber-200'
                         : 'hover:bg-gray-100'
                     }`}
-                    title={product.vedette ? 'Retirer de vedette' : 'Marquer comme vedette'}
+                    title={product.vedette ? 'Удалить из избранного' : 'Добавить в избранное'}
                   >
                     <Star
                       size={20}
@@ -167,7 +167,7 @@ export default function AdminProducts() {
                   <Link
                     href={`/admin/products/edit/${product.id}`}
                     className="p-2 hover:bg-blue-100 rounded-lg transition"
-                    title="Modifier"
+                    title="Редактировать"
                   >
                     <Edit2 size={20} className="text-blue-600" />
                   </Link>

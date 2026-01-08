@@ -25,11 +25,11 @@ export default function AdminLoginPage() {
         localStorage.setItem('adminCode', code)
         router.push('/admin')
       } else {
-        setError('❌ Code d\'accès incorrect')
+        setError('❌ Неправильный код доступа')
         setCode('')
       }
     } catch (err) {
-      setError('Erreur lors de la connexion')
+      setError('Ошибка при входе')
     } finally {
       setLoading(false)
     }
@@ -45,16 +45,16 @@ export default function AdminLoginPage() {
         </div>
 
         <h1 className="text-3xl font-bold text-center text-wood-900 mb-2">
-          🔐 Admin TsarstvoDereva
+          🔐 Администратор TsarstvoDereva
         </h1>
         <p className="text-center text-wood-600 mb-8">
-          Entrez le code d'accès administrateur
+          Введите административный код доступа
         </p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-wood-900 mb-2">
-              Code d'accès
+              Код доступа
             </label>
             <div className="relative">
               <input
@@ -87,14 +87,14 @@ export default function AdminLoginPage() {
             className="w-full bg-fire-600 text-white py-3 px-4 rounded-lg hover:bg-fire-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading && <Loader size={18} className="animate-spin" />}
-            {loading ? 'Vérification...' : 'Accéder au Dashboard'}
+            {loading ? 'Проверка...' : 'Перейти на панель управления'}
           </button>
         </form>
 
         <div className="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
           <p className="text-xs text-yellow-900">
-            <strong>⚠️ Sécurité:</strong><br />
-            Ce code est confidentiel et unique. Ne le partager avec personne.
+            <strong>⚠️ Безопасность:</strong><br />
+            Этот код конфиденциален и уникален. Не делитесь им ни с кем.
           </p>
         </div>
       </div>

@@ -89,7 +89,7 @@ export default function AdminDashboard() {
   }
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Chargement...</div>
+    return <div className="flex items-center justify-center min-h-screen">Загрузка...</div>
   }
 
   if (!isAuthenticated) {
@@ -98,28 +98,28 @@ export default function AdminDashboard() {
 
   const statCards = [
     {
-      label: 'Commandes en attente',
+      label: 'Заказы в ожидании',
       value: stats.pendingOrders.toString(),
       icon: ShoppingCart,
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-50',
     },
     {
-      label: 'Produits',
+      label: 'Товары',
       value: stats.totalProducts.toString(),
       icon: Package,
       color: 'text-blue-600',
       bgColor: 'bg-blue-50',
     },
     {
-      label: 'Commandes totales',
+      label: 'Всего заказов',
       value: stats.totalOrders.toString(),
       icon: BarChart3,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
     },
     {
-      label: 'Revenu total',
+      label: 'Общий доход',
       value: `${(stats.totalRevenue / 1000).toFixed(1)}k₽`,
       icon: TrendingUp,
       color: 'text-purple-600',
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
       >
         <div className="p-6 border-b border-wood-800">
           <h1 className="text-2xl font-bold">TsarstvoDereva</h1>
-          <p className="text-wood-400 text-sm">Admin Panel</p>
+          <p className="text-wood-400 text-sm">Панель администратора</p>
         </div>
 
         <nav className="flex-1 p-6 space-y-2">
@@ -146,21 +146,21 @@ export default function AdminDashboard() {
             className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-wood-800 transition"
           >
             <BarChart3 size={20} />
-            Dashboard
+            Панель управления
           </Link>
           <Link
             href="/admin/products"
             className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-wood-800 transition"
           >
             <Package size={20} />
-            Produits
+            Товары
           </Link>
           <Link
             href="/admin/orders"
             className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-wood-800 transition"
           >
             <ShoppingCart size={20} />
-            Commandes
+            Заказы
           </Link>
         </nav>
 
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
             className="w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-600 transition text-white"
           >
             <LogOut size={20} />
-            Déconnexion
+            Выход
           </button>
         </div>
       </div>
@@ -186,11 +186,11 @@ export default function AdminDashboard() {
             >
               {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <h2 className="text-2xl font-bold text-wood-900">Dashboard</h2>
+            <h2 className="text-2xl font-bold text-wood-900">Панель управления</h2>
           </div>
           <div className="text-right">
-            <p className="text-sm text-wood-600">Administrateur connecté</p>
-            <p className="font-semibold text-wood-900">🔐 Dashboard Sécurisé</p>
+            <p className="text-sm text-wood-600">Администратор подключен</p>
+            <p className="font-semibold text-wood-900">🔐 Защищенная панель управления</p>
           </div>
         </div>
 
@@ -218,34 +218,34 @@ export default function AdminDashboard() {
           {/* Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-bold text-wood-900 mb-4">Actions rapides</h3>
+              <h3 className="text-lg font-bold text-wood-900 mb-4">Быстрые действия</h3>
               <div className="space-y-3">
                 <Link
                   href="/admin/products/new"
                   className="block w-full bg-fire-600 text-white py-2 px-4 rounded-lg hover:bg-fire-700 transition text-center font-semibold"
                 >
-                  + Ajouter un produit
+                  + Добавить товар
                 </Link>
                 <Link
                   href="/admin/orders"
                   className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition text-center font-semibold"
                 >
-                  Gérer les commandes ({stats.pendingOrders})
+                  Управление заказами ({stats.pendingOrders})
                 </Link>
               </div>
             </div>
 
             <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-bold text-wood-900 mb-4">Résumé</h3>
+              <h3 className="text-lg font-bold text-wood-900 mb-4">Сводка</h3>
               <div className="space-y-3 text-sm text-wood-700">
                 <p>
-                  <strong>En attente:</strong> <span className="text-yellow-600 font-bold">{stats.pendingOrders} commandes</span>
+                  <strong>В ожидании:</strong> <span className="text-yellow-600 font-bold">{stats.pendingOrders} заказов</span>
                 </p>
                 <p>
-                  <strong>Produits:</strong> <span className="text-blue-600 font-bold">{stats.totalProducts}</span>
+                  <strong>Товары:</strong> <span className="text-blue-600 font-bold">{stats.totalProducts}</span>
                 </p>
                 <p>
-                  <strong>Chiffre d'affaires:</strong> <span className="text-purple-600 font-bold">{stats.totalRevenue.toLocaleString()}₽</span>
+                  <strong>Выручка:</strong> <span className="text-purple-600 font-bold">{stats.totalRevenue.toLocaleString()}₽</span>
                 </p>
               </div>
             </div>

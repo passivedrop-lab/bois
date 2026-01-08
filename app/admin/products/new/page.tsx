@@ -78,8 +78,8 @@ export default function NewProductPage() {
       return
     }
     
-    // Sauvegarder le produit
-    alert('Produit ajouté avec succès!')
+      // Сохранить товар
+      alert('Товар успешно добавлен!')
     router.push('/admin/products')
   }
 
@@ -93,7 +93,7 @@ export default function NewProductPage() {
           <Link href="/admin/products" className="p-2 hover:bg-wood-100 rounded-lg transition">
             <ArrowLeft size={20} />
           </Link>
-          <h1 className="text-3xl font-bold text-wood-900">Ajouter un produit</h1>
+          <h1 className="text-3xl font-bold text-wood-900">Добавить товар</h1>
         </div>
       </div>
 
@@ -103,14 +103,14 @@ export default function NewProductPage() {
             {/* Image du produit */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
-                Image du produit *
+                Изображение товара *
               </label>
               
               {!imagePreview ? (
                 <label className="w-full flex flex-col items-center justify-center border-2 border-dashed border-wood-300 rounded-lg p-8 cursor-pointer hover:border-fire-500 hover:bg-fire-50 transition">
                   <Upload size={32} className="text-wood-600 mb-2" />
-                  <span className="text-wood-900 font-semibold">Cliquez pour sélectionner une image</span>
-                  <span className="text-wood-600 text-sm mt-1">PNG, JPG, WebP (max 5MB)</span>
+                  <span className="text-wood-900 font-semibold">Нажмите для выбора изображения</span>
+                  <span className="text-wood-600 text-sm mt-1">PNG, JPG, WebP (макс. 5 МБ)</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -138,7 +138,7 @@ export default function NewProductPage() {
                   <label className="block">
                     <span className="inline-flex items-center gap-2 bg-wood-100 hover:bg-wood-200 text-wood-900 px-4 py-2 rounded-lg cursor-pointer transition font-semibold">
                       <Upload size={18} />
-                      Changer l'image
+                      Изменить изображение
                     </span>
                     <input
                       type="file"
@@ -154,7 +154,7 @@ export default function NewProductPage() {
             {/* Nom */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
-                Nom du produit *
+                Название товара *
               </label>
               <input
                 type="text"
@@ -162,14 +162,14 @@ export default function NewProductPage() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-2 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600"
-                placeholder="ex: Bois de construction brut"
+                placeholder="пр: Строительное дерево сырье"
               />
             </div>
 
             {/* Catégorie */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
-                Catégorie *
+                Категория *
               </label>
               <select
                 required
@@ -189,7 +189,7 @@ export default function NewProductPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-bold text-wood-900 mb-2">
-                  Prix (RUB) *
+                  Цена (РУБ) *
                 </label>
                 <input
                   type="number"
@@ -202,7 +202,7 @@ export default function NewProductPage() {
               </div>
               <div>
                 <label className="block text-sm font-bold text-wood-900 mb-2">
-                  Prix promotionnel (optionnel)
+                  Цена со скидкой (необязательно)
                 </label>
                 <input
                   type="number"
@@ -217,7 +217,7 @@ export default function NewProductPage() {
             {/* Description */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
-                Description *
+                Описание *
               </label>
               <textarea
                 required
@@ -225,7 +225,7 @@ export default function NewProductPage() {
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={6}
                 className="w-full px-4 py-2 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600"
-                placeholder="Décrivez le produit en détail..."
+                placeholder="Подробно опишите товар..."
               />
             </div>
 
@@ -239,7 +239,7 @@ export default function NewProductPage() {
                 className="w-4 h-4 text-amber-600 border-wood-300 rounded focus:ring-amber-500"
               />
               <label htmlFor="vedette" className="ml-3 text-sm font-medium text-wood-900">
-                Afficher ce produit sur la page d'accueil comme vedette ⭐
+                Показать этот товар на главной странице как избранный ⭐
               </label>
             </div>
 
@@ -250,13 +250,13 @@ export default function NewProductPage() {
                 className="flex items-center gap-2 bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
               >
                 <Save size={20} />
-                Créer le produit
+                Создать товар
               </button>
               <Link
                 href="/admin/products"
                 className="px-6 py-2 border border-wood-300 rounded-lg hover:bg-wood-50 transition font-semibold"
               >
-                Annuler
+                Отмена
               </Link>
             </div>
           </form>
