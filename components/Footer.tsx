@@ -74,6 +74,16 @@ export default function Footer() {
                   О компании
                 </Link>
               </li>
+              <li>
+                <Link href="/legal" className="hover:text-fire-400 transition">
+                  Mentions légales
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-fire-400 transition">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

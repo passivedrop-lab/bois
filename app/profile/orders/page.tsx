@@ -7,6 +7,7 @@ export default function OrdersPage() {
   const orders = [
     { id: '001', date: '2025-12-15', amount: '4,500₽', status: 'Livré' },
     { id: '002', date: '2025-11-28', amount: '2,850₽', status: 'En cours' },
+    { id: '003', date: '2025-01-08', amount: '50,000₽', status: 'En attente de vérification' },
   ]
 
   return (
@@ -39,7 +40,7 @@ export default function OrdersPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-bold text-wood-900">{order.amount}</p>
-                    <p className={`text-sm font-semibold ${order.status === 'Livré' ? 'text-green-600' : 'text-orange-600'}`}>
+                    <p className={`text-sm font-semibold ${order.status === 'Livré' ? 'text-green-600' : order.status === 'En attente de vérification' ? 'text-yellow-600' : 'text-orange-600'}`}>
                       {order.status}
                     </p>
                   </div>
