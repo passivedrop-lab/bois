@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  // Envoyer OTP
+  // Отправка OTP
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -46,7 +46,7 @@ export default function LoginPage() {
     }
   }
 
-  // Vérifier OTP
+  // Проверка OTP
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -67,7 +67,7 @@ export default function LoginPage() {
         return
       }
 
-      // Mode Connexion: utilisateur existe déjà
+      // Режим входа: пользователь уже существует
       if (mode === 'login') {
         localStorage.setItem('authToken', data.token)
         localStorage.setItem('userId', data.userId)
@@ -76,7 +76,7 @@ export default function LoginPage() {
         return
       }
 
-      // Mode Inscription: créer le compte
+      // Режим регистрации: создать аккаунт
       if (mode === 'register') {
         await handleCompleteRegistration()
       }
@@ -87,7 +87,7 @@ export default function LoginPage() {
     }
   }
 
-  // Compléter l'inscription
+  // Завершить регистрацию
   const handleCompleteRegistration = async () => {
     setLoading(true)
     setError('')
@@ -217,7 +217,7 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* Champs d'inscription */}
+              {/* Поля регистрации */}
               {mode === 'register' && (
                 <>
                   <div>
