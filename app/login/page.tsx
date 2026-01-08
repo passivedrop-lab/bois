@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  // Step 1: Envoyer OTP après avoir rempli le formulaire
+  // Envoyer OTP
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -34,7 +34,6 @@ export default function LoginPage() {
 
       if (!response.ok) {
         setError(data.error || 'Erreur lors de l\'envoi du code')
-        setLoading(false)
         return
       }
 
@@ -47,7 +46,7 @@ export default function LoginPage() {
     }
   }
 
-  // Step 2: Vérifier OTP
+  // Vérifier OTP
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -65,7 +64,6 @@ export default function LoginPage() {
 
       if (!response.ok) {
         setError(data.error || 'Code invalide')
-        setLoading(false)
         return
       }
 
@@ -78,8 +76,8 @@ export default function LoginPage() {
         return
       }
 
-      // Mode Inscription: continuer avec la création de profil
-      if (data.needsRegistration) {
+      // Mode Inscription: créer le compte
+      if (mode === 'register') {
         await handleCompleteRegistration()
       }
     } catch (err) {
@@ -89,7 +87,7 @@ export default function LoginPage() {
     }
   }
 
-  // Step 3: Compléter l'inscription (pour mode = 'register')
+  // Compléter l'inscription
   const handleCompleteRegistration = async () => {
     setLoading(true)
     setError('')
@@ -111,7 +109,6 @@ export default function LoginPage() {
 
       if (!response.ok) {
         setError(data.error || 'Erreur lors de l\'inscription')
-        setLoading(false)
         return
       }
 
@@ -151,7 +148,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-b from-wood-50 to-white py-12 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl p-8">
-          {/* Tabs/Mode Selection */}
+          {/* Tabs */}
           <div className="flex gap-4 mb-8">
             <button
               onClick={() => handleSwitchMode('login')}
@@ -190,7 +187,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Messages d'erreur/succès */}
+          {/* Messages */}
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
               {error}
@@ -206,7 +203,6 @@ export default function LoginPage() {
           {/* FORM STEP */}
           {step === 'form' && (
             <form onSubmit={handleSendOtp} className="space-y-4">
-              {/* Email - pour les deux modes */}
               <div>
                 <label className="block text-sm font-medium text-wood-900 mb-2">
                   Email *
@@ -221,7 +217,7 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* Champs d'inscription uniquement */}
+              {/* Champs d'inscription */}
               {mode === 'register' && (
                 <>
                   <div>
