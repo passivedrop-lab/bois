@@ -1,0 +1,102 @@
+
+> bois-chauffage-russe@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/45) ...
+GET /api/products/featured error: n [Error]: Dynamic server usage: Route /api/products/featured couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (/home/deo/Desktop/bois/.next/server/chunks/9276.js:1:37220)
+    at d (/home/deo/Desktop/bois/.next/server/chunks/9702.js:23:4125)
+    at s (/home/deo/Desktop/bois/.next/server/app/api/auth/register/route.js:1:2433)
+    at c (/home/deo/Desktop/bois/.next/server/app/api/products/featured/route.js:1:894)
+    at /home/deo/Desktop/bois/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/deo/Desktop/bois/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854) {
+  description: "Route /api/products/featured couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (11/45) 
+GET /api/products error: B [Error]: Dynamic server usage: Route /api/products couldn't be rendered statically because it used `request.url`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at V (/home/deo/Desktop/bois/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:21778)
+    at Object.get (/home/deo/Desktop/bois/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:29465)
+    at u (/home/deo/Desktop/bois/.next/server/app/api/products/route.js:1:908)
+    at /home/deo/Desktop/bois/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/deo/Desktop/bois/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/deo/Desktop/bois/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)
+    at /home/deo/Desktop/bois/node_modules/next/dist/server/lib/trace/tracer.js:122:103 {
+  description: "Route /api/products couldn't be rendered statically because it used `request.url`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (22/45) 
+   Generating static pages (33/45) 
+ ✓ Generating static pages (45/45)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    38.3 kB         208 kB
+├ ○ /_not-found                          873 B          88.2 kB
+├ ○ /a-propos                            154 B          87.5 kB
+├ ○ /admin                               4.29 kB         154 kB
+├ ○ /admin/login                         2.7 kB         95.1 kB
+├ ○ /admin/orders                        4.42 kB         159 kB
+├ ○ /admin/products                      3.52 kB        99.6 kB
+├ ○ /admin/products/new                  3.42 kB        99.5 kB
+├ ƒ /api/admin/products                  0 B                0 B
+├ ƒ /api/admin/products/delete-all       0 B                0 B
+├ ƒ /api/admin/products/delete-multiple  0 B                0 B
+├ ƒ /api/auth/register                   0 B                0 B
+├ ƒ /api/auth/send-otp                   0 B                0 B
+├ ƒ /api/auth/verify-otp                 0 B                0 B
+├ ƒ /api/emails/send                     0 B                0 B
+├ ƒ /api/orders/update-status            0 B                0 B
+├ ƒ /api/products                        0 B                0 B
+├ ƒ /api/products/featured               0 B                0 B
+├ ƒ /api/receipts/upload                 0 B                0 B
+├ ƒ /auth/callback                       0 B                0 B
+├ ○ /cart                                2.67 kB         155 kB
+├ ○ /catalogue                           1.36 kB        97.4 kB
+├ ○ /catalogue/bois-brut-industriel      1.54 kB         163 kB
+├ ○ /catalogue/bois-de-chauffage         1.54 kB         163 kB
+├ ○ /catalogue/bois-de-construction      1.54 kB         163 kB
+├ ○ /catalogue/bois-decoratif            1.54 kB         163 kB
+├ ○ /catalogue/bois-exterieur            1.54 kB         163 kB
+├ ○ /catalogue/bois-sauna                1.54 kB         163 kB
+├ ○ /catalogue/bois-scié                 1.54 kB         163 kB
+├ ○ /catalogue/panneaux                  1.54 kB         163 kB
+├ ○ /checkout                            5.55 kB         163 kB
+├ ○ /checkout/receipt                    3.7 kB          154 kB
+├ ○ /contacts                            154 B          87.5 kB
+├ ○ /diagnostics                         1.7 kB           89 kB
+├ ○ /faq                                 3.38 kB        90.7 kB
+├ ○ /favorites                           2.64 kB         155 kB
+├ ○ /legal                               154 B          87.5 kB
+├ ○ /livraison                           154 B          87.5 kB
+├ ○ /login                               3.22 kB         150 kB
+├ ○ /profile                             3.13 kB         153 kB
+├ ○ /profile/orders                      2.86 kB         153 kB
+├ ○ /profile/settings                    2.79 kB         158 kB
+└ ○ /services                            154 B          87.5 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/117-2df212d18156c103.js       31.7 kB
+  ├ chunks/fd9d1056-10e26e91962a256e.js  53.6 kB
+  └ other shared chunks (total)          1.95 kB
+
+
+ƒ Middleware                             73.1 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
