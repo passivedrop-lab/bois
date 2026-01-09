@@ -250,24 +250,24 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-white p-3 rounded border border-blue-200 relative group">
                     <span className="text-[10px] uppercase text-blue-600 font-bold block mb-1">Получатель</span>
-                    <span className="text-wood-900 font-bold">TsarstvoDereva LLC</span>
-                    <button type="button" onClick={() => copyToClipboard('TsarstvoDereva LLC')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
+                    <span className="text-wood-900 font-bold">Коссиви Жоашим Микаель Эдем С.</span>
+                    <button type="button" onClick={() => copyToClipboard('Коссиви Жоашим Микаель Эдем С.')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
                       <Copy size={14} className="text-blue-600" />
                     </button>
                   </div>
 
                   <div className="bg-white p-3 rounded border border-blue-200 relative group">
-                    <span className="text-[10px] uppercase text-blue-600 font-bold block mb-1">Расчётный счёт</span>
-                    <span className="text-wood-900 font-bold font-mono">RU12 0456 1234 5678 9012 3456</span>
-                    <button type="button" onClick={() => copyToClipboard('RU12 0456 1234 5678 9012 3456')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
+                    <span className="text-[10px] uppercase text-blue-600 font-bold block mb-1">Номер карты</span>
+                    <span className="text-wood-900 font-bold font-mono">2202 2069 4562 7276</span>
+                    <button type="button" onClick={() => copyToClipboard('2202 2069 4562 7276')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
                       <Copy size={14} className="text-blue-600" />
                     </button>
                   </div>
 
                   <div className="bg-white p-3 rounded border border-blue-200 relative group">
-                    <span className="text-[10px] uppercase text-blue-600 font-bold block mb-1">Корреспондентский</span>
-                    <span className="text-wood-900 font-bold font-mono">SBERRU33</span>
-                    <button type="button" onClick={() => copyToClipboard('SBERRU33')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
+                    <span className="text-[10px] uppercase text-blue-600 font-bold block mb-1">Банк</span>
+                    <span className="text-wood-900 font-bold font-mono">СБЕРБАНК</span>
+                    <button type="button" onClick={() => copyToClipboard('СБЕРБАНК')} className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition">
                       <Copy size={14} className="text-blue-600" />
                     </button>
                   </div>
