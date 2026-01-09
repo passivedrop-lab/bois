@@ -132,7 +132,13 @@ export default function CheckoutPage() {
       toast.success('Заказ успешно создан')
       router.push(`/checkout/receipt?orderId=${order.id}&amount=${grandTotal}`)
     } catch (error: any) {
-      console.error('Order creation error:', error)
+      console.error('CRITICAL Order Creation Error:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+        error
+      })
       toast.error(`Ошибка при создании заказа: ${error.message || 'Техническая ошибка'}`)
     } finally {
       setLoading(false)
