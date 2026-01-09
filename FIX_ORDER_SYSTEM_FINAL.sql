@@ -51,3 +51,10 @@ DROP POLICY IF EXISTS "Users manage own cart" ON user_cart;
 CREATE POLICY "Users manage own cart" ON user_cart FOR ALL USING (
   auth.uid() = user_id
 );
+
+-- 5. Sync missing profiles from auth.users
+-- This ensures that orders can be linked to existing users even if the trigger failed previously
+INSERT INTO public.profiles (id, email, role)
+SELECT id, email, 'user'
+FROM auth.users
+ON CONFLICT (id) DO NOTHING;

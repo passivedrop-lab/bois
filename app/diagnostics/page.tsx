@@ -1,142 +1,90 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useAuth } from '@/components/AuthProvider'
 
-/**
- * Page de diagnostic pour tester la connexion Supabase
- * et identifier les erreurs de création de produit
- */
 export default function DiagnosticsPage() {
-  const [diagnostics, setDiagnostics] = useState<any>({
-    loading: true,
-    tables: [],
-    bucket: null,
-    testProduct: null,
-    error: null,
-  })
-
-  useEffect(() => {
-    runDiagnostics()
-  }, [])
+  const { user } = useAuth()
+  const supabase = createClient()
+  const [results, setResults] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
 
   const runDiagnostics = async () => {
-    try {
-      setDiagnostics(prev => ({ ...prev, loading: true }))
-      
-      // Test 1: Vérifier les tables
-      console.log('[TEST 1] Vérification des tables...')
-      const tablesRes = await fetch('/api/admin/products')
-      const tablesData = await tablesRes.json()
-      
-      if (!tablesRes.ok) {
-        throw new Error(`Tables inaccessible: ${tablesData.error}`)
-      }
-      
-      console.log('[SUCCESS] Tables accessibles, produits:', tablesData.products?.length || 0)
-      
-      setDiagnostics(prev => ({
-        ...prev,
-        loading: false,
-        tables: tablesData.products || [],
-      }))
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : String(err)
-      console.error('[DIAGNOSTIC ERROR]', errorMsg)
-      setDiagnostics(prev => ({
-        ...prev,
-        loading: false,
-        error: errorMsg,
-      }))
+    setLoading(true)
+    setResults([])
+    const logs: any[] = []
+
+    const addLog = (name: string, status: 'success' | 'error' | 'info', message: any) => {
+      logs.push({ name, status, message: typeof message === 'string' ? message : JSON.stringify(message, null, 2) })
+      setResults([...logs])
     }
+
+    // 1. Check Auth
+    if (!user) {
+      addLog('Auth Check', 'error', 'User not authenticated')
+      setLoading(false)
+      return
+    }
+    addLog('Auth Check', 'success', `Logged in as ${user.email} (${user.id})`)
+
+    // 2. Check Profile exists
+    addLog('Profile Fetch', 'info', 'Checking if profile exists in database...')
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError) {
+      addLog('Profile Fetch', 'error', profileError)
+    } else {
+      addLog('Profile Fetch', 'success', profile)
+    }
+
+    // 3. Test Order Item Types (Dry run check)
+    addLog('Schema Test', 'info', 'Testing order_items product_id type...')
+    const testItemId = 'test-' + Date.now()
+    const { error: insertError } = await supabase
+      .from('order_items')
+      .insert({
+        order_id: 0, // Should probably fail foreign key if not handled, but we check the TYPE error first
+        product_id: 'test-id-string',
+        quantity: 1,
+        price: 0
+      })
+
+    if (insertError) {
+      // If code is 42804, it means type mismatch (integer vs text)
+      // If code is 23503, it means foreign key violation (which is expected here since order_id 0 doesn't exist)
+      addLog('Schema Test Result', insertError.code === '42804' ? 'error' : 'info', {
+        code: insertError.code,
+        message: insertError.message,
+        hint: 'If code is 42804, product_id is still an INTEGER in the database.'
+      })
+    }
+
+    setLoading(false)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">🔧 Diagnostic Supabase</h1>
-        
-        {diagnostics.error && (
-          <div className="bg-red-50 border border-red-300 rounded-lg p-6 mb-8">
-            <h2 className="text-lg font-bold text-red-800">❌ Erreur Trouvée</h2>
-            <p className="text-red-700 mt-2 font-mono">{diagnostics.error}</p>
-            
-            <div className="mt-4 p-4 bg-red-100 rounded text-sm text-red-900">
-              <strong>Solution:</strong>
-              <ol className="list-decimal list-inside mt-2 space-y-1">
-                <li>Allez dans <a href="https://app.supabase.com" className="underline">Supabase Console</a></li>
-                <li>Sélectionnez votre projet</li>
-                <li>Allez dans <strong>SQL Editor</strong></li>
-                <li>Copiez le contenu de <code className="bg-red-200 px-1">supabase-schema.sql</code></li>
-                <li>Collez dans l'éditeur SQL et cliquez <strong>Run</strong></li>
-                <li>Créez le bucket <code className="bg-red-200 px-1">product-images</code> en tant que Private</li>
-                <li>Revenez ici et rafraîchissez</li>
-              </ol>
-            </div>
+    <div className="container mx-auto p-8">
+      <h1 className="text-2xl font-bold mb-4">Diagnostics de Commande</h1>
+      <button
+        onClick={runDiagnostics}
+        disabled={loading}
+        className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+      >
+        {loading ? 'Exécution...' : 'Lancer les diagnostics'}
+      </button>
+
+      <div className="mt-8 space-y-4">
+        {results.map((res, i) => (
+          <div key={i} className={`p-4 border rounded ${res.status === 'success' ? 'bg-green-50' : res.status === 'error' ? 'bg-red-50' : 'bg-blue-50'}`}>
+            <h3 className="font-bold">{res.name}</h3>
+            <pre className="text-sm mt-2 whitespace-pre-wrap">{res.message}</pre>
           </div>
-        )}
-        
-        {!diagnostics.error && (
-          <div className="bg-green-50 border border-green-300 rounded-lg p-6 mb-8">
-            <h2 className="text-lg font-bold text-green-800">✅ Configuration OK</h2>
-            <p className="text-green-700 mt-2">
-              Supabase est connecté et les tables sont accessibles.
-            </p>
-            <div className="mt-4">
-              <p className="font-semibold">📊 Produits actuels: <span className="text-xl">{diagnostics.tables.length}</span></p>
-              {diagnostics.tables.length > 0 && (
-                <ul className="mt-3 space-y-2">
-                  {diagnostics.tables.map((p: any) => (
-                    <li key={p.id} className="text-sm p-2 bg-green-100 rounded">
-                      <strong>{p.name}</strong> - {p.category} - ${p.price}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-        )}
-        
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-bold mb-4">📋 Étapes de Configuration</h2>
-          <ol className="space-y-3">
-            <li className="flex items-start">
-              <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4">1</span>
-              <div>
-                <p className="font-semibold">Créer les tables Supabase</p>
-                <p className="text-gray-600 text-sm">Exécutez le schéma SQL dans Supabase Console</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4">2</span>
-              <div>
-                <p className="font-semibold">Créer le bucket de stockage</p>
-                <p className="text-gray-600 text-sm">Nommez-le <code className="bg-gray-200 px-1">product-images</code> et définissez-le comme Private</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4">3</span>
-              <div>
-                <p className="font-semibold">Tester la création</p>
-                <p className="text-gray-600 text-sm">Allez à <code className="bg-gray-200 px-1">/admin/products/new</code> et créez un produit</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-        
-        <div className="mt-8 flex gap-4">
-          <button
-            onClick={runDiagnostics}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold transition"
-          >
-            🔄 Actualiser le diagnostic
-          </button>
-          <a
-            href="/admin/products/new"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition"
-          >
-            ➕ Créer un produit
-          </a>
-        </div>
+        ))}
       </div>
     </div>
   )
