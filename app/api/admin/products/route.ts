@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient as createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
+import { cookies } from 'next/headers'
 
 const BUCKET = process.env.SUPABASE_PRODUCT_BUCKET || 'product-images'
 
 export async function GET() {
   try {
+    const cookieStore = await cookies()
+    const hasSecret = cookieStore.get('admin_secret_access')?.value === 'true'
+
+    if (!hasSecret) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
     const supabase = await createServerClient()
     const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false })
     if (error) return NextResponse.json({ error: 'Erreur lecture produits' }, { status: 500 })
@@ -14,10 +23,14 @@ export async function GET() {
       (data || []).map(async (p: any) => {
         if (p.image_path) {
           try {
-            const { data: urlData, error: urlError } = await supabase.storage
-              .from(BUCKET)
-              .createSignedUrl(p.image_path, 60 * 60) // 1 hour
-            if (!urlError && urlData) p.image_url = urlData.signedUrl
+            if (p.image_path.startsWith('http')) {
+              p.image_url = p.image_path
+            } else {
+              const { data: urlData, error: urlError } = await supabase.storage
+                .from(BUCKET)
+                .createSignedUrl(p.image_path, 60 * 60) // 1 hour
+              if (!urlError && urlData) p.image_url = urlData.signedUrl
+            }
           } catch (e) {
             // ignore
           }
@@ -35,8 +48,31 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const cookieStore = await cookies()
+    const hasSecret = cookieStore.get('admin_secret_access')?.value === 'true'
+
+    if (!hasSecret) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
     const contentType = request.headers.get('content-type') || ''
-    const supabase = await createServerClient()
+
+    // Use Service Role if available to bypass RLS
+    let supabase
+    if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY,
+        {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false
+          }
+        }
+      )
+    } else {
+      supabase = await createServerClient()
+    }
 
     if (contentType.includes('multipart/form-data')) {
       const form = await request.formData()
@@ -58,12 +94,12 @@ export async function POST(request: NextRequest) {
       if (file && file.size > 0) {
         const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`
         const fileBuffer = Buffer.from(await file.arrayBuffer())
-        
+
         console.log(`[INFO] Uploading image: ${fileName} to bucket: ${BUCKET}`)
         const { error: uploadError, data: uploadData } = await supabase.storage
           .from(BUCKET)
           .upload(fileName, fileBuffer, { upsert: false })
-        
+
         if (uploadError) {
           console.error(`[ERROR] Upload failed for ${fileName}:`, uploadError)
           throw new Error(`Erreur upload image: ${uploadError.message}`)
@@ -84,12 +120,12 @@ export async function POST(request: NextRequest) {
 
       console.log(`[INFO] Inserting product:`, payload)
       const { data: inserted, error: insertError } = await supabase.from('products').insert([payload]).select().single()
-      
+
       if (insertError) {
         console.error('[ERROR] Insert failed:', insertError)
         throw new Error(`Erreur création produit: ${insertError.message}`)
       }
-      
+
       console.log('[SUCCESS] Product created:', inserted)
       return NextResponse.json({ product: inserted }, { status: 201 })
     }
@@ -122,11 +158,34 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const cookieStore = await cookies()
+    const hasSecret = cookieStore.get('admin_secret_access')?.value === 'true'
+
+    if (!hasSecret) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
     if (!id) return NextResponse.json({ error: 'ID requis' }, { status: 400 })
 
-    const supabase = await createServerClient()
+    // Use Service Role if available
+    let supabase
+    if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY,
+        {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false
+          }
+        }
+      )
+    } else {
+      supabase = await createServerClient()
+    }
+
     const { data: existing, error: selErr } = await supabase.from('products').select('image_path').eq('id', id).single()
     if (selErr) console.warn('Produit non trouvé ou erreur lecture image_path', selErr)
 
