@@ -43,29 +43,29 @@ export default function AdminProducts() {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
+    const hasSecretAccess = document.cookie.includes('admin_secret_access=true')
+    if (!hasSecretAccess) {
       router.push('/admin/login')
     } else {
       setIsAuthenticated(true)
-      // Load products via server API (returns signed URLs for private images)
-      ;(async () => {
-        try {
-          const res = await fetch('/api/admin/products')
-          const json = await res.json()
-          if (res.ok && json.products) setProducts(json.products)
-        } catch (err) {
-          console.error('Erreur chargement produits:', err)
-        } finally {
-          setLoading(false)
-        }
-      })()
+        // Load products via server API (returns signed URLs for private images)
+        ; (async () => {
+          try {
+            const res = await fetch('/api/admin/products')
+            const json = await res.json()
+            if (res.ok && json.products) setProducts(json.products)
+          } catch (err) {
+            console.error('Erreur chargement produits:', err)
+          } finally {
+            setLoading(false)
+          }
+        })()
     }
   }, [router])
 
   const handleDelete = (id: string) => {
-      if (confirm('Вы уверены, что хотите удалить этот товар?')) {
-      ;(async () => {
+    if (confirm('Вы уверены, что хотите удалить этот товар?')) {
+      ; (async () => {
         try {
           const res = await fetch(`/api/admin/products?id=${encodeURIComponent(id)}`, {
             method: 'DELETE',
@@ -82,7 +82,7 @@ export default function AdminProducts() {
   }
 
   const toggleVedette = (id: string) => {
-    ;(async () => {
+    ; (async () => {
       try {
         const prod = products.find((p) => p.id === id)
         if (!prod) return
@@ -222,9 +222,8 @@ export default function AdminProducts() {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className={`rounded-lg shadow p-6 flex items-center justify-between hover:shadow-lg transition ${
-                  product.vedette ? 'bg-amber-50 border-2 border-amber-400' : 'bg-white'
-                }`}
+                className={`rounded-lg shadow p-6 flex items-center justify-between hover:shadow-lg transition ${product.vedette ? 'bg-amber-50 border-2 border-amber-400' : 'bg-white'
+                  }`}
               >
                 <div className="pr-4">
                   <input
@@ -262,11 +261,10 @@ export default function AdminProducts() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => toggleVedette(product.id)}
-                    className={`p-2 rounded-lg transition ${
-                      product.vedette
+                    className={`p-2 rounded-lg transition ${product.vedette
                         ? 'bg-amber-100 hover:bg-amber-200'
                         : 'hover:bg-gray-100'
-                    }`}
+                      }`}
                     title={product.vedette ? 'Удалить из избранного' : 'Добавить в избранное'}
                   >
                     <Star

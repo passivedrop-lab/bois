@@ -52,9 +52,9 @@ export default function AuthPage() {
       if (error) throw error
 
       if (data.user && data.user.identities && data.user.identities.length === 0) {
-        toast.error('Cet email est déjà utilisé.')
+        toast.error('Этот email уже используется.')
       } else {
-        toast.success('Compte créé ! Veuillez vérifier votre email pour le code.')
+        toast.success('Аккаунт создан! Пожалуйста, проверьте email для получения кода.')
         setShowCodeInput(true) // Move to code entry
       }
     } catch (error: any) {
@@ -92,7 +92,7 @@ export default function AuthPage() {
         if (error) throw error
         setLoading(false)
         setShowCodeInput(true) // Show input to enter the code they just received
-        toast.success('Code envoyé par email !')
+        toast.success('Код отправлен на email!')
         return // Don't stop loading yet? No, we need to let them enter code.
       }
     } catch (error: any) {
@@ -119,11 +119,11 @@ export default function AuthPage() {
 
       if (error) throw error
 
-      toast.success('Vérification réussie !')
+      toast.success('Проверка успешна!')
       router.push('/profile')
       router.refresh()
     } catch (error: any) {
-      toast.error(error.message || 'Code invalide')
+      toast.error(error.message || 'Неверный код')
     } finally {
       setLoading(false)
     }
@@ -139,9 +139,9 @@ export default function AuthPage() {
           <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <KeyRound className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-bold text-wood-900 mb-4">Entrez le code</h2>
+          <h2 className="text-2xl font-bold text-wood-900 mb-4">Введите код</h2>
           <p className="text-wood-600 mb-6">
-            Nous avons envoyé un code à 6 chiffres à <strong>{email}</strong>.
+            Мы отправили код из 6 цифр на <strong>{email}</strong>.
           </p>
 
           <form onSubmit={handleVerifyCode} className="space-y-4">
@@ -157,7 +157,7 @@ export default function AuthPage() {
               disabled={loading}
               className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold"
             >
-              {loading ? <Loader className="animate-spin mx-auto" /> : 'Vérifier'}
+              {loading ? <Loader className="animate-spin mx-auto" /> : 'Проверить'}
             </button>
           </form>
 
@@ -165,7 +165,7 @@ export default function AuthPage() {
             onClick={() => setShowCodeInput(false)}
             className="mt-6 text-sm text-wood-500 hover:text-wood-700 underline"
           >
-            Retour
+            Назад
           </button>
         </div>
       </div>
@@ -184,10 +184,10 @@ export default function AuthPage() {
               <Lock className="w-6 h-6 text-fire-600" />
             </div>
             <h1 className="text-2xl font-bold text-wood-900 mb-2">
-              {mode === 'login' ? 'Connexion' : 'Créer un compte'}
+              {mode === 'login' ? 'Вход' : 'Создать аккаунт'}
             </h1>
             <p className="text-wood-600 text-sm">
-              Tsarstvo Dereva - Espace Client
+              Tsarstvo Dereva - Личный кабинет
             </p>
           </div>
 
@@ -200,7 +200,7 @@ export default function AuthPage() {
                 : 'text-wood-600 hover:text-wood-900'
                 }`}
             >
-              Connexion
+              Вход
             </button>
             <button
               onClick={() => { setMode('register'); setShowCodeInput(false); }}
@@ -209,7 +209,7 @@ export default function AuthPage() {
                 : 'text-wood-600 hover:text-wood-900'
                 }`}
             >
-              Inscription
+              Регистрация
             </button>
           </div>
 
@@ -223,14 +223,14 @@ export default function AuthPage() {
                   onClick={() => setLoginMethod('password')}
                   className={`pb-1 px-2 ${loginMethod === 'password' ? 'text-fire-600 border-b-2 border-fire-600 font-semibold' : 'text-wood-500'}`}
                 >
-                  Mot de passe
+                  Пароль
                 </button>
                 <button
                   type="button"
                   onClick={() => setLoginMethod('code')}
                   className={`pb-1 px-2 ${loginMethod === 'code' ? 'text-fire-600 border-b-2 border-fire-600 font-semibold' : 'text-wood-500'}`}
                 >
-                  Code unique
+                  Уникальный код
                 </button>
               </div>
 
@@ -247,7 +247,7 @@ export default function AuthPage() {
 
               {loginMethod === 'password' && (
                 <div>
-                  <label className="block text-sm font-medium text-wood-700 mb-1">Mot de passe</label>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Пароль</label>
                   <input
                     type="password"
                     value={password}
@@ -263,7 +263,7 @@ export default function AuthPage() {
                 disabled={loading}
                 className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2"
               >
-                {loading ? <Loader className="animate-spin" /> : (loginMethod === 'password' ? 'Se connecter' : 'Recevoir le code')}
+                {loading ? <Loader className="animate-spin" /> : (loginMethod === 'password' ? 'Войти' : 'Получить код')}
               </button>
             </form>
           )}
@@ -273,7 +273,7 @@ export default function AuthPage() {
             <form onSubmit={handleRegister} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-wood-700 mb-1">Prénom</label>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Имя</label>
                   <input
                     type="text"
                     value={firstName}
@@ -283,7 +283,7 @@ export default function AuthPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-wood-700 mb-1">Nom</label>
+                  <label className="block text-sm font-medium text-wood-700 mb-1">Фамилия</label>
                   <input
                     type="text"
                     value={lastName}
@@ -306,7 +306,7 @@ export default function AuthPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-wood-700 mb-1">Téléphone</label>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Телефон</label>
                 <input
                   type="tel"
                   value={phone}
@@ -318,19 +318,19 @@ export default function AuthPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-wood-700 mb-1">Ville</label>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Город</label>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   required
-                  placeholder="Moscou"
+                  placeholder="Москва"
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-wood-700 mb-1">Mot de passe</label>
+                <label className="block text-sm font-medium text-wood-700 mb-1">Пароль</label>
                 <input
                   type="password"
                   value={password}
@@ -339,7 +339,7 @@ export default function AuthPage() {
                   minLength={6}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
                 />
-                <p className="text-xs text-wood-500 mt-1">Minimum 6 caractères</p>
+                <p className="text-xs text-wood-500 mt-1">Минимум 6 символов</p>
               </div>
 
               <button
@@ -347,13 +347,13 @@ export default function AuthPage() {
                 disabled={loading}
                 className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold flex items-center justify-center gap-2"
               >
-                {loading ? <Loader className="animate-spin" /> : 'Créer mon compte'}
+                {loading ? <Loader className="animate-spin" /> : 'Создать аккаунт'}
               </button>
             </form>
           )}
 
           <div className="mt-6 text-center text-xs text-wood-500">
-            En continuant, vous acceptez nos CGU et Politique de confidentialité.
+            Продолжая, вы принимаете наши Условия использования и Политику конфиденциальности.
           </div>
         </div>
       </div>

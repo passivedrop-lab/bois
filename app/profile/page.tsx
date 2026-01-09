@@ -44,7 +44,7 @@ export default function ProfilePage() {
             // Fallback if profile doesn't exist (should match trigger)
             setProfile({
               id: user.id,
-              full_name: user.user_metadata.full_name || 'Utilisateur',
+              full_name: user.user_metadata.full_name || 'Пользователь',
               email: user.email!,
               phone: null,
               city: null,

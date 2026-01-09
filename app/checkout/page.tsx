@@ -40,7 +40,7 @@ export default function CheckoutPage() {
 
     try {
       if (!user) {
-        toast.error('Veuillez vous connecter pour commander')
+        toast.error('Пожалуйста, войдите для оформления заказа')
         router.push('/login?next=/checkout')
         return
       }
@@ -90,7 +90,7 @@ export default function CheckoutPage() {
       router.push(`/checkout/payment?orderId=${data.id}&amount=${grandTotal}`)
     } catch (error: any) {
       console.error('Order creation error:', error)
-      toast.error('Erreur lors de la création de la commande')
+      toast.error('Ошибка при создании заказа')
     } finally {
       setLoading(false)
     }

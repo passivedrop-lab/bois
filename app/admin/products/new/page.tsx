@@ -34,8 +34,8 @@ export default function NewProductPage() {
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
+    const hasSecretAccess = document.cookie.includes('admin_secret_access=true')
+    if (!hasSecretAccess) {
       router.push('/admin/login')
     } else {
       setIsAuthenticated(true)
@@ -57,7 +57,7 @@ export default function NewProductPage() {
         return
       }
       setFormData({ ...formData, image: file })
-      
+
       // Créer une prévisualisation
       const reader = new FileReader()
       reader.onloadend = () => {
@@ -76,13 +76,13 @@ export default function NewProductPage() {
     e.preventDefault()
     setError(null)
     setSubmitMessage(null)
-    
+
     if (!formData.image) {
       setError('Veuillez sélectionner une image')
       return
     }
-    
-    ;(async () => {
+
+    ; (async () => {
       setLoading(true)
       try {
         const form = new FormData()
@@ -145,14 +145,14 @@ export default function NewProductPage() {
               <p className="text-sm mt-1">{submitMessage}</p>
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             {/* Image du produit */}
             <div>
               <label className="block text-sm font-bold text-wood-900 mb-2">
                 Изображение товара *
               </label>
-              
+
               {!imagePreview ? (
                 <label className="w-full flex flex-col items-center justify-center border-2 border-dashed border-wood-300 rounded-lg p-8 cursor-pointer hover:border-fire-500 hover:bg-fire-50 transition">
                   <Upload size={32} className="text-wood-600 mb-2" />

