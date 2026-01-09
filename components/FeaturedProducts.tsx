@@ -8,41 +8,25 @@ import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
 import { useState, useEffect } from 'react'
+import { PRODUCTS } from '@/lib/data/products'
 
 export default function FeaturedProducts() {
   const cartStore = useCartStore()
   const favoritesStore = useFavoritesStore()
-  const [products, setProducts] = useState<any[]>([])
+  const [products, setProducts] = useState<typeof PRODUCTS>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch('/api/products/featured')
-        const data = await res.json()
+    // Filtrage statique pour les produits en vedette
+    const vedetteProducts = PRODUCTS.filter(p => p.vedette)
 
-        if (data.products) {
-          const mappedProducts = data.products.map((p: any) => ({
-            id: p.id,
-            name: p.name,
-            // Si promo_price existe, c'est le prix actuel, et price est l'ancien prix
-            price: p.promo_price || p.price,
-            originalPrice: p.promo_price ? p.price : null,
-            image: p.image_url || '/images-product/placeholder.jpg', // Fallback
-            rating: 5.0, // Donnée simulée car absente en DB
-            reviews: Math.floor(Math.random() * 50) + 10, // Donnée simulée
-            vedette: p.vedette
-          }))
-          setProducts(mappedProducts)
-        }
-      } catch (error) {
-        console.error('Failed to load featured products:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+    // Délai pour UX
+    const timer = setTimeout(() => {
+      setProducts(vedetteProducts)
+      setLoading(false)
+    }, 500)
 
-    fetchProducts()
+    return () => clearTimeout(timer)
   }, [])
 
   const handleAddToCart = async (product: typeof products[0]) => {
@@ -187,4 +171,3 @@ export default function FeaturedProducts() {
     </section>
   )
 }
-

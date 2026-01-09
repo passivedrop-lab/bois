@@ -7,6 +7,7 @@ import { ShoppingCart, Star, Heart, Loader } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
+import { PRODUCTS } from '@/lib/data/products'
 
 interface ProductListProps {
     categoryName: string
@@ -15,36 +16,20 @@ interface ProductListProps {
 export default function ProductList({ categoryName }: ProductListProps) {
     const cartStore = useCartStore()
     const favoritesStore = useFavoritesStore()
-    const [products, setProducts] = useState<any[]>([])
+    const [products, setProducts] = useState<typeof PRODUCTS>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await fetch(`/api/products?category=${encodeURIComponent(categoryName)}`)
-                const data = await res.json()
+        // Filtrage statique au lieu de l'API
+        const filtered = PRODUCTS.filter(p => p.category === categoryName)
 
-                if (data.products) {
-                    const mappedProducts = data.products.map((p: any) => ({
-                        id: p.id,
-                        name: p.name,
-                        price: p.promo_price || p.price,
-                        originalPrice: p.promo_price ? p.price : null,
-                        image: p.image_url || '/images-product/placeholder.jpg',
-                        rating: 5.0, // Simulation
-                        reviews: Math.floor(Math.random() * 50) + 10, // Simulation
-                        vedette: p.vedette
-                    }))
-                    setProducts(mappedProducts)
-                }
-            } catch (error) {
-                console.error('Failed to load products:', error)
-            } finally {
-                setLoading(false)
-            }
-        }
+        // Délai simulé pour l'UX
+        const timer = setTimeout(() => {
+            setProducts(filtered)
+            setLoading(false)
+        }, 500)
 
-        fetchProducts()
+        return () => clearTimeout(timer)
     }, [categoryName])
 
     const handleAddToCart = async (product: any) => {
