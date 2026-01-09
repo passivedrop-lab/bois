@@ -16,40 +16,52 @@ export async function POST(request: NextRequest) {
     const base64File = Buffer.from(fileBuffer).toString('base64')
 
     const adminEmail = process.env.ADMIN_EMAIL || 'admin@tsarstvadereva.ru'
-    const resendKey = process.env.RESEND_API_KEY
 
-    if (resendKey) {
-      try {
-        // Lazy import to avoid failing when package not installed locally
-        const { Resend } = await import('resend')
-        const resend = new Resend(resendKey)
+    try {
+      // Use shared resend client
+      const { resend } = await import('@/lib/resend')
 
-        const subject = `Reçu de commande #${orderId}`
-        const html = `<p>Reçu uploadé pour la commande <strong>#${orderId}</strong></p>
-          <p>Client: ${customerEmail || '—'}</p>`
+      const subject = `Reçu de commande #${orderId}`
+      const html = `
+        <h2>Nouveau reçu de virement reçu</h2>
+        <p><strong>Commande #:</strong> ${orderId}</p>
+        <p><strong>Email client:</strong> ${customerEmail || '—'}</p>
+        <p><strong>Date:</strong> ${new Date().toLocaleString('fr-FR')}</p>
+        <p><strong>Fichier:</strong> ${file.name}</p>
+      `
 
-        const payload: any = {
-          from: process.env.SENDER_EMAIL || `no-reply@${new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost').hostname.replace(/^www\./, '')}`,
-          to: adminEmail,
-          subject,
-          html,
-          attachments: [
-            {
-              filename: file.name,
-              content_type: file.type || 'application/octet-stream',
-              data: base64File,
-            },
-          ],
-        }
+      // Use onboarding email if SENDER_EMAIL not set to ensure delivery
+      const fromEmail = process.env.SENDER_EMAIL || 'TsarstvoDereva <onboarding@resend.dev>'
 
-        await (resend as any).emails.send(payload)
+      const { data, error: sendError } = await resend.emails.send({
+        from: fromEmail,
+        to: adminEmail,
+        subject,
+        html,
+        attachments: [
+          {
+            filename: file.name,
+            content: Buffer.from(fileBuffer),
+          },
+        ],
+      })
 
-        console.log('Reçu envoyé à', adminEmail)
-        return NextResponse.json({ success: true, message: 'Reçu envoyé à l\'admin avec succès', orderId }, { status: 200 })
-      } catch (err) {
-        console.error('Erreur Resend:', err)
-        // Fallthrough to simulated response below
+      if (sendError) {
+        console.error('Resend Send Error:', sendError)
+        throw sendError
       }
+
+      console.log('Reçu envoyé à', adminEmail, 'ID:', data?.id)
+      return NextResponse.json({
+        success: true,
+        message: 'Reçu envoyé à l\'admin avec succès',
+        orderId,
+        emailId: data?.id
+      }, { status: 200 })
+    } catch (err) {
+      console.error('Erreur lors de l\'envoi de l\'email:', err)
+      // Fallthrough to simulated response below if we want, 
+      // but better to report error if Resend is expected to work
     }
 
     // Fallback simulation (if Resend not configured or failed)
