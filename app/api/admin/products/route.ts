@@ -23,7 +23,7 @@ export async function GET() {
       (data || []).map(async (p: any) => {
         if (p.image_path) {
           try {
-            if (p.image_path.startsWith('http')) {
+            if (p.image_path.startsWith('http') || p.image_path.startsWith('/')) {
               p.image_url = p.image_path
             } else {
               const { data: urlData, error: urlError } = await supabase.storage

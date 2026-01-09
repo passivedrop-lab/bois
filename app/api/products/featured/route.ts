@@ -30,7 +30,7 @@ export async function GET() {
                 if (p.image_path) {
                     try {
                         // Check if path is a full URL (if some were migrated or external)
-                        if (p.image_path.startsWith('http')) {
+                        if (p.image_path.startsWith('http') || p.image_path.startsWith('/')) {
                             p.image_url = p.image_path
                         } else {
                             const { data: urlData, error: urlError } = await supabase.storage
