@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const supabase = createClient()
   const { items, getTotal, clearCart } = useCartStore()
 
@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: user?.email || '',
+    email: '',
     phone: '',
     address: '',
     city: '',
@@ -32,10 +32,24 @@ export default function CheckoutPage() {
   const grandTotal = cartTotal + shippingCost
 
   useEffect(() => {
+    if (!authLoading && !user) {
+      toast.error('Пожалуйста, войдите для оформления заказа')
+      router.push('/login?next=/checkout')
+    }
     if (user?.email) {
       setFormData(prev => ({ ...prev, email: user.email! }))
     }
-  }, [user])
+  }, [user, authLoading, router])
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader className="animate-spin text-fire-600" size={48} />
+      </div>
+    )
+  }
+
+  if (!user) return null
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
