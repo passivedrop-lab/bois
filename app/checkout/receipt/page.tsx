@@ -13,6 +13,8 @@ function ReceiptContent() {
   const amount = searchParams.get('amount') || ''
   const { user } = useAuth()
 
+  console.log('ReceiptContent rendered:', { orderId, amount, userId: user?.id })
+
   const [file, setFile] = useState<File | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -144,8 +146,8 @@ function ReceiptContent() {
                     onClick={handleSubmit}
                     disabled={!file || uploading}
                     className={`w-full py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition ${file && !uploading
-                        ? 'bg-fire-600 text-white hover:bg-fire-700 cursor-pointer'
-                        : 'bg-wood-200 text-wood-400 cursor-not-allowed'
+                      ? 'bg-fire-600 text-white hover:bg-fire-700 cursor-pointer'
+                      : 'bg-wood-200 text-wood-400 cursor-not-allowed'
                       }`}
                   >
                     <CheckCircle size={20} />
@@ -188,7 +190,11 @@ function ReceiptContent() {
               <div className="space-y-4 pb-6 border-b border-wood-200">
                 <div>
                   <p className="text-sm text-wood-600">Montant payé</p>
-                  <p className="text-2xl font-bold text-fire-600">{amount ? `${parseInt(amount).toLocaleString()}₽` : '-'}</p>
+                  <p className="text-2xl font-bold text-fire-600">
+                    {amount && !isNaN(parseInt(amount))
+                      ? `${parseInt(amount).toLocaleString('ru-RU')} ₽`
+                      : '-'}
+                  </p>
                 </div>
 
                 <div>

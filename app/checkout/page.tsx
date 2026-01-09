@@ -92,7 +92,9 @@ export default function CheckoutPage() {
         .select()
         .single()
 
+      console.log('Order created:', order)
       if (orderError) throw orderError
+      if (!order) throw new Error('Order data is missing after insertion')
 
       // 2. Insert Order Items
       const orderItems = items.map(item => ({
@@ -143,8 +145,12 @@ export default function CheckoutPage() {
       // 4. Clear Cart
       await clearCart()
 
+      console.log('Redirecting to receipt with:', { orderId: order.id, amount: grandTotal })
       toast.success('Заказ успешно создан')
-      router.push(`/checkout/receipt?orderId=${order.id}&amount=${grandTotal}`)
+
+      const orderIdStr = String(order.id)
+      const amountStr = String(grandTotal)
+      router.push(`/checkout/receipt?orderId=${orderIdStr}&amount=${amountStr}`)
     } catch (error: any) {
       console.error('CRITICAL Order Creation Error:', {
         message: error.message,
