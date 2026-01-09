@@ -152,6 +152,7 @@ export default function CheckoutPage() {
       const amountStr = String(grandTotal)
       router.push(`/checkout/receipt?orderId=${orderIdStr}&amount=${amountStr}`)
     } catch (error: any) {
+      const detailedError = error.message || error.details || error.code || 'Техническая ошибка';
       console.error('CRITICAL Order Creation Error:', {
         message: error.message,
         details: error.details,
@@ -159,7 +160,7 @@ export default function CheckoutPage() {
         code: error.code,
         error
       })
-      toast.error(`Ошибка при создании заказа: ${error.message || 'Техническая ошибка'}`)
+      toast.error(`Ошибка при создании заказа: ${detailedError}`)
     } finally {
       setLoading(false)
     }
