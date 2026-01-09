@@ -16,42 +16,33 @@ export default function FeaturedProducts() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Récupérer les produits marqués comme vedettes
-    // Pour l'instant, on utilise des données de test
-    const vedetteProducts = [
-      {
-        id: 1,
-        name: 'Дрова дубовые 30 см - 3,1 стера',
-        price: 4510,
-        originalPrice: null,
-        image: '/images-product/dub-30-3.1.jpg',
-        rating: 4.8,
-        reviews: 124,
-        vedette: true,
-      },
-      {
-        id: 2,
-        name: 'Дрова 25 см - 2,60 стера в упаковке',
-        price: 4300,
-        originalPrice: null,
-        image: '/images-product/drova-25-2.6.jpg',
-        rating: 4.9,
-        reviews: 89,
-        vedette: true,
-      },
-      {
-        id: 4,
-        name: 'Палета 1 стер дров - готово к использованию',
-        price: 1600,
-        originalPrice: null,
-        image: '/images-product/paleta-1-ster.jpg',
-        rating: 4.9,
-        reviews: 203,
-        vedette: true,
-      },
-    ]
-    setProducts(vedetteProducts)
-    setLoading(false)
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch('/api/products/featured')
+        const data = await res.json()
+
+        if (data.products) {
+          const mappedProducts = data.products.map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            // Si promo_price existe, c'est le prix actuel, et price est l'ancien prix
+            price: p.promo_price || p.price,
+            originalPrice: p.promo_price ? p.price : null,
+            image: p.image_url || '/images-product/placeholder.jpg', // Fallback
+            rating: 5.0, // Donnée simulée car absente en DB
+            reviews: Math.floor(Math.random() * 50) + 10, // Donnée simulée
+            vedette: p.vedette
+          }))
+          setProducts(mappedProducts)
+        }
+      } catch (error) {
+        console.error('Failed to load featured products:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
   }, [])
 
   const handleAddToCart = async (product: typeof products[0]) => {

@@ -25,7 +25,7 @@
 - ✅ Paramètres (mise à jour des infos personnelles)
 
 ### 3. Dashboard Admin (`/admin`)
-- ✅ Accès sécurisé par rôle
+- ✅ Accès via **Code Secret Unique** (Cookie sécurisé)
 - ✅ Statistiques en temps réel
 - ✅ Gestion des commandes (Valider/Rejeter)
 - ✅ Notifications email automatiques
