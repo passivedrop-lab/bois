@@ -97,7 +97,7 @@ export default function CheckoutPage() {
       // 2. Insert Order Items
       const orderItems = items.map(item => ({
         order_id: order.id,
-        product_id: parseInt(item.id.replace(/[^0-9]/g, '') || '0'), // Handle string IDs if they contain numbers
+        product_id: item.id, // Use string ID as-is (e.g., "bc-1")
         product_name: item.name,
         quantity: item.quantity,
         price: item.price
