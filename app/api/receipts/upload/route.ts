@@ -20,14 +20,80 @@ export async function POST(request: NextRequest) {
     try {
       // Use shared resend client
       const { resend } = await import('@/lib/resend')
+      const { createClient } = await import('@/lib/supabase/server')
+      const supabase = await createClient()
 
-      const subject = `Reçu de commande #${orderId}`
+      // Fetch order details and items
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (*)
+        `)
+        .eq('id', orderId)
+        .single()
+
+      if (orderError || !order) {
+        console.error('Order Fetch Error:', orderError)
+        return NextResponse.json({ error: 'Commande introuvable' }, { status: 404 })
+      }
+
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      const approveUrl = `${baseUrl}/api/admin/orders/action?id=${orderId}&action=verified`
+      const rejectUrl = `${baseUrl}/api/admin/orders/action?id=${orderId}&action=rejected`
+
+      const itemsHtml = order.order_items.map((item: any) => `
+        <tr>
+          <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.product_name || item.product_id}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">x${item.quantity}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">${item.price.toLocaleString()} ₽</td>
+        </tr>
+      `).join('')
+
+      const subject = `🔥 Nouveau reçu : Commande #${orderId}`
       const html = `
-        <h2>Nouveau reçu de virement reçu</h2>
-        <p><strong>Commande #:</strong> ${orderId}</p>
-        <p><strong>Email client:</strong> ${customerEmail || '—'}</p>
-        <p><strong>Date:</strong> ${new Date().toLocaleString('fr-FR')}</p>
-        <p><strong>Fichier:</strong> ${file.name}</p>
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; padding: 20px;">
+          <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">Nouveau reçu de virement</h2>
+          
+          <div style="margin: 20px 0;">
+            <p><strong>Commande :</strong> #${orderId}</p>
+            <p><strong>Client :</strong> ${order.customer_name} (<a href="mailto:${order.customer_email}">${order.customer_email}</a>)</p>
+            <p><strong>Adresse :</strong> ${order.delivery_address || 'Non spécifiée'}</p>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead>
+              <tr style="background-color: #f9fafb;">
+                <th style="padding: 10px; text-align: left; border-bottom: 2px solid #eee;">Produit</th>
+                <th style="padding: 10px; text-align: center; border-bottom: 2px solid #eee;">Qté</th>
+                <th style="padding: 10px; text-align: right; border-bottom: 2px solid #eee;">Prix</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsHtml}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">TOTAL:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold; color: #dc2626; font-size: 1.2em;">${order.total_price.toLocaleString()} ₽</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; text-align: center; margin-top: 30px;">
+            <h3 style="margin-top: 0; color: #991b1b;">Actions rapides</h3>
+            <p style="font-size: 0.9em; color: #7f1d1d; margin-bottom: 20px;">Cliquez sur un bouton ci-dessous pour changer le statut immédiatement.</p>
+            
+            <div style="text-align: center;">
+              <a href="${approveUrl}" style="display: inline-block; background-color: #16a34a; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-right: 10px;">✅ VALIDER</a>
+              <a href="${rejectUrl}" style="display: inline-block; background-color: #dc2626; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold;">❌ REJETER</a>
+            </div>
+          </div>
+
+          <p style="font-size: 0.8em; color: #666; margin-top: 30px; text-align: center;">
+            Le reçu est joint à cet email.
+          </p>
+        </div>
       `
 
       // Use onboarding email if SENDER_EMAIL not set to ensure delivery
@@ -51,7 +117,7 @@ export async function POST(request: NextRequest) {
         throw sendError
       }
 
-      console.log('Reçu envoyé à', adminEmail, 'ID:', data?.id)
+      console.log('Reçu détaillé envoyé à', adminEmail, 'ID:', data?.id)
       return NextResponse.json({
         success: true,
         message: 'Reçu envoyé à l\'admin avec succès',
@@ -60,8 +126,7 @@ export async function POST(request: NextRequest) {
       }, { status: 200 })
     } catch (err) {
       console.error('Erreur lors de l\'envoi de l\'email:', err)
-      // Fallthrough to simulated response below if we want, 
-      // but better to report error if Resend is expected to work
+      return NextResponse.json({ error: 'Erreur lors de l\'envoi de l\'email' }, { status: 500 })
     }
 
     // Fallback simulation (if Resend not configured or failed)
