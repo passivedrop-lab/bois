@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import AuthProvider from '@/components/AuthProvider'
 import Toaster from '@/components/Toaster'
+import TelegramFloat from '@/components/TelegramFloat'
 
 export const metadata: Metadata = {
   title: 'TsarstvoDereva - Качественный лес и пиломатериалы',
@@ -26,6 +27,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster />
+          <TelegramFloat />
         </AuthProvider>
       </body>
     </html>

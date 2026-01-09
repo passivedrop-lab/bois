@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Phone, Mail, MapPin, Facebook, Instagram, Twitter } from 'lucide-react'
+import { Phone, Mail, MapPin, Send } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -17,15 +17,16 @@ export default function Footer() {
             <p className="text-sm sm:text-base text-wood-300 mb-3 sm:mb-4">
               TsarstvoDereva — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
             </p>
-            <div className="flex gap-3 sm:gap-4">
-              <a href="#" className="hover:text-fire-400 transition" aria-label="Facebook">
-                <Facebook size={18} className="sm:w-5 sm:h-5" />
-              </a>
-              <a href="#" className="hover:text-fire-400 transition" aria-label="Instagram">
-                <Instagram size={18} className="sm:w-5 sm:h-5" />
-              </a>
-              <a href="#" className="hover:text-fire-400 transition" aria-label="Twitter">
-                <Twitter size={18} className="sm:w-5 sm:h-5" />
+            <div className="flex flex-col gap-2">
+              <p className="text-xs text-wood-500 uppercase tracking-wider font-bold">Мы в Telegram</p>
+              <a
+                href="https://t.me/TSARSTVODEREVA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-blue-400 Transition text-blue-400 font-semibold"
+              >
+                <Send size={18} />
+                <span>@TSARSTVODEREVA</span>
               </a>
             </div>
           </div>
