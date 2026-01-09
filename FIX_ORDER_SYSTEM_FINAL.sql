@@ -1,9 +1,8 @@
 -- ============================================================
--- FINAL FIX (v3): RESOLVING FOREIGN KEY (23503) AND RLS
+-- FINAL FIX (v4): RESOLVING ADMIN DASHBOARD VISIBILITY
 -- ============================================================
 
 -- 1. Correctly drop all foreign key constraints on order_items.product_id
--- We use a DO block to find the constraint name dynamically
 DO $$ 
 DECLARE 
     r RECORD;
@@ -38,31 +37,56 @@ CREATE POLICY "Authenticated users read profiles" ON profiles FOR SELECT USING (
   auth.role() = 'authenticated'
 );
 
--- 4. Fix Order System RLS
+-- 4. Fix Order System RLS (Orders Table)
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users create orders" ON orders;
 CREATE POLICY "Users create orders" ON orders FOR INSERT WITH CHECK (
-  auth.uid() = user_id
+  auth.uid() = user_id OR user_id IS NULL
 );
+
+DROP POLICY IF EXISTS "Users see own orders" ON orders;
+CREATE POLICY "Users see own orders" ON orders FOR SELECT USING (
+  auth.uid() = user_id OR user_id IS NULL
+);
+
+DROP POLICY IF EXISTS "Admins see all orders" ON orders;
+CREATE POLICY "Admins see all orders" ON orders FOR ALL USING (
+  EXISTS (
+    SELECT 1 FROM profiles 
+    WHERE profiles.id = auth.uid() 
+    AND profiles.role = 'admin'
+  )
+);
+
+-- 5. Fix Order System RLS (Order Items Table)
+ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Users create order items" ON order_items;
 CREATE POLICY "Users create order items" ON order_items FOR INSERT WITH CHECK (
   EXISTS (
     SELECT 1 FROM orders 
     WHERE orders.id = order_items.order_id 
-    AND orders.user_id = auth.uid()
+    AND (orders.user_id = auth.uid() OR orders.user_id IS NULL)
   )
 );
 
--- 5. Sync missing profiles from auth.users
+DROP POLICY IF EXISTS "Admins see all order items" ON order_items;
+CREATE POLICY "Admins see all order items" ON order_items FOR ALL USING (
+  EXISTS (
+    SELECT 1 FROM profiles 
+    WHERE profiles.id = auth.uid() 
+    AND profiles.role = 'admin'
+  )
+);
+
+-- 6. Sync missing profiles from auth.users
 INSERT INTO public.profiles (id, email, role)
 SELECT id, email, 'user'
 FROM auth.users
 ON CONFLICT (id) DO NOTHING;
 
--- 6. (Optional) Fix user_cart RLS
+-- 7. (Optional) Fix user_cart RLS
 ALTER TABLE user_cart ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Users manage own cart" ON user_cart;
 CREATE POLICY "Users manage own cart" ON user_cart FOR ALL USING (
