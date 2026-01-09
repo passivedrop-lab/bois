@@ -7,27 +7,12 @@ import { ShoppingCart, Star, Heart } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
-import { useState, useEffect } from 'react'
 import { PRODUCTS } from '@/lib/data/products'
 
 export default function FeaturedProducts() {
+  const products = PRODUCTS.filter(p => p.vedette)
   const cartStore = useCartStore()
   const favoritesStore = useFavoritesStore()
-  const [products, setProducts] = useState<typeof PRODUCTS>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // Filtrage statique pour les produits en vedette
-    const vedetteProducts = PRODUCTS.filter(p => p.vedette)
-
-    // Délai pour UX
-    const timer = setTimeout(() => {
-      setProducts(vedetteProducts)
-      setLoading(false)
-    }, 500)
-
-    return () => clearTimeout(timer)
-  }, [])
 
   const handleAddToCart = async (product: typeof products[0]) => {
     await cartStore.addItem({
@@ -50,7 +35,7 @@ export default function FeaturedProducts() {
     )
   }
 
-  if (loading || products.length === 0) return null
+  if (products.length === 0) return null
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-wood-50 to-white">

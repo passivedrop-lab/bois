@@ -1,9 +1,6 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ShoppingCart, Star, Heart, Loader } from 'lucide-react'
+import { Star, Heart, ShoppingCart } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
@@ -14,23 +11,9 @@ interface ProductListProps {
 }
 
 export default function ProductList({ categoryName }: ProductListProps) {
+    const products = PRODUCTS.filter(p => p.category === categoryName)
     const cartStore = useCartStore()
     const favoritesStore = useFavoritesStore()
-    const [products, setProducts] = useState<typeof PRODUCTS>([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        // Filtrage statique au lieu de l'API
-        const filtered = PRODUCTS.filter(p => p.category === categoryName)
-
-        // Délai simulé pour l'UX
-        const timer = setTimeout(() => {
-            setProducts(filtered)
-            setLoading(false)
-        }, 500)
-
-        return () => clearTimeout(timer)
-    }, [categoryName])
 
     const handleAddToCart = async (product: any) => {
         await cartStore.addItem({
@@ -53,13 +36,6 @@ export default function ProductList({ categoryName }: ProductListProps) {
         )
     }
 
-    if (loading) {
-        return (
-            <div className="flex justify-center py-12">
-                <Loader className="w-8 h-8 text-wood-600 animate-spin" />
-            </div>
-        )
-    }
 
     if (products.length === 0) {
         return (

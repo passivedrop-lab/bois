@@ -748,7 +748,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-1',
         name: 'Дрова березовые (Сетка)',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 250,
         originalPrice: null,
         description: 'Сухие березовые дрова в сетке.',
@@ -760,7 +760,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-2',
         name: 'Дрова дубовые',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 4900,
         originalPrice: 5500,
         description: 'Элитное топливо. Дуб 1м3.',
@@ -772,7 +772,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-3',
         name: 'Брикеты RUF',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 180,
         originalPrice: null,
         description: 'Брикеты из березовой пыли.',
@@ -784,7 +784,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-4',
         name: 'Пеллеты 6мм',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 350,
         originalPrice: null,
         description: 'Светлые пеллеты DIN+ (15кг).',
@@ -796,7 +796,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-5',
         name: 'Дрова осиновые',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 220,
         originalPrice: null,
         description: 'Чистит дымоход от сажи.',
@@ -808,7 +808,7 @@ export const PRODUCTS: Product[] = [
     {
         id: 'dr-6',
         name: 'Уголь древесный (3кг)',
-        category: 'Drova et Biotoplivо',
+        category: 'Drova et Biotoplivo',
         price: 290,
         originalPrice: null,
         description: 'Отборный крупный уголь.',

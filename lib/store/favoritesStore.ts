@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { createClient } from '@/lib/supabase/client'
 
 export interface FavoriteItem {
-  id: number
+  id: string
   name: string
   price: number
   image?: string
@@ -13,8 +13,8 @@ interface FavoritesStore {
   items: FavoriteItem[]
   isSyncing: boolean
   addFavorite: (item: FavoriteItem) => Promise<void>
-  removeFavorite: (id: number) => Promise<void>
-  isFavorite: (id: number) => boolean
+  removeFavorite: (id: string) => Promise<void>
+  isFavorite: (id: string) => boolean
   toggleFavorite: (item: FavoriteItem) => Promise<void>
   syncWithSupabase: (userId: string) => Promise<void>
   loadFromSupabase: (userId: string) => Promise<void>
@@ -27,12 +27,12 @@ export const useFavoritesStore = create<FavoritesStore>()(
     (set, get) => ({
       items: [],
       isSyncing: false,
-      
+
       addFavorite: async (item) => {
         if (!get().isFavorite(item.id)) {
           const newItems = [...get().items, item]
           set({ items: newItems })
-          
+
           // Sync with Supabase if user is logged in
           const { data: { user } } = await supabase.auth.getUser()
           if (user) {
@@ -47,7 +47,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
                 }, {
                   onConflict: 'user_id,product_id'
                 })
-              
+
               if (error) throw error
             } catch (error) {
               console.error('Error syncing favorite to Supabase:', error)
@@ -55,11 +55,11 @@ export const useFavoritesStore = create<FavoritesStore>()(
           }
         }
       },
-      
+
       removeFavorite: async (id) => {
         const newItems = get().items.filter((i) => i.id !== id)
         set({ items: newItems })
-        
+
         // Remove from Supabase if user is logged in
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
@@ -69,18 +69,18 @@ export const useFavoritesStore = create<FavoritesStore>()(
               .delete()
               .eq('user_id', user.id)
               .eq('product_id', id)
-            
+
             if (error) throw error
           } catch (error) {
             console.error('Error removing favorite from Supabase:', error)
           }
         }
       },
-      
+
       isFavorite: (id) => {
         return get().items.some((i) => i.id === id)
       },
-      
+
       toggleFavorite: async (item) => {
         if (get().isFavorite(item.id)) {
           await get().removeFavorite(item.id)
@@ -88,22 +88,22 @@ export const useFavoritesStore = create<FavoritesStore>()(
           await get().addFavorite(item)
         }
       },
-      
+
       syncWithSupabase: async (userId: string) => {
         if (get().isSyncing) return
         set({ isSyncing: true })
-        
+
         try {
           const localItems = get().items
-          
+
           // Get items from Supabase
           const { data: supabaseItems, error } = await supabase
             .from('user_favorites')
             .select('*')
             .eq('user_id', userId)
-          
+
           if (error) throw error
-          
+
           // Merge strategy: Supabase takes precedence for logged-in users
           if (supabaseItems && supabaseItems.length > 0) {
             const mergedItems: FavoriteItem[] = supabaseItems.map((item) => ({
@@ -133,16 +133,16 @@ export const useFavoritesStore = create<FavoritesStore>()(
           set({ isSyncing: false })
         }
       },
-      
+
       loadFromSupabase: async (userId: string) => {
         try {
           const { data, error } = await supabase
             .from('user_favorites')
             .select('*')
             .eq('user_id', userId)
-          
+
           if (error) throw error
-          
+
           if (data && data.length > 0) {
             const items: FavoriteItem[] = data.map((item) => ({
               id: item.product_id,

@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { createClient } from '@/lib/supabase/client'
 
 export interface CartItem {
-  id: number
+  id: string
   name: string
   price: number
   quantity: number
@@ -14,8 +14,8 @@ interface CartStore {
   items: CartItem[]
   isSyncing: boolean
   addItem: (item: Omit<CartItem, 'quantity'>) => Promise<void>
-  removeItem: (id: number) => Promise<void>
-  updateQuantity: (id: number, quantity: number) => Promise<void>
+  removeItem: (id: string) => Promise<void>
+  updateQuantity: (id: string, quantity: number) => Promise<void>
   clearCart: () => Promise<void>
   syncWithSupabase: (userId: string) => Promise<void>
   loadFromSupabase: (userId: string) => Promise<void>
@@ -30,17 +30,17 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       isSyncing: false,
-      
+
       addItem: async (item) => {
         const existingItem = get().items.find((i) => i.id === item.id)
         const newItems = existingItem
           ? get().items.map((i) =>
-              i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-            )
+            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          )
           : [...get().items, { ...item, quantity: 1 }]
-        
+
         set({ items: newItems })
-        
+
         // Sync with Supabase if user is logged in
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
@@ -58,7 +58,7 @@ export const useCartStore = create<CartStore>()(
                 }, {
                   onConflict: 'user_id,product_id'
                 })
-              
+
               if (error) throw error
             }
           } catch (error) {
@@ -66,11 +66,11 @@ export const useCartStore = create<CartStore>()(
           }
         }
       },
-      
+
       removeItem: async (id) => {
         const newItems = get().items.filter((i) => i.id !== id)
         set({ items: newItems })
-        
+
         // Remove from Supabase if user is logged in
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
@@ -80,25 +80,25 @@ export const useCartStore = create<CartStore>()(
               .delete()
               .eq('user_id', user.id)
               .eq('product_id', id)
-            
+
             if (error) throw error
           } catch (error) {
             console.error('Error removing item from Supabase:', error)
           }
         }
       },
-      
+
       updateQuantity: async (id, quantity) => {
         if (quantity <= 0) {
           await get().removeItem(id)
           return
         }
-        
+
         const newItems = get().items.map((i) =>
           i.id === id ? { ...i, quantity } : i
         )
         set({ items: newItems })
-        
+
         // Update in Supabase if user is logged in
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
@@ -108,17 +108,17 @@ export const useCartStore = create<CartStore>()(
               .update({ quantity })
               .eq('user_id', user.id)
               .eq('product_id', id)
-            
+
             if (error) throw error
           } catch (error) {
             console.error('Error updating quantity in Supabase:', error)
           }
         }
       },
-      
+
       clearCart: async () => {
         set({ items: [] })
-        
+
         // Clear from Supabase if user is logged in
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
@@ -127,29 +127,29 @@ export const useCartStore = create<CartStore>()(
               .from('user_cart')
               .delete()
               .eq('user_id', user.id)
-            
+
             if (error) throw error
           } catch (error) {
             console.error('Error clearing cart from Supabase:', error)
           }
         }
       },
-      
+
       syncWithSupabase: async (userId: string) => {
         if (get().isSyncing) return
         set({ isSyncing: true })
-        
+
         try {
           const localItems = get().items
-          
+
           // Get items from Supabase
           const { data: supabaseItems, error } = await supabase
             .from('user_cart')
             .select('*')
             .eq('user_id', userId)
-          
+
           if (error) throw error
-          
+
           // Merge strategy: Supabase takes precedence for logged-in users
           if (supabaseItems && supabaseItems.length > 0) {
             const mergedItems: CartItem[] = supabaseItems.map((item) => ({
@@ -181,16 +181,16 @@ export const useCartStore = create<CartStore>()(
           set({ isSyncing: false })
         }
       },
-      
+
       loadFromSupabase: async (userId: string) => {
         try {
           const { data, error } = await supabase
             .from('user_cart')
             .select('*')
             .eq('user_id', userId)
-          
+
           if (error) throw error
-          
+
           if (data && data.length > 0) {
             const items: CartItem[] = data.map((item) => ({
               id: item.product_id,
@@ -204,14 +204,14 @@ export const useCartStore = create<CartStore>()(
           console.error('Error loading cart from Supabase:', error)
         }
       },
-      
+
       getTotal: () => {
         return get().items.reduce(
           (total, item) => total + item.price * item.quantity,
           0
         )
       },
-      
+
       getItemCount: () => {
         return get().items.reduce((count, item) => count + item.quantity, 0)
       },

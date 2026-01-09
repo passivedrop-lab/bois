@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ShoppingCart, Star, Heart, Filter } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
@@ -27,7 +27,7 @@ const allProducts: Product[] = [
   { id: 6, name: 'Дрова навалом 50 см', price: 1200, rating: 4.5, reviews: 92, category: 'firewood' },
   { id: 7, name: 'Дрова 50 см в упаковке на палете 2 м³', price: 1990, rating: 4.8, reviews: 145, category: 'firewood' },
   { id: 8, name: 'Брикеты из дуба - длительного горения', price: 3550, rating: 4.9, reviews: 167, category: 'firewood' },
-  
+
   // Пеллеты
   { id: 9, name: 'Пеллеты премиум ENERBIO - 66 мешков 990кг', price: 3950, originalPrice: 4500, rating: 4.8, reviews: 145, badge: 'Скидка', category: 'pellets' },
   { id: 10, name: 'Пеллеты премиум Crépito®', price: 4490, rating: 4.9, reviews: 203, category: 'pellets' },
@@ -35,7 +35,7 @@ const allProducts: Product[] = [
   { id: 12, name: 'Пеллеты премиум', price: 3600, rating: 4.6, reviews: 134, category: 'pellets' },
   { id: 13, name: 'Пеллеты VAN ROJE - палета 65 мешков', price: 4190, rating: 4.8, reviews: 156, category: 'pellets' },
   { id: 14, name: 'Пеллеты ПИРЕНЕИ - палета 65 мешков', price: 4300, rating: 4.9, reviews: 189, category: 'pellets' },
-  
+
   // Печи
   { id: 15, name: 'Печь INTERSTOVES HUGO 9 | Дрова 50см - Черная', price: 6000, originalPrice: 6590, rating: 4.8, reviews: 67, badge: 'Скидка', category: 'stoves' },
   { id: 16, name: 'Печь панорамная двойная FIREMATIC Ottawa - 13.5 кВт', price: 18300, originalPrice: 31000, rating: 4.9, reviews: 45, badge: 'Скидка', category: 'stoves' },
@@ -44,7 +44,7 @@ const allProducts: Product[] = [
   { id: 19, name: 'Печь INTERSTOVES GT | 15 кВт', price: 10490, rating: 4.8, reviews: 76, category: 'stoves' },
   { id: 20, name: 'Каминная топка Ecofire Confort 12 кВт', price: 15900, rating: 4.8, reviews: 93, category: 'stoves' },
   { id: 21, name: 'Печь-камин Nordica Isotta Plus 8 кВт', price: 12490, rating: 4.9, reviews: 78, badge: 'Хит продаж', category: 'stoves' },
-  
+
   // Котлы
   { id: 22, name: 'Котел твердотопливный Protherm Бобер 40 DLO 35 кВт', price: 68900, originalPrice: 75000, rating: 4.8, reviews: 45, badge: 'Скидка', category: 'boilers' },
   { id: 23, name: 'Котел ZOTA Optima 20 20 кВт', price: 45900, rating: 4.7, reviews: 67, category: 'boilers' },
@@ -52,7 +52,7 @@ const allProducts: Product[] = [
   { id: 25, name: 'Котел твердотопливный НМК Магнум КДГ-20 ТЭ 20 кВт', price: 52900, rating: 4.6, reviews: 89, category: 'boilers' },
   { id: 26, name: 'Котел ZOTA Optima 30 30 кВт', price: 54900, rating: 4.8, reviews: 56, category: 'boilers' },
   { id: 27, name: 'Котел Protherm Бобер 50 DLO 48 кВт', price: 78900, rating: 4.9, reviews: 42, category: 'boilers' },
-  
+
   // Аксессуары
   { id: 28, name: 'Термостат для котла комнатный', price: 3200, rating: 4.7, reviews: 145, category: 'accessories' },
   { id: 29, name: 'Колосниковая решетка для печи 30x25 см', price: 1890, rating: 4.6, reviews: 98, category: 'accessories' },
