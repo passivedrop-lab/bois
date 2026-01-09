@@ -24,6 +24,11 @@
 - ✅ Historique des commandes
 - ✅ Paramètres (mise à jour des infos personnelles)
 
+### 2b. Catalogue Dynamique
+- ✅ API produits publique (`/api/products`)
+- ✅ Pages de catégories connectées à la DB
+- ✅ Galerie "Produits Populaires" sur l'accueil (synchronisée avec Admin)
+
 ### 3. Dashboard Admin (`/admin`)
 - ✅ Accès via **Code Secret Unique** (Cookie sécurisé)
 - ✅ Statistiques en temps réel
