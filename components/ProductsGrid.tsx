@@ -7,7 +7,7 @@ import { useFavoritesStore } from '@/lib/store/favoritesStore'
 import toast from 'react-hot-toast'
 
 interface Product {
-  id: number
+  id: string
   name: string
   price: number
   originalPrice?: number
@@ -19,51 +19,51 @@ interface Product {
 
 const allProducts: Product[] = [
   // Дрова
-  { id: 1, name: 'Дрова дубовые 30 см - 3,1 стера', price: 4510, rating: 4.8, reviews: 124, badge: 'Хит продаж', category: 'firewood' },
-  { id: 2, name: 'Дрова 25 см - 2,60 стера в упаковке', price: 4300, rating: 4.9, reviews: 89, category: 'firewood' },
-  { id: 3, name: 'Дрова 30 см - 2,24 стера в упаковке', price: 3980, rating: 4.7, reviews: 156, category: 'firewood' },
-  { id: 4, name: 'Палета 1 стер дров - готово к использованию', price: 1600, rating: 4.9, reviews: 203, badge: 'Популярное', category: 'firewood' },
-  { id: 5, name: 'Дрова навалом 1м³', price: 890, rating: 4.6, reviews: 78, category: 'firewood' },
-  { id: 6, name: 'Дрова навалом 50 см', price: 1200, rating: 4.5, reviews: 92, category: 'firewood' },
-  { id: 7, name: 'Дрова 50 см в упаковке на палете 2 м³', price: 1990, rating: 4.8, reviews: 145, category: 'firewood' },
-  { id: 8, name: 'Брикеты из дуба - длительного горения', price: 3550, rating: 4.9, reviews: 167, category: 'firewood' },
+  { id: '1', name: 'Дрова дубовые 30 см - 3,1 стера', price: 4510, rating: 4.8, reviews: 124, badge: 'Хит продаж', category: 'firewood' },
+  { id: '2', name: 'Дрова 25 см - 2,60 стера в упаковке', price: 4300, rating: 4.9, reviews: 89, category: 'firewood' },
+  { id: '3', name: 'Дрова 30 см - 2,24 стера в упаковке', price: 3980, rating: 4.7, reviews: 156, category: 'firewood' },
+  { id: '4', name: 'Палета 1 стер дров - готово к использованию', price: 1600, rating: 4.9, reviews: 203, badge: 'Популярное', category: 'firewood' },
+  { id: '5', name: 'Дрова навалом 1м³', price: 890, rating: 4.6, reviews: 78, category: 'firewood' },
+  { id: '6', name: 'Дрова навалом 50 см', price: 1200, rating: 4.5, reviews: 92, category: 'firewood' },
+  { id: '7', name: 'Дрова 50 см в упаковке на палете 2 м³', price: 1990, rating: 4.8, reviews: 145, category: 'firewood' },
+  { id: '8', name: 'Брикеты из дуба - длительного горения', price: 3550, rating: 4.9, reviews: 167, category: 'firewood' },
 
   // Пеллеты
-  { id: 9, name: 'Пеллеты премиум ENERBIO - 66 мешков 990кг', price: 3950, originalPrice: 4500, rating: 4.8, reviews: 145, badge: 'Скидка', category: 'pellets' },
-  { id: 10, name: 'Пеллеты премиум Crépito®', price: 4490, rating: 4.9, reviews: 203, category: 'pellets' },
-  { id: 11, name: 'Пеллеты WOODAY - палета 65 мешков по 15 кг', price: 4350, rating: 4.7, reviews: 178, category: 'pellets' },
-  { id: 12, name: 'Пеллеты премиум', price: 3600, rating: 4.6, reviews: 134, category: 'pellets' },
-  { id: 13, name: 'Пеллеты VAN ROJE - палета 65 мешков', price: 4190, rating: 4.8, reviews: 156, category: 'pellets' },
-  { id: 14, name: 'Пеллеты ПИРЕНЕИ - палета 65 мешков', price: 4300, rating: 4.9, reviews: 189, category: 'pellets' },
+  { id: '9', name: 'Пеллеты премиум ENERBIO - 66 мешков 990кг', price: 3950, originalPrice: 4500, rating: 4.8, reviews: 145, badge: 'Скидка', category: 'pellets' },
+  { id: '10', name: 'Пеллеты премиум Crépito®', price: 4490, rating: 4.9, reviews: 203, category: 'pellets' },
+  { id: '11', name: 'Пеллеты WOODAY - палета 65 мешков по 15 кг', price: 4350, rating: 4.7, reviews: 178, category: 'pellets' },
+  { id: '12', name: 'Пеллеты премиум', price: 3600, rating: 4.6, reviews: 134, category: 'pellets' },
+  { id: '13', name: 'Пеллеты VAN ROJE - палета 65 мешков', price: 4190, rating: 4.8, reviews: 156, category: 'pellets' },
+  { id: '14', name: 'Пеллеты ПИРЕНЕИ - палета 65 мешков', price: 4300, rating: 4.9, reviews: 189, category: 'pellets' },
 
   // Печи
-  { id: 15, name: 'Печь INTERSTOVES HUGO 9 | Дрова 50см - Черная', price: 6000, originalPrice: 6590, rating: 4.8, reviews: 67, badge: 'Скидка', category: 'stoves' },
-  { id: 16, name: 'Печь панорамная двойная FIREMATIC Ottawa - 13.5 кВт', price: 18300, originalPrice: 31000, rating: 4.9, reviews: 45, badge: 'Скидка', category: 'stoves' },
-  { id: 17, name: 'Печь панорамная 3 стороны FIREMATIC Calgary - 13.5 кВт', price: 17600, originalPrice: 31800, rating: 4.9, reviews: 52, badge: 'Скидка', category: 'stoves' },
-  { id: 18, name: 'Печь Stovia Italia Danna 6кВт - WiFi', price: 11490, rating: 4.7, reviews: 89, category: 'stoves' },
-  { id: 19, name: 'Печь INTERSTOVES GT | 15 кВт', price: 10490, rating: 4.8, reviews: 76, category: 'stoves' },
-  { id: 20, name: 'Каминная топка Ecofire Confort 12 кВт', price: 15900, rating: 4.8, reviews: 93, category: 'stoves' },
-  { id: 21, name: 'Печь-камин Nordica Isotta Plus 8 кВт', price: 12490, rating: 4.9, reviews: 78, badge: 'Хит продаж', category: 'stoves' },
+  { id: '15', name: 'Печь INTERSTOVES HUGO 9 | Дрова 50см - Черная', price: 6000, originalPrice: 6590, rating: 4.8, reviews: 67, badge: 'Скидка', category: 'stoves' },
+  { id: '16', name: 'Печь панорамная двойная FIREMATIC Ottawa - 13.5 кВт', price: 18300, originalPrice: 31000, rating: 4.9, reviews: 45, badge: 'Скидка', category: 'stoves' },
+  { id: '17', name: 'Печь панорамная 3 стороны FIREMATIC Calgary - 13.5 кВт', price: 17600, originalPrice: 31800, rating: 4.9, reviews: 52, badge: 'Скидка', category: 'stoves' },
+  { id: '18', name: 'Печь Stovia Italia Danna 6кВт - WiFi', price: 11490, rating: 4.7, reviews: 89, category: 'stoves' },
+  { id: '19', name: 'Печь INTERSTOVES GT | 15 кВт', price: 10490, rating: 4.8, reviews: 76, category: 'stoves' },
+  { id: '20', name: 'Каминная топка Ecofire Confort 12 кВт', price: 15900, rating: 4.8, reviews: 93, category: 'stoves' },
+  { id: '21', name: 'Печь-камин Nordica Isotta Plus 8 кВт', price: 12490, rating: 4.9, reviews: 78, badge: 'Хит продаж', category: 'stoves' },
 
   // Котлы
-  { id: 22, name: 'Котел твердотопливный Protherm Бобер 40 DLO 35 кВт', price: 68900, originalPrice: 75000, rating: 4.8, reviews: 45, badge: 'Скидка', category: 'boilers' },
-  { id: 23, name: 'Котел ZOTA Optima 20 20 кВт', price: 45900, rating: 4.7, reviews: 67, category: 'boilers' },
-  { id: 24, name: 'Котел Буржуй-К Т-40 40 кВт', price: 124900, rating: 4.9, reviews: 34, badge: 'Премиум', category: 'boilers' },
-  { id: 25, name: 'Котел твердотопливный НМК Магнум КДГ-20 ТЭ 20 кВт', price: 52900, rating: 4.6, reviews: 89, category: 'boilers' },
-  { id: 26, name: 'Котел ZOTA Optima 30 30 кВт', price: 54900, rating: 4.8, reviews: 56, category: 'boilers' },
-  { id: 27, name: 'Котел Protherm Бобер 50 DLO 48 кВт', price: 78900, rating: 4.9, reviews: 42, category: 'boilers' },
+  { id: '22', name: 'Котел твердотопливный Protherm Бобер 40 DLO 35 кВт', price: 68900, originalPrice: 75000, rating: 4.8, reviews: 45, badge: 'Скидка', category: 'boilers' },
+  { id: '23', name: 'Котел ZOTA Optima 20 20 кВт', price: 45900, rating: 4.7, reviews: 67, category: 'boilers' },
+  { id: '24', name: 'Котел Буржуй-К Т-40 40 кВт', price: 124900, rating: 4.9, reviews: 34, badge: 'Премиум', category: 'boilers' },
+  { id: '25', name: 'Котел твердотопливный НМК Магнум КДГ-20 ТЭ 20 кВт', price: 52900, rating: 4.6, reviews: 89, category: 'boilers' },
+  { id: '26', name: 'Котел ZOTA Optima 30 30 кВт', price: 54900, rating: 4.8, reviews: 56, category: 'boilers' },
+  { id: '27', name: 'Котел Protherm Бобер 50 DLO 48 кВт', price: 78900, rating: 4.9, reviews: 42, category: 'boilers' },
 
   // Аксессуары
-  { id: 28, name: 'Термостат для котла комнатный', price: 3200, rating: 4.7, reviews: 145, category: 'accessories' },
-  { id: 29, name: 'Колосниковая решетка для печи 30x25 см', price: 1890, rating: 4.6, reviews: 98, category: 'accessories' },
-  { id: 30, name: 'Подставка под дрова металлическая', price: 4500, rating: 4.8, reviews: 167, badge: 'Популярное', category: 'accessories' },
-  { id: 31, name: 'Кочерега кочерга для камина 120 см', price: 1500, rating: 4.5, reviews: 234, category: 'accessories' },
-  { id: 32, name: 'Щипцы для дров 65 см', price: 1200, rating: 4.6, reviews: 189, category: 'accessories' },
-  { id: 33, name: 'Ведро для золы металлическое 12 л', price: 890, rating: 4.7, reviews: 278, category: 'accessories' },
-  { id: 34, name: 'Защитный экран для печи 100x70 см', price: 8900, rating: 4.8, reviews: 112, category: 'accessories' },
-  { id: 35, name: 'Датчик температуры для котла', price: 2100, rating: 4.5, reviews: 156, category: 'accessories' },
-  { id: 36, name: 'Труба дымохода стальная 115 мм 1 метр', price: 3200, rating: 4.7, reviews: 203, category: 'accessories' },
-  { id: 37, name: 'Набор инструментов для камина (кочерга, щипцы, совок)', price: 3200, rating: 4.9, reviews: 145, badge: 'Комплект', category: 'accessories' },
+  { id: '28', name: 'Термостат для котла комнатный', price: 3200, rating: 4.7, reviews: 145, category: 'accessories' },
+  { id: '29', name: 'Колосниковая решетка для печи 30x25 см', price: 1890, rating: 4.6, reviews: 98, category: 'accessories' },
+  { id: '30', name: 'Подставка под дрова металлическая', price: 4500, rating: 4.8, reviews: 167, badge: 'Популярное', category: 'accessories' },
+  { id: '31', name: 'Кочерега кочерга для камина 120 см', price: 1500, rating: 4.5, reviews: 234, category: 'accessories' },
+  { id: '32', name: 'Щипцы для дров 65 см', price: 1200, rating: 4.6, reviews: 189, category: 'accessories' },
+  { id: '33', name: 'Ведро для золы металлическое 12 л', price: 890, rating: 4.7, reviews: 278, category: 'accessories' },
+  { id: '34', name: 'Защитный экран для печи 100x70 см', price: 8900, rating: 4.8, reviews: 112, category: 'accessories' },
+  { id: '35', name: 'Датчик температуры для котла', price: 2100, rating: 4.5, reviews: 156, category: 'accessories' },
+  { id: '36', name: 'Труба дымохода стальная 115 мм 1 метр', price: 3200, rating: 4.7, reviews: 203, category: 'accessories' },
+  { id: '37', name: 'Набор инструментов для камина (кочерга, щипцы, совок)', price: 3200, rating: 4.9, reviews: 145, badge: 'Комплект', category: 'accessories' },
 ]
 
 interface ProductsGridProps {
@@ -219,4 +219,3 @@ export default function ProductsGrid({ category }: ProductsGridProps) {
     </div>
   )
 }
-

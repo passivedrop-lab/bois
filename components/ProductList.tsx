@@ -1,5 +1,6 @@
+'use client'
+
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { Star, Heart, ShoppingCart } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
 import { useFavoritesStore } from '@/lib/store/favoritesStore'
@@ -48,12 +49,10 @@ export default function ProductList({ categoryName }: ProductListProps) {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product, index) => (
-                <motion.div
+            {products.map((product) => (
+                <div
                     key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="opacity-100"
                 >
                     <div className="card group h-full flex flex-col">
                         {/* Image */}
@@ -137,7 +136,7 @@ export default function ProductList({ categoryName }: ProductListProps) {
                             </div>
                         </div>
                     </div>
-                </motion.div>
+                </div>
             ))}
         </div>
     )

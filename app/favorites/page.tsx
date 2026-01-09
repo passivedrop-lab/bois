@@ -9,7 +9,7 @@ import { useState } from 'react'
 export default function FavoritesPage() {
   const { items: favorites, removeFavorite } = useFavoritesStore()
   const { addItem } = useCartStore()
-  const [addedToCart, setAddedToCart] = useState<number | null>(null)
+  const [addedToCart, setAddedToCart] = useState<string | null>(null)
 
   const handleAddToCart = async (item: any) => {
     await addItem({
@@ -27,7 +27,7 @@ export default function FavoritesPage() {
       <div className="container mx-auto px-4 sm:px-6">
         <h1 className="text-4xl font-bold text-wood-900 mb-2">Мои Избранные</h1>
         <p className="text-wood-600 mb-12">Продукты, которые вы сохранили</p>
-        
+
         {favorites.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {favorites.map((item) => (
@@ -45,18 +45,17 @@ export default function FavoritesPage() {
                   <h3 className="font-semibold text-wood-900 mb-2">{item.name}</h3>
                   <p className="text-fire-600 font-bold mb-4">{item.price}₽</p>
                   <div className="flex gap-2">
-                    <button 
+                    <button
                       onClick={() => handleAddToCart(item)}
-                      className={`flex-1 py-2 rounded transition text-sm font-semibold flex items-center justify-center gap-2 ${
-                        addedToCart === item.id 
-                          ? 'bg-green-600 text-white' 
+                      className={`flex-1 py-2 rounded transition text-sm font-semibold flex items-center justify-center gap-2 ${addedToCart === item.id
+                          ? 'bg-green-600 text-white'
                           : 'bg-fire-600 text-white hover:bg-fire-700'
-                      }`}
+                        }`}
                     >
                       <ShoppingCart size={16} />
                       {addedToCart === item.id ? 'Добавлено!' : 'Добавить'}
                     </button>
-                    <button 
+                    <button
                       onClick={() => removeFavorite(item.id)}
                       className="p-2 hover:bg-red-100 rounded transition"
                       title="Удалить из избранных"
