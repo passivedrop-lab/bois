@@ -39,10 +39,16 @@ CREATE POLICY "Users create order items" ON order_items FOR INSERT WITH CHECK (
   )
 );
 
--- 3. Ensure profiles are accessible for order creation if checked
+-- 3. Fix RLS Recursion on profiles
+-- Drop the recursive policy from COMPLETE_DB_SETUP.sql or other scripts
+DROP POLICY IF EXISTS "Admins can read all profiles" ON profiles;
 DROP POLICY IF EXISTS "Users can read own profile" ON profiles;
-CREATE POLICY "Users can read own profile" ON profiles FOR SELECT USING (
-  auth.uid() = id OR auth.uid() IS NOT NULL
+
+-- Non-recursive policy: Users can read their own profile, and authenticated users can read basic profile info to avoid recursion
+-- A simpler approach for this project: allow authenticated users to read all profiles (non-sensitive info)
+-- This avoids the "EXISTS(SELECT 1 FROM profiles...)" which causes recursion.
+CREATE POLICY "Authenticated users read profiles" ON profiles FOR SELECT USING (
+  auth.role() = 'authenticated'
 );
 
 -- 4. (Optional) Fix user_cart RLS if items are still stuck
