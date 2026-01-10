@@ -1,91 +1,85 @@
-# Liste des images à ajouter
+# Liste des images produits (Noms descriptifs)
 
-Pour que les produits s'affichent, ajoutez les fichiers suivants dans le dossier `public/images-product/` de votre projet.
+Ajoutez les fichiers suivants dans le dossier `public/images-product/`.
 
-### 1. Bois de construction
-- `brus_suhoy_100x100.jpg`
-- `brus_profil_150x150.jpg`
-- `brusok_50x50.jpg`
-- `doska_strog_40x150.jpg`
-- `laga_listvennica_50x150.jpg`
-- `brus_kleenyy_200x200.jpg`
-- `stropila_50x200.jpg`
-- `mauerlat_150x150.jpg`
-- `reyka_20x50.jpg`
-- `brus_el_100x150.jpg`
-- `brus_sosna_100x200.jpg`
-- `stolb_opornyy_150x150.jpg`
+### 1. Bois de construction (Provence Sciage)
+- `bois-massif-charpente-sapin-douglas.jpg`
+- `bois-ossature-epicea-douglas-c24.jpg`
+- `bois-emballage-coffrage-chantier.jpg`
+- `bois-contre-colle-structure-epicea.jpg`
+- `bois-lamelle-colle-grande-portee.jpg`
+- `poutre-en-i-lamibois-charpente.jpg`
 
-### 2. Bois scié
-- `doska_obrez_25x100.jpg`
-- `doska_obrez_50x150.jpg`
-- `doska_neobrez_25.jpg`
-- `brusok_40x40.jpg`
-- `doska_palub_listv.jpg`
-- `doska_zabor_20x95.jpg`
-- `shtaketnik.jpg`
-- `doska_pol_28.jpg`
-- `doska_pol_36.jpg`
-- `gorbyl.jpg`
-- `opilki.jpg`
-- `srezki.jpg`
+### 2. Bois scié (Пиломатериалы)
+- `planche-coffrage-bois-25x100x6000mm.jpg` (doska_obrez_25x100.jpg)
+- `madrier-bois-charpente-50x150x6000mm.jpg` (doska_obrez_50x150.jpg)
+- `planche-bois-brut-live-edge-25mm.jpg` (doska_neobrez_25.jpg)
+- `tasseau-bois-carre-sec-40x40x3000mm.jpg` (brusok_40x40.jpg)
+- `planche-terrasse-lisse-meleze-28x140x4000mm.jpg` (doska_palub_listv.jpg)
+- `lame-cloture-bois-rabotee-20x95x2000mm.jpg` (doska_zabor_20x95.jpg)
+- `piquet-cloture-bois-45x1500mm.jpg` (shtaketnik.jpg)
+- `plancher-bois-massif-sapin-28x135x6000mm.jpg` (doska_pol_28.jpg)
+- `plancher-bois-massif-epais-36x135x6000mm.jpg` (doska_pol_36.jpg)
+- `dosse-bois-brut-vrac.jpg` (gorbyl.jpg)
+- `sciure-bois-sac-50l.jpg` (opilki.jpg)
+- `chutes-bois-allumage-feu.jpg` (srezki.jpg)
 
-### 3. Bois d'extérieur
-- `terras_velvet_listv.jpg`
-- `planken_skosh.jpg`
-- `planken_pryamoy_sosna.jpg`
-- `terras_dpk_wenge.jpg`
-- `ograzhdenie_terrasy.jpg`
-- `stupen_listv.jpg`
-- `sad_parket.jpg`
-- `brus_pergola.jpg`
-- `termo_yasen.jpg`
-- `maslo_terras.jpg`
+### 3. Bois extérieur (Экстерьерные системы)
+- `terrasse-bois-meleze-strie-antiderapant-28x140.jpg` (terras_velvet_listv.jpg)
+- `bardage-bois-claire-voie-meleze-20x140.jpg` (planken_skosh.jpg)
+- `bardage-bois-droit-pin-20x120.jpg` (planken_pryamoy_sosna.jpg)
+- `lame-terrasse-composite-wenge-140x25.jpg` (terras_dpk_wenge.jpg)
+- `garde-corps-bois-terrasse-section.jpg` (ograzhdenie_terrasy.jpg)
+- `marche-escalier-bois-meleze-40x300.jpg` (stupen_listv.jpg)
+- `dalle-terrasse-bois-cliquable-30x30.jpg` (sad_parket.jpg)
+- `poutre-pergola-bois-traite-100x100.jpg` (brus_pergola.jpg)
+- `bardage-bois-frene-thermo-traite.jpg` (termo_yasen.jpg)
+- `huile-protection-bois-terrasse-2-5l.jpg` (maslo_terras.jpg)
 
-### 4. Bois décoratif
-- `vagonka_shtil_A.jpg`
-- `vagonka_kedr.jpg`
-- `imitacia_brusa.jpg`
-- `block_house.jpg`
-- `galtel.jpg`
-- `nalichnik.jpg`
-- `ugolok_40.jpg`
-- `podokonnik.jpg`
-- `ekran_batarea.jpg`
-- `reshetka_buk.jpg`
+### 4. Bois décoratif (Декоративная отделка)
+- `lambris-bois-pin-profil-v-14x120.jpg` (vagonka_shtil_A.jpg)
+- `lambris-bois-cedre-aromatique-14x140.jpg` (vagonka_kedr.jpg)
+- `clins-bois-imitation-poutre-20x145.jpg` (imitacia_brusa.jpg)
+- `bardage-bois-demi-rond-log-lap-28x140.jpg` (block_house.jpg)
+- `moulure-bois-angle-arrondi-30x30.jpg` (galtel.jpg)
+- `chambranle-bois-encadrement-porte-70mm.jpg` (nalichnik.jpg)
+- `baguette-angle-bois-exterieur-40x40.jpg` (ugolok_40.jpg)
+- `tablette-fenetre-bois-massif-40x300.jpg` (podokonnik.jpg)
+- `cache-radiateur-bois-rotin.jpg` (ekran_batarea.jpg)
+- `claustra-bois-hetre-decoration.jpg` (reshetka_buk.jpg)
 
-### 5. Panneaux et voiles
-- `fanera_10.jpg`
-- `fanera_18_shlif.jpg`
-- `osb_9.jpg`
-- `osb_12.jpg`
-- `shit_sosna_extra.jpg`
-- `shit_dub.jpg`
-- `dvp.jpg`
-- `csp.jpg`
+### 5. Panneaux et voiles (Панели и щиты)
+- `panneau-contreplaque-batiment-10mm.jpg` (fanera_10.jpg)
+- `panneau-contreplaque-bouleau-ponce-18mm.jpg` (fanera_18_shlif.jpg)
+- `panneau-osb3-hydrofuge-9mm.jpg` (osb_9.jpg)
+- `panneau-osb3-structurel-12mm.jpg` (osb_12.jpg)
+- `panneau-bois-massif-pin-lamelle-18x600.jpg` (shit_sosna_extra.jpg)
+- `panneau-bois-massif-chene-prestige-40x600.jpg` (shit_dub.jpg)
+- `panneau-isorel-dur-dvp-3-2mm.jpg` (dvp.jpg)
+- `panneau-particules-ciment-csp-10mm.jpg` (csp.jpg)
 
-### 6. Bois pour sauna
-- `vagonka_lipa.jpg`
-- `polok_lipa.jpg`
-- `vagonka_olha.jpg`
-- `polok_abash.jpg`
-- `dver_sauna.jpg`
-- `abazhur.jpg`
-- `podgolovnik.jpg`
-- `kamni.jpg`
+### 6. Bois pour sauna (Для бани и сауны)
+- `lambris-bois-tilleul-sauna-extra.jpg` (vagonka_lipa.jpg)
+- `banc-sauna-bois-tilleul-confort-27x90.jpg` (polok_lipa.jpg)
+- `lambris-bois-aulne-premium-sauna.jpg` (vagonka_olha.jpg)
+- `banc-sauna-bois-abachi-afrique.jpg` (polok_abash.jpg)
+- `porte-sauna-verre-trempe-cadre-bois.jpg` (dver_sauna.jpg)
+- `abat-jour-angle-sauna-bois-tilleul.jpg` (abazhur.jpg)
+- `appui-tete-sauna-anatomique-cedre.jpg` (podgolovnik.jpg)
+- `pierres-sauna-volcaniques-10kg.jpg` (kamni.jpg)
 
-### 7. Drova et Biotoplivо
-- `drova_bereza.jpg`
-- `drova_dub.jpg`
-- `brikety_ruf.jpg`
-- `pellety.jpg`
-- `drova_osina.jpg`
-- `ugol.jpg`
+### 7. Drova et Biotoplivо (Дрова и Биотопливо)
+- `buches-bois-bouleau-sec-filet-40l.jpg` (drova_bereza.jpg)
+- `buches-bois-chene-haute-densite-palette.jpg` (drova_dub.jpg)
+- `briquettes-chauffage-bois-compresse-10kg.jpg` (brikety_ruf.jpg)
+- `granules-bois-pellets-din-plus-15kg.jpg` (pellety.jpg)
+- `buches-bois-tremble-nettoyage-conduit.jpg` (drova_osina.jpg)
+- `charbon-de-bois-barbecue-3kg.jpg` (ugol.jpg)
 
-### 8. Bois brut/industriel
-- `brus_2sort.jpg`
-- `doska_2sort.jpg`
-- `poddon.jpg`
-- `kolya.jpg`
-- `fanera_obrezki.jpg`
-- `shity_lesa.jpg`
+### 8. Bois brut/industriel (Техническое дерево)
+- `poutre-bois-brut-coffrage-100x100.jpg` (brus_2sort.jpg)
+- `planche-bois-brut-second-choix-25x150.jpg` (doska_2sort.jpg)
+- `palette-bois-occasion-reconditionnee.jpg` (poddon.jpg)
+- `piquets-bois-balisage-chantier.jpg` (kolya.jpg)
+- `chutes-contreplaque-decoupe.jpg` (fanera_obrezki.jpg)
+- `planchers-echafaudage-bois.jpg` (shity_lesa.jpg)

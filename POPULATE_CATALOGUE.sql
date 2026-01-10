@@ -8,18 +8,12 @@ DELETE FROM products;
 
 -- 1. BOIS DE CONSTRUCTION (Строительный лес) - 12 articles
 INSERT INTO products (name, category, price, promo_price, description, image_path, vedette) VALUES
-('Брус сухой строганный 100х100х3000 мм', 'Bois de construction', 1200, NULL, 'Высококачественный сухой строганный брус камерной сушки. Идеальная геометрия, влажность 12-14%. Подходит для каркасного строительства и отделочных работ.', '/images-product/brus_suhoy_100x100.jpg', true),
-('Брус профилированный 150х150х6000 мм', 'Bois de construction', 4500, 3900, 'Профилированный брус из массива сосны. Система шип-паз обеспечивает плотное прилегание и защиту от продувания. Отличный выбор для строительства дома.', '/images-product/brus_profil_150x150.jpg', false),
-('Брусок монтажный 50х50х3000 мм', 'Bois de construction', 180, NULL, 'Строганный деревянный брусок. Используется для обрешетки стен, потолков и монтажа каркасов. Сорт АБ, без выпадающих сучков.', '/images-product/brusok_50x50.jpg', false),
-('Доска строганная 40х150х6000 мм', 'Bois de construction', 850, NULL, 'Сухая строганная доска. Гладкая поверхность, готова к покраске. Применяется для настила полов, обшивки стен и изготовления мебели.', '/images-product/doska_strog_40x150.jpg', true),
-('Лага для пола (Лиственница) 50х150х4000 мм', 'Bois de construction', 1100, NULL, 'Лага из сибирской лиственницы. Устойчива к влаге и гниению. Идеальна для устройства полов в банях и террасах.', '/images-product/laga_listvennica_50x150.jpg', false),
-('Брус клееный конструкционный 200х200х6000 мм', 'Bois de construction', 12000, NULL, 'Клееный брус высокой прочности. Не дает усадки, не трескается. Предназначен для несущих конструкций и перекрытий больших пролетов.', '/images-product/brus_kleenyy_200x200.jpg', false),
-('Стропильная доска 50х200х6000 мм', 'Bois de construction', 950, 890, 'Доска обрезная антисептированная. Предназначена для стропильных систем кровли. Обработана огнебиозащитным составом.', '/images-product/stropila_50x200.jpg', false),
-('Мауэрлат 150х150х6000 мм', 'Bois de construction', 3500, NULL, 'Брус естественной влажности для устройства мауэрлата. Основа вашей надежной крыши. Изготовлен из плотной северной сосны.', '/images-product/mauerlat_150x150.jpg', false),
-('Рейка прижимная 20х50х3000 мм', 'Bois de construction', 60, NULL, 'Рейка деревянная сухая. Используется для контробрешетки и вентилируемых фасадов.', '/images-product/reyka_20x50.jpg', false),
-('Брус еловый 100х150х6000 мм', 'Bois de construction', 2100, NULL, 'Пиломатериал хвойных пород (Ель). Легкий и прочный, отлично сохраняет тепло. Сорт 1.', '/images-product/brus_el_100x150.jpg', false),
-('Брус сосновый 100х200х6000 мм', 'Bois de construction', 2800, NULL, 'Массивный сосновый брус для перекрытий. Высокая несущая способность.', '/images-product/brus_sosna_100x200.jpg', false),
-('Опорный столб 150х150х3000 мм', 'Bois de construction', 2250, NULL, 'Гладкий строганный столб для веранд и навесов. Снятые фаски, шлифованная поверхность.', '/images-product/stolb_opornyy_150x150.jpg', false);
+('Bois massif charpente', 'Bois de construction', 950, NULL, 'Для всех ваших текущих работ по каркасу, балкам, кровле и опалубке. Породы: Ель или Дугласия. Дополнительные услуги: Строгание, Обработка Класс 2.', '/images-product/bois-massif-charpente-sapin-douglas.jpg', true),
+('Bois d''ossature C24', 'Bois de construction', 1200, 1100, 'Порода: Ель или Дугласия французского происхождения. Класс механической прочности: C24. Сухая древесина камерной сушки (18+/-2%). Строганая с 4 сторон, 4 фаски.', '/images-product/bois-ossature-epicea-douglas-c24.jpg', true),
+('Bois d''emballage et coffrage', 'Bois de construction', 450, NULL, 'Идеально подходит для изготовления ящиков, поддонов, специальной упаковки и опалубки на стройплощадке. Обрезные доски, стропила и балки.', '/images-product/bois-emballage-coffrage-chantier.jpg', false),
+('Bois Contre Collé', 'Bois de construction', 4500, NULL, 'Для всех ваших больших пролетов (до 13.50 м), выдерживающих значительные нагрузки. Порода: Ель. Доступна обработка Класс 2.', '/images-product/bois-contre-colle-structure-epicea.jpg', false),
+('Bois Lamellé Collé', 'Bois de construction', 8500, 7900, 'Высокотехнологичные изделия для очень больших пролетов. Различные сечения от 120x280 мм до 200x440 мм. Длина до 13 м.', '/images-product/bois-lamelle-colle-grande-portee.jpg', true),
+('Poutre en I', 'Bois de construction', 2500, NULL, 'Опора для пола и каркаса (прогоны, стропила). Полки из клееного бруса, сердцевина из твердых древесноволокнистых плит NFB. Ультралегкий и прочный.', '/images-product/poutre-en-i-lamibois-charpente.jpg', false);
 
 -- 2. BOIS SCIÉ (Пиломатериалы) - 12 articles
 INSERT INTO products (name, category, price, promo_price, description, image_path, vedette) VALUES
