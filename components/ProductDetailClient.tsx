@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -19,33 +19,26 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     const cartStore = useCartStore()
     const favoritesStore = useFavoritesStore()
 
-    const [qty, setQty] = useState(1)
-    const [selectedVariant, setSelectedVariant] = useState(product?.variants?.[0] || null)
+    // State for multi-variant quantities
+    const [quantities, setQuantities] = useState<{ [key: string]: number }>({})
 
     // Calculator States
     const [showCalculator, setShowCalculator] = useState(false)
     const [calculatorSurface, setCalculatorSurface] = useState('')
     const [suggestions, setSuggestions] = useState<{ [key: string]: number }>({})
 
-    const currentPrice = selectedVariant ? selectedVariant.price : (product?.price || 0)
-    const currentOriginalPrice = selectedVariant ? selectedVariant.originalPrice : (product?.originalPrice)
-
-    // Auto-select first variant if available
-    useEffect(() => {
-        if (product?.variants && product.variants.length > 0 && !selectedVariant) {
-            setSelectedVariant(product.variants[0])
-        }
-    }, [product, selectedVariant])
-
-    // Update qty if suggestion exists for selected variant
-    useEffect(() => {
-        if (selectedVariant && suggestions[selectedVariant.id]) {
-            setQty(suggestions[selectedVariant.id])
-        }
-    }, [selectedVariant, suggestions])
+    // Helper to update quantity for a specific variant
+    const updateQuantity = (variantId: string, value: number) => {
+        setQuantities(prev => {
+            if (value <= 0) {
+                const { [variantId]: _, ...rest } = prev
+                return rest
+            }
+            return { ...prev, [variantId]: value }
+        })
+    }
 
     const parseDimensions = (label: string) => {
-        // Matches "100x100x3000" or similar patterns
         const match = label.match(/(\d+)[xх](\d+)[xх](\d+)/)
         if (match) {
             return {
@@ -66,9 +59,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         product.variants.forEach(variant => {
             const dims = parseDimensions(variant.label)
             if (dims) {
-                // mm² to m²
-                // Assuming coverage is Width * Length (e.g. decking/cladding)
-                // For other items, logic might differ, but this is a safe default for "boards"
                 const pieceArea = (dims.width * dims.length) / 1000000
                 if (pieceArea > 0) {
                     const count = Math.ceil(surface / pieceArea)
@@ -79,20 +69,54 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
         setSuggestions(newSuggestions)
         setShowCalculator(false)
-        setCalculatorSurface('')
-        toast.success(`Расчет для ${surface} м² выполнен`)
+        console.log("Suggestions calculated:", newSuggestions) // Debug
+        toast.success(`Расчет для ${surface} м² выполнен. Выберите варианты.`)
     }
 
+    // Calculate total price of selected items
+    const totalPrice = product.variants?.reduce((sum, variant) => {
+        const qty = quantities[variant.id] || 0
+        return sum + (variant.price * qty)
+    }, 0) || (product.price * (quantities['default'] || 1)) // Fallback for no-variant products
+
+    // Count total items selected
+    const totalItems = Object.values(quantities).reduce((a, b) => a + b, 0)
+
     const handleAddToCart = () => {
-        cartStore.addItem({
-            id: selectedVariant ? `${product.id}-${selectedVariant.id}` : product.id,
-            name: product.name,
-            price: currentPrice,
-            quantity: qty,
-            variantLabel: selectedVariant?.label,
-            image: product.image
-        })
-        toast.success(`Добавлено в корзину (${qty})`)
+        if (product.variants && product.variants.length > 0) {
+            let added = false
+            Object.entries(quantities).forEach(([variantId, qty]) => {
+                const variant = product.variants!.find(v => v.id === variantId)
+                if (variant && qty > 0) {
+                    cartStore.addItem({
+                        id: `${product.id}-${variant.id}`,
+                        name: `${product.name} (${variant.label})`,
+                        price: variant.price,
+                        quantity: qty,
+                        variantLabel: variant.label,
+                        image: product.image
+                    })
+                    added = true
+                }
+            })
+            if (added) {
+                toast.success('Товары добавлены в корзину')
+                setQuantities({}) // Reset after adding
+                setSuggestions({})
+            } else {
+                toast.error('Выберите количество хотя бы для одного варианта')
+            }
+        } else {
+            // No variants logic
+            cartStore.addItem({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: quantities['default'] || 1,
+                image: product.image
+            })
+            toast.success('Добавлено в корзину')
+        }
     }
 
     const handleToggleFavorite = () => {
@@ -109,9 +133,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
 
     const isFavorite = favoritesStore.isFavorite(product.id)
-    const discount = currentOriginalPrice
-        ? Math.round(((currentOriginalPrice - currentPrice) / currentOriginalPrice) * 100)
-        : 0
 
     return (
         <div className="bg-white min-h-screen py-8 sm:py-12">
@@ -175,142 +196,177 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                             </button>
                         </div>
 
-                        {/* Variants Selection */}
-                        {product.variants && product.variants.length > 0 && (
-                            <div className="mb-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-sm font-bold text-wood-900 uppercase tracking-wider">
-                                        Варианты:
+                        {/* Variants Selection & Calculator */}
+                        {product.variants && product.variants.length > 0 ? (
+                            <div className="mb-8">
+                                <div className="flex items-center justify-between mb-4 bg-wood-50 p-3 rounded-lg border border-wood-100">
+                                    <h3 className="text-sm font-bold text-wood-900 uppercase tracking-wider flex items-center gap-2">
+                                        <Shield size={16} className="text-fire-600" />
+                                        Выберите размеры
                                     </h3>
                                     <button
                                         onClick={() => setShowCalculator(!showCalculator)}
-                                        className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium"
+                                        className="text-sm bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-md flex items-center gap-2 font-medium transition shadow-sm"
                                     >
-                                        <Truck size={16} /> {/* Using Truck as placeholder for calc icon or add proper one */}
-                                        Калькулятор площади
+                                        <Truck size={16} />
+                                        Калькулятор (м²)
                                     </button>
                                 </div>
 
                                 {/* Calculator Input */}
                                 {showCalculator && (
-                                    <div className="mb-4 bg-blue-50 p-4 rounded-lg border border-blue-100 animate-in fade-in slide-in-from-top-2">
-                                        <label className="block text-sm font-medium text-blue-900 mb-1">
-                                            Площадь покрытия (м²):
+                                    <div className="mb-6 bg-blue-50 p-5 rounded-xl border border-blue-100 animate-in fade-in slide-in-from-top-2 shadow-sm">
+                                        <label className="block text-sm font-bold text-blue-900 mb-2">
+                                            Введите площадь (м²):
                                         </label>
                                         <div className="flex gap-2">
                                             <input
                                                 type="number"
                                                 value={calculatorSurface}
                                                 onChange={(e) => setCalculatorSurface(e.target.value)}
-                                                placeholder="50"
-                                                className="flex-1 px-3 py-2 border border-blue-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                placeholder="Например: 50"
+                                                className="flex-1 px-4 py-3 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
                                             />
                                             <button
                                                 onClick={applyCalculator}
-                                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-medium"
+                                                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-bold transition shadow-md"
                                             >
                                                 Рассчитать
                                             </button>
                                         </div>
-                                        <p className="text-xs text-blue-700 mt-2">
-                                            Мы рассчитаем необходимое количество штук для каждого варианта.
+                                        <p className="text-xs text-blue-600 mt-2 flex items-center gap-1">
+                                            <Check size={12} />
+                                            Мы подскажем нужное количество для каждого варианта
                                         </p>
                                     </div>
                                 )}
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div className="space-y-3">
                                     {product.variants.map((v) => {
                                         const suggestion = suggestions[v.id]
+                                        const currentQty = quantities[v.id] || 0
+                                        const isSelected = currentQty > 0
+
                                         return (
-                                            <button
+                                            <div
                                                 key={v.id}
-                                                onClick={() => setSelectedVariant(v)}
-                                                className={`relative flex flex-col items-start p-4 rounded-xl border-2 transition-all text-left ${selectedVariant?.id === v.id
-                                                    ? 'border-fire-600 bg-fire-50 text-fire-900 shadow-sm'
-                                                    : 'border-wood-100 bg-white hover:border-wood-300'
+                                                className={`relative flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border-2 transition-all ${isSelected ? 'border-fire-600 bg-fire-50/30' : 'border-wood-100 bg-white hover:border-wood-200'
                                                     }`}
                                             >
-                                                <span className="font-bold pr-6">{v.label}</span>
-                                                <span className="text-sm opacity-80">{v.price.toLocaleString('ru-RU')} ₽</span>
-
-                                                {/* Suggestion Badge */}
-                                                {suggestion && suggestion > 0 && (
-                                                    <div className="mt-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-bold w-full text-center">
-                                                        Рекомендуем: {suggestion} шт
+                                                <div className="mb-3 sm:mb-0">
+                                                    <div className="flex items-baseline gap-2">
+                                                        <span className="font-bold text-lg text-wood-900">{v.label}</span>
+                                                        <span className="text-fire-600 font-bold">{v.price.toLocaleString('ru-RU')} ₽</span>
                                                     </div>
-                                                )}
+                                                    {v.originalPrice && (
+                                                        <span className="text-xs text-wood-400 line-through">
+                                                            {v.originalPrice.toLocaleString('ru-RU')} ₽
+                                                        </span>
+                                                    )}
 
-                                                {selectedVariant?.id === v.id && (
-                                                    <div className="absolute top-3 right-3 text-fire-600">
-                                                        <Check size={18} />
+                                                    {/* Suggestion Badge & Action */}
+                                                    {suggestion && suggestion > 0 && (
+                                                        <div className="mt-2 flex items-center gap-2">
+                                                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-medium">
+                                                                Нужно: {suggestion} шт
+                                                            </span>
+                                                            <button
+                                                                onClick={() => updateQuantity(v.id, suggestion)}
+                                                                className="text-xs text-blue-600 hover:text-blue-800 font-bold underline decoration-dotted"
+                                                            >
+                                                                Выбрать
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Quantity Controls */}
+                                                <div className="flex items-center gap-3">
+                                                    <div className="flex items-center bg-white border border-wood-200 rounded-lg shadow-sm">
+                                                        <button
+                                                            onClick={() => updateQuantity(v.id, currentQty - 1)}
+                                                            className="w-10 h-10 flex items-center justify-center text-wood-500 hover:bg-wood-50 hover:text-wood-900 transition"
+                                                        >
+                                                            -
+                                                        </button>
+                                                        <input
+                                                            type="number"
+                                                            value={currentQty > 0 ? currentQty : ''}
+                                                            placeholder="0"
+                                                            onChange={(e) => updateQuantity(v.id, parseInt(e.target.value) || 0)}
+                                                            className="w-12 text-center font-bold text-wood-900 focus:outline-none placeholder-wood-300"
+                                                        />
+                                                        <button
+                                                            onClick={() => updateQuantity(v.id, currentQty + 1)}
+                                                            className="w-10 h-10 flex items-center justify-center text-wood-500 hover:bg-wood-50 hover:text-wood-900 transition"
+                                                        >
+                                                            +
+                                                        </button>
                                                     </div>
-                                                )}
-                                            </button>
+                                                </div>
+                                            </div>
                                         )
                                     })}
                                 </div>
                             </div>
+                        ) : (
+                            // Fallback for Products without Variants
+                            <div className="mb-8 p-6 bg-wood-50 rounded-xl border border-wood-100">
+                                <span className="text-4xl font-bold text-fire-600 block mb-4">
+                                    {product.price.toLocaleString('ru-RU')} ₽
+                                </span>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center bg-white border border-wood-300 rounded-lg">
+                                        <button
+                                            onClick={() => updateQuantity('default', (quantities['default'] || 1) - 1)}
+                                            className="px-4 py-2 hover:bg-wood-50"
+                                        >
+                                            -
+                                        </button>
+                                        <span className="w-12 text-center font-bold">
+                                            {quantities['default'] || 1}
+                                        </span>
+                                        <button
+                                            onClick={() => updateQuantity('default', (quantities['default'] || 1) + 1)}
+                                            className="px-4 py-2 hover:bg-wood-50"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         )}
 
-                        {/* Price & Quantity */}
-                        <div className="bg-wood-50/50 p-6 rounded-xl border border-wood-100 mb-8 sticky top-4 z-10 shadow-sm">
-                            <div className="flex items-end gap-4 mb-4">
-                                <span className="text-4xl font-bold text-fire-600">
-                                    {currentPrice.toLocaleString('ru-RU')} ₽
-                                </span>
-                                {product.unit && (
-                                    <span className="text-xl text-wood-500 mb-1">/ {product.unit}</span>
-                                )}
-                                {currentOriginalPrice && (
-                                    <>
-                                        <span className="text-xl text-wood-400 line-through mb-1">
-                                            {currentOriginalPrice.toLocaleString('ru-RU')} ₽
+                        {/* Total Sticky Bar */}
+                        <div className="bg-wood-900 text-white p-6 rounded-xl shadow-lg sticky bottom-4 sm:bottom-8 z-20 border border-wood-700">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div>
+                                    <p className="text-wood-300 text-sm mb-1">Итого к оплате:</p>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-3xl font-bold">
+                                            {totalPrice.toLocaleString('ru-RU')} ₽
                                         </span>
-                                        <span className="bg-red-100 text-red-700 px-2 py-1 rounded-md text-sm font-bold mb-2">
-                                            -{discount}%
+                                        <span className="text-wood-400 text-sm">
+                                            ({totalItems} товаров)
                                         </span>
-                                    </>
-                                )}
-                            </div>
-
-                            <p className="text-green-700 flex items-center gap-2 font-medium mb-6">
-                                <Check size={18} />
-                                В наличии
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <div className="flex items-center border border-wood-300 rounded-lg bg-white w-fit">
-                                    <button
-                                        onClick={() => setQty(Math.max(1, qty - 1))}
-                                        className="px-4 py-3 hover:bg-wood-50 text-wood-600 transition font-mono text-lg"
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="number"
-                                        value={qty}
-                                        onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
-                                        className="w-16 text-center font-bold text-lg border-x border-wood-100 py-3 focus:outline-none"
-                                    />
-                                    <button
-                                        onClick={() => setQty(qty + 1)}
-                                        className="px-4 py-3 hover:bg-wood-50 text-wood-600 transition font-mono text-lg"
-                                    >
-                                        +
-                                    </button>
+                                    </div>
                                 </div>
                                 <button
                                     onClick={handleAddToCart}
-                                    className="flex-1 bg-fire-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-fire-700 transition shadow-lg shadow-fire-200 flex items-center justify-center gap-2 text-lg transform active:scale-[0.98]"
+                                    disabled={totalItems === 0}
+                                    className={`w-full sm:w-auto px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition ${totalItems > 0
+                                            ? 'bg-fire-600 hover:bg-fire-500 text-white shadow-fire-900/50 shadow-lg cursor-pointer transform hover:-translate-y-0.5'
+                                            : 'bg-wood-700 text-wood-500 cursor-not-allowed'
+                                        }`}
                                 >
-                                    <ShoppingCart size={22} />
-                                    В корзину
+                                    <ShoppingCart size={20} />
+                                    {totalItems > 0 ? 'В корзину' : 'Выберите товар'}
                                 </button>
                             </div>
                         </div>
 
                         {/* Description & Features */}
-                        <div className="prose prose-wood max-w-none">
+                        <div className="mt-12 prose prose-wood max-w-none">
                             <h3 className="text-xl font-bold text-wood-900 mb-4 border-b border-wood-200 pb-2">
                                 Описание и характеристики
                             </h3>
