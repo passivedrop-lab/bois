@@ -24,9 +24,9 @@ export default function ProductPage() {
     if (!product) {
         return (
             <div className="min-h-[60vh] flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold text-wood-900 mb-4">Produit introuvable</h1>
+                <h1 className="text-2xl font-bold text-wood-900 mb-4">Товар не найден</h1>
                 <Link href="/catalogue" className="text-fire-600 hover:underline">
-                    Retour au catalogue
+                    Вернуться в каталог
                 </Link>
             </div>
         )
@@ -39,7 +39,7 @@ export default function ProductPage() {
             price: product.price,
             quantity: qty
         })
-        toast.success(`Ajouté au panier (${qty})`)
+        toast.success(`Добавлено в корзину (${qty})`)
     }
 
     const handleToggleFavorite = () => {
@@ -50,8 +50,8 @@ export default function ProductPage() {
         })
         toast.success(
             favoritesStore.isFavorite(product.id)
-                ? 'Retiré des favoris'
-                : 'Ajouté aux favoris'
+                ? 'Удалено из избранного'
+                : 'Добавлено в избранное'
         )
     }
 
@@ -69,7 +69,7 @@ export default function ProductPage() {
                     className="flex items-center text-wood-600 hover:text-fire-600 transition mb-8 group"
                 >
                     <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Retour
+                    Назад
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -109,7 +109,7 @@ export default function ProductPage() {
                                     <div className="flex items-center text-amber-500">
                                         <Star size={16} fill="currentColor" />
                                         <span className="ml-1 font-bold text-wood-900">{product.rating}</span>
-                                        <span className="ml-1 text-wood-500">({product.reviews} avis)</span>
+                                        <span className="ml-1 text-wood-500">({product.reviews} отзывов)</span>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ export default function ProductPage() {
 
                             <p className="text-green-700 flex items-center gap-2 font-medium mb-6">
                                 <Check size={18} />
-                                En stock, prêt à être expédié
+                                В наличии, готово к отправке
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4">
@@ -167,7 +167,7 @@ export default function ProductPage() {
                                     className="flex-1 bg-fire-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-fire-700 transition shadow-lg shadow-fire-200 flex items-center justify-center gap-2 text-lg transform active:scale-[0.98]"
                                 >
                                     <ShoppingCart size={22} />
-                                    Ajouter au panier
+                                    В корзину
                                 </button>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ export default function ProductPage() {
                         {/* Description & Features */}
                         <div className="prose prose-wood max-w-none">
                             <h3 className="text-xl font-bold text-wood-900 mb-4 border-b border-wood-200 pb-2">
-                                Description & Caractéristiques
+                                Описание и характеристики
                             </h3>
                             <div className="bg-white text-wood-700 leading-relaxed whitespace-pre-wrap">
                                 {product.description}
@@ -189,8 +189,8 @@ export default function ProductPage() {
                                     <Truck size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-wood-900 text-sm">Livraison Rapide</h4>
-                                    <p className="text-xs text-wood-500">Expédition sous 24-48h</p>
+                                    <h4 className="font-bold text-wood-900 text-sm">Быстрая доставка</h4>
+                                    <p className="text-xs text-wood-500">Отправка в течение 24-48 часов</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
@@ -198,8 +198,8 @@ export default function ProductPage() {
                                     <Shield size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-wood-900 text-sm">Qualité Garantie</h4>
-                                    <p className="text-xs text-wood-500">Bois certifié et contrôlé</p>
+                                    <h4 className="font-bold text-wood-900 text-sm">Гарантия качества</h4>
+                                    <p className="text-xs text-wood-500">Сертифицированная и проверенная древесина</p>
                                 </div>
                             </div>
                         </div>

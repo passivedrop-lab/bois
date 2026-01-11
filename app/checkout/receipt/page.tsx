@@ -106,10 +106,10 @@ function ReceiptContent() {
                   >
                     <Upload size={48} className="mx-auto mb-4 text-fire-600" />
                     <p className="text-lg font-semibold text-wood-900 mb-2">
-                      Glissez votre fichier ici ou cliquez pour parcourir
+                      Перетащите файл сюда или нажмите для выбора
                     </p>
                     <p className="text-sm text-wood-600">
-                      Formats acceptés: PNG, JPG, PDF (Max 10 Mo)
+                      Поддерживаемые форматы: PNG, JPG, PDF (Макс. 10 МБ)
                     </p>
                     <input
                       id="file-input"
@@ -124,14 +124,14 @@ function ReceiptContent() {
                     <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-6 flex items-center gap-3">
                       <CheckCircle size={24} className="text-green-600" />
                       <div className="flex-1">
-                        <p className="font-semibold text-green-900">Fichier sélectionné:</p>
+                        <p className="font-semibold text-green-900">Выбранный файл:</p>
                         <p className="text-sm text-green-800">{file.name}</p>
                       </div>
                       <button
                         onClick={() => setFile(null)}
                         className="text-green-700 hover:text-green-900 font-semibold"
                       >
-                        Modifier
+                        Изменить
                       </button>
                     </div>
                   )}
@@ -151,7 +151,7 @@ function ReceiptContent() {
                       }`}
                   >
                     <CheckCircle size={20} />
-                    {uploading ? 'Téléversement en cours...' : 'Valider ma commande'}
+                    {uploading ? 'Загрузка...' : 'Подтвердить заказ'}
                   </button>
                 </div>
               </>
@@ -163,21 +163,21 @@ function ReceiptContent() {
                   </div>
                 </div>
 
-                <h2 className="text-3xl font-bold text-green-900 mb-4">Téléversement réussi!</h2>
+                <h2 className="text-3xl font-bold text-green-900 mb-4">Загрузка успешна!</h2>
 
                 <p className="text-green-800 text-lg mb-8">
-                  Votre reçu a été téléversé avec succès. Nous allons maintenant vérifier votre paiement.
+                  Ваш чек успешно загружен. Мы проверим ваш платеж в ближайшее время.
                 </p>
 
                 <p className="text-wood-600 text-sm mb-6">
-                  Redirection vers votre historique de commandes dans 3 secondes...
+                  Перенаправление в историю заказов через 3 секунды...
                 </p>
 
                 <Link
                   href="/profile/orders"
                   className="inline-block bg-fire-600 text-white px-8 py-3 rounded-lg hover:bg-fire-700 transition font-semibold"
                 >
-                  Voir mes commandes
+                  Мои заказы
                 </Link>
               </div>
             )}
@@ -185,11 +185,11 @@ function ReceiptContent() {
 
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-6 sticky top-20">
-              <h3 className="text-lg font-bold text-wood-900 mb-6">Récapitulatif commande</h3>
+              <h3 className="text-lg font-bold text-wood-900 mb-6">Детали заказа</h3>
 
               <div className="space-y-4 pb-6 border-b border-wood-200">
                 <div>
-                  <p className="text-sm text-wood-600">Montant payé</p>
+                  <p className="text-sm text-wood-600">Оплаченная сумма</p>
                   <p className="text-2xl font-bold text-fire-600">
                     {amount && !isNaN(parseInt(amount))
                       ? `${parseInt(amount).toLocaleString('ru-RU')} ₽`
@@ -198,10 +198,10 @@ function ReceiptContent() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-wood-600">Statut</p>
+                  <p className="text-sm text-wood-600">Статус</p>
                   <div className="flex items-center gap-2 mt-1">
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <p className="font-semibold text-yellow-700">En attente de vérification</p>
+                    <p className="font-semibold text-yellow-700">Ожидает подтверждения</p>
                   </div>
                 </div>
               </div>
