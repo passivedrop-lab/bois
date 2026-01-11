@@ -17,6 +17,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
     const [isExpanded, setIsExpanded] = useState(false)
     const [quantities, setQuantities] = useState<{ [key: string]: number }>({})
+    const [suggestions, setSuggestions] = useState<{ [key: string]: number }>({})
     const [showCalculator, setShowCalculator] = useState(false)
     const [calculatorSurface, setCalculatorSurface] = useState('')
 
@@ -307,6 +308,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         <div className="max-h-56 overflow-y-auto pr-1 flex flex-col gap-2">
                             {product.variants.map((variant) => {
                                 const qty = quantities[variant.id] || 0
+                                const suggestion = suggestions[variant.id]
                                 const discount = getDiscountMultiplier(qty)
                                 const currentPrice = Math.round(variant.price * discount)
 
@@ -359,11 +361,27 @@ export default function ProductCard({ product }: ProductCardProps) {
                                                 </button>
                                             </div>
                                         </div>
+
+                                        {/* Suggestion & Apply Button */}
+                                        {suggestion && suggestion > 0 && (
+                                            <div className="mt-2 flex items-center justify-between text-xs bg-blue-50 text-blue-800 px-2 py-1.5 rounded border border-blue-100 animate-in fade-in slide-in-from-top-1">
+                                                <span>Необходимо: <span className="font-bold">{suggestion} шт</span></span>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleQuantityInput(variant.id, suggestion.toString())
+                                                    }}
+                                                    className="ml-2 bg-blue-600 text-white px-2 py-0.5 rounded hover:bg-blue-700 transition"
+                                                >
+                                                    Выбрать
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 )
                             })}
                         </div>
-                    </div>
+                    </div >
                 ) : (
                     /* No variants - Single quantity control */
                     <div className="flex items-center justify-between mb-4 bg-gray-50 p-3 rounded-lg border border-wood-100" onClick={e => e.stopPropagation()}>
@@ -408,7 +426,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                             </button>
                         </div>
                     </div>
-                )}
+                )
+                }
 
                 {/* Description Toggle */}
                 <button
@@ -462,7 +481,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         </div>
                     )}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
