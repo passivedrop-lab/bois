@@ -12,7 +12,7 @@ const features = [
   {
     icon: Truck,
     title: 'Быстрая доставка',
-    description: 'Доставка в течение 48 часов по всей России',
+    description: 'Доставка в течение 5-10 дней по всей России',
   },
   {
     icon: HeadphonesIcon,

@@ -223,7 +223,7 @@ export default function ProductPage() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-wood-900 text-sm">Быстрая доставка</h4>
-                                    <p className="text-xs text-wood-500">Отправка в течение 24-48 часов</p>
+                                    <p className="text-xs text-wood-500">Отправка в течение 5-10 дней</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
