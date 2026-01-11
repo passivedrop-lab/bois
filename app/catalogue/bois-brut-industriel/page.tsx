@@ -1,11 +1,15 @@
 import ProductList from '@/components/ProductList'
+import CategoryHero from '@/components/CategoryHero'
 
 export default function CategoryPage() {
   return (
-    <div className="py-12">
+    <div className="pb-12">
+      <CategoryHero
+        title="Техническое дерево"
+        subtitle="Брус для опалубки и промышленные заготовки для производства."
+        icon="⚙️"
+      />
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-wood-900 mb-4">Техническое дерево</h1>
-        <p className="text-wood-600 mb-8">Брус для опалубки и промышленные заготовки для производства.</p>
         <ProductList categoryName="Bois brut/industriel" />
       </div>
     </div>

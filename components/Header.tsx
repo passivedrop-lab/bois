@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { Menu, X, ShoppingCart, User, Phone, Search, Heart, LogOut } from 'lucide-react'
 import { useAuth } from './AuthProvider'
 import { useCartStore } from '@/lib/store/cartStore'
@@ -171,18 +172,34 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Categories */}
-      <div className="bg-gray-100 py-2">
-        <div className="container mx-auto px-4 flex gap-4 overflow-x-auto">
-          {categories.map((category) => (
-            <a
-              key={category.href}
-              href={category.href}
-              className="text-sm text-gray-700 hover:text-fire-400 whitespace-nowrap"
-            >
-              {category.name}
-            </a>
-          ))}
+      {/* Categories Navigation */}
+      <div className="bg-wood-50/50 backdrop-blur-md border-b border-wood-100 py-3 overflow-hidden">
+        <div className="container mx-auto px-4 relative">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map((category) => {
+              const isActive = pathname === category.href
+              return (
+                <Link
+                  key={category.href}
+                  href={category.href}
+                  className={`relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${isActive
+                    ? 'text-white'
+                    : 'text-wood-600 hover:text-fire-600 hover:bg-wood-100'
+                    }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeCategory"
+                      className="absolute inset-0 bg-gradient-to-r from-fire-600 to-fire-700 rounded-full shadow-lg"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{category.name}</span>
+                </Link>
+              )
+            })}
+          </div>
         </div>
       </div>
 
