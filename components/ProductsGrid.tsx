@@ -174,7 +174,7 @@ export default function ProductsGrid({ category }: ProductsGridProps) {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {sortedProducts.map((product) => (
+              {sortedProducts.map((product, index) => (
                 <div key={product.id} className="card group flex flex-col bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-wood-100 overflow-hidden">
                   <div className="relative aspect-[4/3] bg-wood-50 overflow-hidden">
                     <Link href={`/products/${product.id}`} className="block w-full h-full">
@@ -191,6 +191,7 @@ export default function ProductsGrid({ category }: ProductsGridProps) {
                         fill
                         className="object-cover group-hover:scale-105 transition duration-500"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 4}
                       />
                       {/* Quick Favorite Button */}
                       <button
