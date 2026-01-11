@@ -20,7 +20,7 @@ export const PRODUCTS: Product[] = [
         price: 36000,
         originalPrice: null,
         description: 'Оптовая палета высококачественного сухого строганного бруса. Идеальная геометрия, влажность 12-14%.',
-        image: '/images-product/brus_suhoy_100x100.jpg',
+        image: '/images-product/bois-massif-charpente-sapin-douglas.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 24
@@ -32,7 +32,7 @@ export const PRODUCTS: Product[] = [
         price: 46800,
         originalPrice: 54000,
         description: 'Палета профилированного бруса из массива сосны. Система шип-паз.',
-        image: '/images-product/brus_profil_150x150.jpg',
+        image: '/images-product/bois-ossature-epicea-douglas-c24.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 12
@@ -44,7 +44,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Оптовая партия строганного деревянного бруска. Сорт АБ.',
-        image: '/images-product/brusok_50x50.jpg',
+        image: '/images-product/bois-emballage-coffrage-chantier.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 8
@@ -56,7 +56,7 @@ export const PRODUCTS: Product[] = [
         price: 25500,
         originalPrice: null,
         description: 'Палета сухой строганной доски. Гладкая поверхность.',
-        image: '/images-product/doska_strog_40x150.jpg',
+        image: '/images-product/bois-contre-colle-structure-epicea.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 30
@@ -68,7 +68,7 @@ export const PRODUCTS: Product[] = [
         price: 33000,
         originalPrice: null,
         description: 'Палета лаг из сибирской лиственницы. Устойчива к влаге.',
-        image: '/images-product/laga_listvennica_50x150.jpg',
+        image: '/images-product/bois-lamelle-colle-grande-portee.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 15
@@ -80,7 +80,7 @@ export const PRODUCTS: Product[] = [
         price: 72000,
         originalPrice: null,
         description: 'Клееный брус высокой прочности (объем 1 м3). Не дает усадки.',
-        image: '/images-product/brus_kleenyy_200x200.jpg',
+        image: '/images-product/poutre-en-i-lamibois-charpente.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 5
@@ -92,7 +92,7 @@ export const PRODUCTS: Product[] = [
         price: 26700,
         originalPrice: 28500,
         description: 'Доска обрезная антисептированная. Оптовая партия.',
-        image: '/images-product/stropila_50x200.jpg',
+        image: '/images-product/bois-massif-charpente-sapin-douglas.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 18
@@ -104,7 +104,7 @@ export const PRODUCTS: Product[] = [
         price: 21000,
         originalPrice: null,
         description: 'Комплект бруса естественной влажности для устройства мауэрлата.',
-        image: '/images-product/mauerlat_150x150.jpg',
+        image: '/images-product/bois-ossature-epicea-douglas-c24.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 10
@@ -116,7 +116,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Оптовая связка рейки деревянной сухой.',
-        image: '/images-product/reyka_20x50.jpg',
+        image: '/images-product/bois-emballage-coffrage-chantier.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 6
@@ -124,11 +124,11 @@ export const PRODUCTS: Product[] = [
     {
         id: 'bc-10',
         name: 'Брус еловый 100х150х6000 мм (10 шт)',
-        category: 'Bois construction',
+        category: 'Bois de construction',
         price: 21000,
         originalPrice: null,
         description: 'Пиломатериал хвойных пород (Ель). Упаковка 10 шт.',
-        image: '/images-product/brus_el_100x150.jpg',
+        image: '/images-product/bois-contre-colle-structure-epicea.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 14
@@ -140,7 +140,7 @@ export const PRODUCTS: Product[] = [
         price: 28000,
         originalPrice: null,
         description: 'Массивный сосновый брус для перекрытий. Упаковка 10 шт.',
-        image: '/images-product/brus_sosna_100x200.jpg',
+        image: '/images-product/bois-lamelle-colle-grande-portee.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 20
@@ -151,8 +151,8 @@ export const PRODUCTS: Product[] = [
         category: 'Bois de construction',
         price: 18000,
         originalPrice: null,
-        description: 'Комплект гладких строганных столбов для веранд.',
-        image: '/images-product/stolb_opornyy_150x150.jpg',
+        description: 'Комплект гладких строганных столборов для веранд.',
+        image: '/images-product/poutre-en-i-lamibois-charpente.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 9
@@ -166,7 +166,7 @@ export const PRODUCTS: Product[] = [
         price: 31000,
         originalPrice: 35000,
         description: 'Классическая обрезная доска ГОСТ. Оптовая партия.',
-        image: '/images-product/doska_obrez_25x100.jpg',
+        image: '/images-product/planche-coffrage-bois-25x100x6000mm.jpg',
         vedette: true,
         rating: 4.8,
         reviews: 54
@@ -178,7 +178,7 @@ export const PRODUCTS: Product[] = [
         price: 51000,
         originalPrice: null,
         description: 'Доска "Пятерка". Палета 60 единиц.',
-        image: '/images-product/doska_obrez_50x150.jpg',
+        image: '/images-product/madrier-bois-charpente-50x150x6000mm.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 32
@@ -190,7 +190,7 @@ export const PRODUCTS: Product[] = [
         price: 20000,
         originalPrice: null,
         description: 'Необрезная доска камерной сушки. Объем 1 м3.',
-        image: '/images-product/doska_neobrez_25.jpg',
+        image: '/images-product/planche-bois-brut-live-edge-25mm.jpg',
         vedette: false,
         rating: 4.4,
         reviews: 12
@@ -202,7 +202,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Брусок строганный сухой. Упаковка 200 шт.',
-        image: '/images-product/brusok_40x40.jpg',
+        image: '/images-product/tasseau-bois-carre-sec-40x40x3000mm.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 22
@@ -214,7 +214,7 @@ export const PRODUCTS: Product[] = [
         price: 41250,
         originalPrice: 45000,
         description: 'Гладкая палубная доска сорта Прима из лиственницы. Комплект на 25 м2.',
-        image: '/images-product/doska_palub_listv.jpg',
+        image: '/images-product/planche-terrasse-lisse-meleze-28x140x4000mm.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 18
@@ -226,7 +226,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Готовая доска для красивого деревянного забора. Партия 150 шт.',
-        image: '/images-product/doska_zabor_20x95.jpg',
+        image: '/images-product/lame-cloture-bois-rabotee-20x95x2000mm.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 15
@@ -238,7 +238,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Сухой штакетник. Оптовое количество для длинного забора.',
-        image: '/images-product/shtaketnik.jpg',
+        image: '/images-product/piquet-cloture-bois-45x1500mm.jpg',
         vedette: false,
         rating: 4.0,
         reviews: 10
@@ -250,7 +250,7 @@ export const PRODUCTS: Product[] = [
         price: 19600,
         originalPrice: null,
         description: 'Европол сосна. Комплект для укладки 20 м2.',
-        image: '/images-product/doska_pol_28.jpg',
+        image: '/images-product/plancher-bois-massif-sapin-28x135x6000mm.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 28
@@ -262,7 +262,7 @@ export const PRODUCTS: Product[] = [
         price: 25000,
         originalPrice: null,
         description: 'Толстая половая доска 36мм. Комплект для укладки 20 м2.',
-        image: '/images-product/doska_pol_36.jpg',
+        image: '/images-product/plancher-bois-massif-epais-36x135x6000mm.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 35
@@ -274,7 +274,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Оптовая партия делового горбыля 3 метра.',
-        image: '/images-product/gorbyl.jpg',
+        image: '/images-product/dosse-bois-brut-vrac.jpg',
         vedette: false,
         rating: 4.0,
         reviews: 8
@@ -286,7 +286,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Сухие стружки и опилки. 150 мешков по 50л.',
-        image: '/images-product/opilki.jpg',
+        image: '/images-product/sciure-bois-sac-50l.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 40
@@ -298,7 +298,7 @@ export const PRODUCTS: Product[] = [
         price: 16000,
         originalPrice: null,
         description: 'Обрезки досок (дрова). 20 больших ящиков.',
-        image: '/images-product/srezki.jpg',
+        image: '/images-product/chutes-bois-allumage-feu.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 20
@@ -312,7 +312,7 @@ export const PRODUCTS: Product[] = [
         price: 35000,
         originalPrice: 38000,
         description: 'Рифленая поверхность "антислип" из лиственницы. Палета на 20 м2.',
-        image: '/images-product/terras_velvet_listv.jpg',
+        image: '/images-product/terrasse-bois-meleze-strie-antiderapant-28x140.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 45
@@ -324,7 +324,7 @@ export const PRODUCTS: Product[] = [
         price: 32000,
         originalPrice: null,
         description: 'Фасадная доска со скошенным профилем из лиственницы. Палета на 20 м2.',
-        image: '/images-product/planken_skosh.jpg',
+        image: '/images-product/bardage-bois-claire-voie-meleze-20x140.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 30
@@ -336,7 +336,7 @@ export const PRODUCTS: Product[] = [
         price: 19500,
         originalPrice: null,
         description: 'Экономичный вариант для обшивки. Оптовая упаковка 30 шт.',
-        image: '/images-product/planken_pryamoy_sosna.jpg',
+        image: '/images-product/bardage-bois-droit-pin-20x120.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 20
@@ -348,7 +348,7 @@ export const PRODUCTS: Product[] = [
         price: 44000,
         originalPrice: null,
         description: 'Композитная террасная доска. Полный комплект для укладки 20 м2.',
-        image: '/images-product/terras_dpk_wenge.jpg',
+        image: '/images-product/lame-terrasse-composite-wenge-140x25.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 15
@@ -360,7 +360,7 @@ export const PRODUCTS: Product[] = [
         price: 22500,
         originalPrice: null,
         description: 'Готовые секции перил из лиственницы. Набор из 5 штук.',
-        image: '/images-product/ograzhdenie_terrasy.jpg',
+        image: '/images-product/garde-corps-bois-terrasse-section.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 5
@@ -372,7 +372,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Цельноламельные ступени из лиственницы. Набор 12 шт.',
-        image: '/images-product/stupen_listv.jpg',
+        image: '/images-product/marche-escalier-bois-meleze-40x300.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 10
@@ -384,7 +384,7 @@ export const PRODUCTS: Product[] = [
         price: 17500,
         originalPrice: null,
         description: 'Модульное покрытие из акации. Упаковка на 4.5 м2.',
-        image: '/images-product/sad_parket.jpg',
+        image: '/images-product/dalle-terrasse-bois-cliquable-30x30.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 25
@@ -396,7 +396,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Обработанный маслом брус для садовых конструкций. 10 шт.',
-        image: '/images-product/brus_pergola.jpg',
+        image: '/images-product/poutre-pergola-bois-traite-100x100.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 6
@@ -408,7 +408,7 @@ export const PRODUCTS: Product[] = [
         price: 42000,
         originalPrice: null,
         description: 'Элитная фасадная отделка из термоясеня. Пакет на 10 м2.',
-        image: '/images-product/termo_yasen.jpg',
+        image: '/images-product/bardage-bois-frene-thermo-traite.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 4
@@ -420,7 +420,7 @@ export const PRODUCTS: Product[] = [
         price: 15200,
         originalPrice: null,
         description: 'Профессиональное масло с твердым воском. Набор из 4 банок.',
-        image: '/images-product/maslo_terras.jpg',
+        image: '/images-product/huile-protection-bois-terrasse-2-5l.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 40
@@ -434,7 +434,7 @@ export const PRODUCTS: Product[] = [
         price: 17150,
         originalPrice: 19250,
         description: 'Классическая вагонка Штиль сорт А. Оптовая упаковка на 35 м2.',
-        image: '/images-product/vagonka_shtil_A.jpg',
+        image: '/images-product/lambris-bois-pin-profil-v-14x120.jpg',
         vedette: true,
         rating: 4.7,
         reviews: 60
@@ -446,7 +446,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Алтайский кедр. Неповторимый аромат. Упаковка на 10 м2.',
-        image: '/images-product/vagonka_kedr.jpg',
+        image: '/images-product/lambris-bois-cedre-aromatique-14x140.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 25
@@ -458,7 +458,7 @@ export const PRODUCTS: Product[] = [
         price: 19600,
         originalPrice: null,
         description: 'Толстая обшивочная доска (Карельский профиль). Набор на 20 м2.',
-        image: '/images-product/imitacia_brusa.jpg',
+        image: '/images-product/clins-bois-imitation-poutre-20x145.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 30
@@ -470,7 +470,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Имитация оцилиндрованного бревна. Упаковка на 15 м2.',
-        image: '/images-product/block_house.jpg',
+        image: '/images-product/bardage-bois-demi-rond-log-lap-28x140.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 18
@@ -482,7 +482,7 @@ export const PRODUCTS: Product[] = [
         price: 15600,
         originalPrice: null,
         description: 'Деревянный плинтус. Оптовая связка 130 шт.',
-        image: '/images-product/galtel.jpg',
+        image: '/images-product/moulure-bois-angle-arrondi-30x30.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 40
@@ -494,7 +494,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Резной наличник. Оптовый набор 100 шт.',
-        image: '/images-product/nalichnik.jpg',
+        image: '/images-product/chambranle-bois-encadrement-porte-70mm.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 35
@@ -506,7 +506,7 @@ export const PRODUCTS: Product[] = [
         price: 15300,
         originalPrice: null,
         description: 'Внешний уголок для защиты углов. Набор 170 шт.',
-        image: '/images-product/ugolok_40.jpg',
+        image: '/images-product/baguette-angle-bois-exterieur-40x40.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 50
@@ -518,7 +518,7 @@ export const PRODUCTS: Product[] = [
         price: 16800,
         originalPrice: null,
         description: 'Клееный щит (сосна) 40х300 мм. Комплект 8 шт.',
-        image: '/images-product/podokonnik.jpg',
+        image: '/images-product/tablette-fenetre-bois-massif-40x300.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 12
@@ -530,7 +530,7 @@ export const PRODUCTS: Product[] = [
         price: 16200,
         originalPrice: null,
         description: 'Декоративные экраны (Ротанг). Набор из 9 штук.',
-        image: '/images-product/ekran_batarea.jpg',
+        image: '/images-product/cache-radiateur-bois-rotin.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 8
@@ -542,7 +542,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Перегородки из массива бука. Набор из 6 штук.',
-        image: '/images-product/reshetka_buk.jpg',
+        image: '/images-product/claustra-bois-hetre-decoration.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 5
@@ -556,7 +556,7 @@ export const PRODUCTS: Product[] = [
         price: 16250,
         originalPrice: null,
         description: 'Березовая фанера влагостойкая. Оптовая пачка 25 листов.',
-        image: '/images-product/fanera_10.jpg',
+        image: '/images-product/panneau-contreplaque-batiment-10mm.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 40
@@ -568,7 +568,7 @@ export const PRODUCTS: Product[] = [
         price: 18750,
         originalPrice: 21000,
         description: 'Толстая шлифованная фанера. Пачка 15 листов.',
-        image: '/images-product/fanera_18_shlif.jpg',
+        image: '/images-product/panneau-contreplaque-bouleau-ponce-18mm.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 20
@@ -580,7 +580,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Влагостойкая плита OSB-3 Калевала. Пачка 25 штук.',
-        image: '/images-product/osb_9.jpg',
+        image: '/images-product/panneau-osb3-hydrofuge-9mm.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 70
@@ -592,7 +592,7 @@ export const PRODUCTS: Product[] = [
         price: 18800,
         originalPrice: null,
         description: 'Усиленная плита OSB. Пачка 20 листов.',
-        image: '/images-product/osb_12.jpg',
+        image: '/images-product/panneau-osb3-structurel-12mm.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 50
@@ -604,19 +604,19 @@ export const PRODUCTS: Product[] = [
         price: 17600,
         originalPrice: null,
         description: 'Цельноламельные щиты сосна Экстра. Набор 8 шт.',
-        image: '/images-product/shit_sosna_extra.jpg',
+        image: '/images-product/panneau-bois-massif-pin-lamelle-18x600.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 15
     },
     {
         id: 'pn-6',
-        name: 'Мебельные щиты из дуба (5 шт)',
+        name: 'Мебельные щиты из duba (5 шт)',
         category: 'Panneaux et voiles',
         price: 32500,
         originalPrice: null,
         description: 'Массив дуба высшего качества. Набор 5 шт.',
-        image: '/images-product/shit_dub.jpg',
+        image: '/images-product/panneau-bois-massif-chene-prestige-40x600.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 8
@@ -628,7 +628,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Древесно-волокнистая плита. Оптовая упаковка 60 листов.',
-        image: '/images-product/dvp.jpg',
+        image: '/images-product/panneau-isorel-dur-dvp-3-2mm.jpg',
         vedette: false,
         rating: 4.3,
         reviews: 30
@@ -640,7 +640,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Цементно-стружечная плита. Пачка 10 листов.',
-        image: '/images-product/csp.jpg',
+        image: '/images-product/panneau-particules-ciment-csp-10mm.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 10
@@ -654,7 +654,7 @@ export const PRODUCTS: Product[] = [
         price: 22000,
         originalPrice: 25000,
         description: 'Медовая липа высшего сорта. Не нагревается. Упаковка на 10 м2.',
-        image: '/images-product/vagonka_lipa.jpg',
+        image: '/images-product/lambris-bois-tilleul-sauna-extra.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 30
@@ -666,7 +666,7 @@ export const PRODUCTS: Product[] = [
         price: 17000,
         originalPrice: null,
         description: 'Гладкая доска для лежаков в сауне. Набор из 20 штук.',
-        image: '/images-product/polok_lipa.jpg',
+        image: '/images-product/banc-sauna-bois-tilleul-confort-27x90.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 20
@@ -678,7 +678,7 @@ export const PRODUCTS: Product[] = [
         price: 23000,
         originalPrice: null,
         description: 'Вагонка высшего качества из ольхи. Пакет на 10 м2.',
-        image: '/images-product/vagonka_olha.jpg',
+        image: '/images-product/lambris-bois-aulne-premium-sauna.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 15
@@ -690,7 +690,7 @@ export const PRODUCTS: Product[] = [
         price: 21000,
         originalPrice: null,
         description: 'Африканское дерево Абаш, не обжигает кожу. Набор 15 шт.',
-        image: '/images-product/polok_abash.jpg',
+        image: '/images-product/banc-sauna-bois-abachi-afrique.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 10
@@ -702,7 +702,7 @@ export const PRODUCTS: Product[] = [
         price: 45000,
         originalPrice: null,
         description: 'Закаленное стекло. Магнитный замок. Оптовая партия 3 шт.',
-        image: '/images-product/dver_sauna.jpg',
+        image: '/images-product/porte-sauna-verre-trempe-cadre-bois.jpg',
         vedette: true,
         rating: 4.8,
         reviews: 12
@@ -714,7 +714,7 @@ export const PRODUCTS: Product[] = [
         price: 16000,
         originalPrice: null,
         description: 'Деревянные угловые абажуры. Набор из 20 штук.',
-        image: '/images-product/abazhur.jpg',
+        image: '/images-product/abat-jour-angle-sauna-bois-tilleul.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 20
@@ -726,7 +726,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Эргономичные кедровые подголовники. Оптовый набор 15 шт.',
-        image: '/images-product/podgolovnik.jpg',
+        image: '/images-product/appui-tete-sauna-anatomique-cedre.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 15
@@ -738,7 +738,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Полудрагоценный камень для бани. 10 упаковок по 10кг.',
-        image: '/images-product/kamni.jpg',
+        image: '/images-product/pierres-sauna-volcaniques-10kg.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 25
@@ -752,7 +752,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Сухие березовые дрова в сетках. Оптовая палета 60 шт.',
-        image: '/images-product/drova_bereza.jpg',
+        image: '/images-product/buches-bois-bouleau-sec-filet-40l.jpg',
         vedette: true,
         rating: 4.8,
         reviews: 120
@@ -764,7 +764,7 @@ export const PRODUCTS: Product[] = [
         price: 24500,
         originalPrice: 27500,
         description: 'Элитное топливо. Дуб высшего качества. Палета 5 м3.',
-        image: '/images-product/drova_dub.jpg',
+        image: '/images-product/buches-bois-chene-haute-densite-palette.jpg',
         vedette: true,
         rating: 5.0,
         reviews: 45
@@ -776,7 +776,7 @@ export const PRODUCTS: Product[] = [
         price: 16200,
         originalPrice: null,
         description: 'Брикеты из березовой пыли. Оптовая палета 900 кг.',
-        image: '/images-product/brikety_ruf.jpg',
+        image: '/images-product/briquettes-chauffage-bois-compresse-10kg.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 80
@@ -788,7 +788,7 @@ export const PRODUCTS: Product[] = [
         price: 22750,
         originalPrice: null,
         description: 'Светлые пеллеты DIN+. Оптовая палета (975 кг).',
-        image: '/images-product/pellety.jpg',
+        image: '/images-product/granules-bois-pellets-din-plus-15kg.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 30
@@ -800,7 +800,7 @@ export const PRODUCTS: Product[] = [
         price: 15400,
         originalPrice: null,
         description: 'Осиновые дрова. Чистят дымоход от сажи. Оптовая палета.',
-        image: '/images-product/drova_osina.jpg',
+        image: '/images-product/buches-bois-tremble-nettoyage-conduit.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 20
@@ -812,7 +812,7 @@ export const PRODUCTS: Product[] = [
         price: 17400,
         originalPrice: null,
         description: 'Отборный крупный уголь в мешках по 3кг. Набор 60 мешков.',
-        image: '/images-product/ugol.jpg',
+        image: '/images-product/charbon-de-bois-barbecue-3kg.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 60
@@ -826,7 +826,7 @@ export const PRODUCTS: Product[] = [
         price: 19000,
         originalPrice: null,
         description: 'Брус с обзолом для опалубки. Оптовая партия 20 шт.',
-        image: '/images-product/brus_2sort.jpg',
+        image: '/images-product/poutre-bois-brut-coffrage-100x100.jpg',
         vedette: false,
         rating: 4.0,
         reviews: 10
@@ -838,7 +838,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: 20000,
         description: 'Доска с тупым обзолом. Палета 100 единиц.',
-        image: '/images-product/doska_2sort.jpg',
+        image: '/images-product/planche-bois-brut-second-choix-25x150.jpg',
         vedette: true,
         rating: 4.1,
         reviews: 15
@@ -850,7 +850,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Европоддон 1200х800. Оптовая партия 100 шт.',
-        image: '/images-product/poddon.jpg',
+        image: '/images-product/palette-bois-occasion-reconditionnee.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 25
@@ -862,7 +862,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Заостренные колья для разметки. Связка 50 шт.',
-        image: '/images-product/kolya.jpg',
+        image: '/images-product/piquets-bois-balisage-chantier.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 12
@@ -874,7 +874,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Полосы фанеры для хозяйственных нужд. Большой объем.',
-        image: '/images-product/fanera_obrezki.jpg',
+        image: '/images-product/chutes-contreplaque-decoupe.jpg',
         vedette: false,
         rating: 4.0,
         reviews: 8
@@ -886,7 +886,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Сбитые щиты из доски для строительных работ. Набор 40 шт.',
-        image: '/images-product/shity_lesa.jpg',
+        image: '/images-product/planchers-echafaudage-bois.jpg',
         vedette: false,
         rating: 4.3,
         reviews: 5
