@@ -8,6 +8,7 @@ export interface CartItem {
   price: number
   quantity: number
   image?: string
+  variantLabel?: string // e.g., "100х100х3000 мм (30 шт)"
 }
 
 interface CartStore {

@@ -17,9 +17,10 @@ export default function ProductPage() {
     const cartStore = useCartStore()
     const favoritesStore = useFavoritesStore()
 
-    const [qty, setQty] = useState(1)
-
     const product = PRODUCTS.find(p => p.id === id)
+
+    const [qty, setQty] = useState(1)
+    const [selectedVariant, setSelectedVariant] = useState(product?.variants?.[0] || null)
 
     if (!product) {
         return (
@@ -32,12 +33,17 @@ export default function ProductPage() {
         )
     }
 
+    const currentPrice = selectedVariant ? selectedVariant.price : product.price
+    const currentOriginalPrice = selectedVariant ? selectedVariant.originalPrice : product.originalPrice
+
     const handleAddToCart = () => {
         cartStore.addItem({
-            id: product.id,
+            id: selectedVariant ? `${product.id}-${selectedVariant.id}` : product.id,
             name: product.name,
-            price: product.price,
-            quantity: qty
+            price: currentPrice,
+            quantity: qty,
+            variantLabel: selectedVariant?.label,
+            image: product.image
         })
         toast.success(`Добавлено в корзину (${qty})`)
     }
@@ -56,8 +62,8 @@ export default function ProductPage() {
     }
 
     const isFavorite = favoritesStore.isFavorite(product.id)
-    const discount = product.originalPrice
-        ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    const discount = currentOriginalPrice
+        ? Math.round(((currentOriginalPrice - currentPrice) / currentOriginalPrice) * 100)
         : 0
 
     return (
@@ -123,16 +129,43 @@ export default function ProductPage() {
                             </button>
                         </div>
 
+                        {/* Variants Selection */}
+                        {product.variants && product.variants.length > 0 && (
+                            <div className="mb-8">
+                                <h3 className="text-sm font-bold text-wood-900 uppercase tracking-wider mb-4">
+                                    Выберите параметры (Размер / Количество):
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {product.variants.map((v) => (
+                                        <button
+                                            key={v.id}
+                                            onClick={() => setSelectedVariant(v)}
+                                            className={`flex flex-col items-start p-4 rounded-xl border-2 transition-all ${selectedVariant?.id === v.id
+                                                ? 'border-fire-600 bg-fire-50 text-fire-900'
+                                                : 'border-wood-100 bg-white hover:border-wood-300'
+                                                }`}
+                                        >
+                                            <span className="font-bold">{v.label}</span>
+                                            <span className="text-sm opacity-80">{v.price.toLocaleString('ru-RU')} ₽</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Price */}
                         <div className="bg-wood-50/50 p-6 rounded-xl border border-wood-100 mb-8">
                             <div className="flex items-end gap-4 mb-4">
                                 <span className="text-4xl font-bold text-fire-600">
-                                    {product.price.toLocaleString('ru-RU')} ₽
+                                    {currentPrice.toLocaleString('ru-RU')} ₽
                                 </span>
-                                {product.originalPrice && (
+                                {product.unit && (
+                                    <span className="text-xl text-wood-500 mb-1">/ {product.unit}</span>
+                                )}
+                                {currentOriginalPrice && (
                                     <>
                                         <span className="text-xl text-wood-400 line-through mb-1">
-                                            {product.originalPrice.toLocaleString('ru-RU')} ₽
+                                            {currentOriginalPrice.toLocaleString('ru-RU')} ₽
                                         </span>
                                         <span className="bg-red-100 text-red-700 px-2 py-1 rounded-md text-sm font-bold mb-2">
                                             -{discount}%

@@ -113,9 +113,17 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 {product.originalPrice.toLocaleString('ru-RU')} ₽
                             </span>
                         )}
-                        <span className="text-2xl font-bold text-fire-600">
-                            {product.price.toLocaleString('ru-RU')} ₽
-                        </span>
+                        <div className="flex items-baseline gap-1">
+                            {product.variants && product.variants.length > 0 && (
+                                <span className="text-xs text-wood-500 font-medium mr-1 italic">от</span>
+                            )}
+                            <span className="text-2xl font-bold text-fire-600">
+                                {product.price.toLocaleString('ru-RU')} ₽
+                            </span>
+                            {product.unit && (
+                                <span className="text-xs text-wood-500">/ {product.unit}</span>
+                            )}
+                        </div>
                     </div>
                     {product.originalPrice && (
                         <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md mb-1">

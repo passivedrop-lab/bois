@@ -26,7 +26,10 @@ export default function CartPage() {
                   )}
                   <div className="flex-1">
                     <h3 className="font-semibold text-wood-900">{item.name}</h3>
-                    <p className="text-sm text-wood-600">Цена: {item.price}₽</p>
+                    {item.variantLabel && (
+                      <p className="text-xs text-fire-600 font-medium mb-1">{item.variantLabel}</p>
+                    )}
+                    <p className="text-sm text-wood-600">Цена: {item.price.toLocaleString('ru-RU')} ₽</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
