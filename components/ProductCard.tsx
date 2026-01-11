@@ -144,9 +144,10 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </button>
 
                 {/* Collapsible Description */}
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                     {isExpanded && (
                         <motion.div
+                            key="description"
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
