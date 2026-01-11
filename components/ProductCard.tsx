@@ -35,6 +35,17 @@ export default function ProductCard({ product }: ProductCardProps) {
         })
     }
 
+    const handleQuantityInput = (variantId: string, value: string) => {
+        const numValue = parseInt(value.replace(/\D/g, '')) || 0
+        setQuantities(prev => {
+            if (numValue === 0) {
+                const { [variantId]: _, ...rest } = prev
+                return rest
+            }
+            return { ...prev, [variantId]: numValue }
+        })
+    }
+
     const parseDimensions = (label: string) => {
         // Matches "100x100x3000" or similar patterns
         const match = label.match(/(\d+)[xх](\d+)[xх](\d+)/)
@@ -70,7 +81,29 @@ export default function ProductCard({ product }: ProductCardProps) {
         setQuantities(newQuantities)
         setShowCalculator(false)
         setCalculatorSurface('')
-        toast.success(`Quantités mises à jour pour ${surface} m²`)
+        toast.success(`Количество обновлено для ${surface} м²`)
+    }
+
+
+
+    const calculateTotal = () => {
+        let total = 0
+        if (product.variants && product.variants.length > 0) {
+            Object.entries(quantities).forEach(([variantId, qty]) => {
+                const variant = product.variants!.find(v => v.id === variantId)
+                if (variant && qty > 0) {
+                    const discount = getDiscountMultiplier(qty)
+                    total += Math.round(variant.price * discount) * qty
+                }
+            })
+        } else {
+            const qty = quantities['default'] || 0
+            if (qty > 0) {
+                const discount = getDiscountMultiplier(qty)
+                total += Math.round(product.price * discount) * qty
+            }
+        }
+        return total
     }
 
     const getDiscountMultiplier = (qty: number) => {
@@ -241,7 +274,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 className="flex items-center gap-1 text-xs font-medium text-fire-600 hover:text-fire-700 bg-fire-50 px-2 py-1 rounded transition-colors"
                             >
                                 <Calculator size={14} />
-                                Calculer mes besoins
+                                Рассчитать количество
                             </button>
                         </div>
 
@@ -251,13 +284,13 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={() => setShowCalculator(false)}>
                                     <X size={14} />
                                 </button>
-                                <p className="text-xs font-semibold text-gray-700 mb-2">Entrez votre surface (m²):</p>
+                                <p className="text-xs font-semibold text-gray-700 mb-2">Введите площадь (м²):</p>
                                 <div className="flex gap-2">
                                     <input
                                         type="number"
                                         value={calculatorSurface}
                                         onChange={(e) => setCalculatorSurface(e.target.value)}
-                                        placeholder="ex: 20"
+                                        placeholder="напр: 20"
                                         className="w-full text-sm p-1.5 border border-wood-200 rounded focus:ring-1 focus:ring-fire-500 outline-none"
                                         onClick={e => e.stopPropagation()}
                                     />
@@ -297,28 +330,30 @@ export default function ProductCard({ product }: ProductCardProps) {
                                             {/* Discount Badge */}
                                             <div className="h-5">
                                                 {qty >= 10 && (
-                                                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">
-                                                        {qty >= 50 ? '-10%' : '-5%'} prix de gros
+                                                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 whitespace-nowrap">
+                                                        {qty >= 50 ? '-10%' : '-5%'} оптовая цена
                                                     </span>
                                                 )}
                                             </div>
 
-                                            <div className="flex items-center gap-2 bg-white rounded-md border border-wood-200 px-1 py-0.5 shadow-sm">
+                                            <div className="flex items-center gap-1 bg-white rounded-md border border-wood-200 px-1 py-0.5 shadow-sm">
                                                 <button
                                                     onClick={() => handleQuantityChange(variant.id, -1)}
-                                                    className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-fire-600 hover:bg-gray-100 rounded transition"
+                                                    className="w-7 h-8 flex items-center justify-center text-gray-500 hover:text-fire-600 hover:bg-gray-100 rounded transition touch-manipulation"
                                                 >
                                                     -
                                                 </button>
                                                 <input
-                                                    type="text"
-                                                    value={qty}
-                                                    readOnly
-                                                    className="w-8 text-center font-bold text-gray-900 bg-transparent border-none p-0 focus:ring-0"
+                                                    type="number"
+                                                    value={qty > 0 ? qty : ''}
+                                                    onChange={(e) => handleQuantityInput(variant.id, e.target.value)}
+                                                    placeholder="0"
+                                                    className="w-10 text-center font-bold text-gray-900 bg-transparent border-none p-0 focus:ring-0 appearance-none text-sm"
+                                                    onClick={e => e.stopPropagation()}
                                                 />
                                                 <button
                                                     onClick={() => handleQuantityChange(variant.id, 1)}
-                                                    className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-green-600 hover:bg-gray-100 rounded transition"
+                                                    className="w-7 h-8 flex items-center justify-center text-gray-500 hover:text-green-600 hover:bg-gray-100 rounded transition touch-manipulation"
                                                 >
                                                     +
                                                 </button>
@@ -350,17 +385,24 @@ export default function ProductCard({ product }: ProductCardProps) {
                                 </span>
                             )}
                         </div>
-                        <div className="flex items-center gap-2 bg-white rounded-md border border-wood-200 px-1 py-0.5">
+                        <div className="flex items-center gap-1 bg-white rounded-md border border-wood-200 px-1 py-0.5">
                             <button
                                 onClick={() => handleQuantityChange('default', -1)}
-                                className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-fire-600 hover:bg-gray-100 rounded transition"
+                                className="w-8 h-9 flex items-center justify-center text-gray-500 hover:text-fire-600 hover:bg-gray-100 rounded transition touch-manipulation"
                             >
                                 -
                             </button>
-                            <span className="w-8 text-center font-bold text-gray-900 text-lg">{quantities['default'] || 0}</span>
+                            <input
+                                type="number"
+                                value={quantities['default'] || ''}
+                                onChange={(e) => handleQuantityInput('default', e.target.value)}
+                                placeholder="0"
+                                className="w-12 text-center font-bold text-gray-900 text-lg bg-transparent border-none p-0 focus:ring-0 appearance-none"
+                                onClick={e => e.stopPropagation()}
+                            />
                             <button
                                 onClick={() => handleQuantityChange('default', 1)}
-                                className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-green-600 hover:bg-gray-100 rounded transition"
+                                className="w-8 h-9 flex items-center justify-center text-gray-500 hover:text-green-600 hover:bg-gray-100 rounded transition touch-manipulation"
                             >
                                 +
                             </button>
@@ -414,6 +456,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                         <ShoppingCart size={18} />
                         В корзину
                     </button>
+                    {calculateTotal() > 0 && (
+                        <div className="absolute bottom-[4.5rem] bg-gray-900/90 text-white px-3 py-1.5 rounded-lg text-sm font-medium backdrop-blur-sm shadow-lg left-1/2 -translate-x-1/2 whitespace-nowrap z-10 animate-in fade-in slide-in-from-bottom-2">
+                            Итого: {calculateTotal().toLocaleString('ru-RU')} ₽
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
