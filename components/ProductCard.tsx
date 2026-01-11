@@ -16,15 +16,22 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
     const [isExpanded, setIsExpanded] = useState(false)
+    const [selectedVariant, setSelectedVariant] = useState(
+        product.variants && product.variants.length > 0 ? product.variants[0] : null
+    )
     const cartStore = useCartStore()
     const favoritesStore = useFavoritesStore()
 
     const handleAddToCart = async (e: React.MouseEvent) => {
         e.stopPropagation()
+        const price = selectedVariant ? selectedVariant.price : product.price
+        const id = selectedVariant ? `${product.id}-${selectedVariant.id}` : product.id
+        const name = selectedVariant ? `${product.name} (${selectedVariant.label})` : product.name
+
         await cartStore.addItem({
-            id: product.id,
-            name: product.name,
-            price: product.price,
+            id,
+            name,
+            price,
         })
         toast.success('Добавлено в корзину')
     }
@@ -105,29 +112,46 @@ export default function ProductCard({ product }: ProductCardProps) {
                     </h3>
                 </Link>
 
+                {/* Variant Selector */}
+                {product.variants && product.variants.length > 0 && (
+                    <div className="mb-3" onClick={(e) => e.stopPropagation()}>
+                        <select
+                            value={selectedVariant?.id}
+                            onChange={(e) => {
+                                const variant = product.variants?.find(v => v.id === e.target.value) || null
+                                setSelectedVariant(variant)
+                            }}
+                            className="w-full p-2 bg-gray-50 border border-wood-200 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-fire-500 focus:border-fire-500 cursor-pointer"
+                        >
+                            {product.variants.map((variant) => (
+                                <option key={variant.id} value={variant.id}>
+                                    {variant.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+
                 {/* Price */}
                 <div className="flex items-end justify-between mb-4">
                     <div className="flex flex-col">
-                        {product.originalPrice && (
+                        {(selectedVariant ? selectedVariant.originalPrice : product.originalPrice) && (
                             <span className="text-sm text-gray-400 line-through mb-0.5">
-                                {product.originalPrice.toLocaleString('ru-RU')} ₽
+                                {((selectedVariant ? selectedVariant.originalPrice : product.originalPrice) ?? 0).toLocaleString('ru-RU')} ₽
                             </span>
                         )}
                         <div className="flex items-baseline gap-1">
-                            {product.variants && product.variants.length > 0 && (
-                                <span className="text-xs text-wood-500 font-medium mr-1 italic">от</span>
-                            )}
                             <span className="text-2xl font-bold text-fire-600">
-                                {product.price.toLocaleString('ru-RU')} ₽
+                                {(selectedVariant ? selectedVariant.price : product.price).toLocaleString('ru-RU')} ₽
                             </span>
                             {product.unit && (
                                 <span className="text-xs text-wood-500">/ {product.unit}</span>
                             )}
                         </div>
                     </div>
-                    {product.originalPrice && (
+                    {(selectedVariant ? selectedVariant.originalPrice : product.originalPrice) && (
                         <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md mb-1">
-                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                            -{Math.round((((selectedVariant ? selectedVariant.originalPrice! : product.originalPrice!) - (selectedVariant ? selectedVariant.price : product.price)) / (selectedVariant ? selectedVariant.originalPrice! : product.originalPrice!)) * 100)}%
                         </span>
                     )}
                 </div>
