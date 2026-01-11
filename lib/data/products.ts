@@ -92,7 +92,7 @@ export const PRODUCTS: Product[] = [
         price: 26700,
         originalPrice: 28500,
         description: 'Доска обрезная антисептированная. Оптовая партия.',
-        image: '/images-product/bois-massif-charpente-sapin-douglas.jpg',
+        image: '/images-product/planche-charpente-50x200.jpg',
         vedette: false,
         rating: 4.7,
         reviews: 18
@@ -104,7 +104,7 @@ export const PRODUCTS: Product[] = [
         price: 21000,
         originalPrice: null,
         description: 'Комплект бруса естественной влажности для устройства мауэрлата.',
-        image: '/images-product/bois-ossature-epicea-douglas-c24.jpg',
+        image: '/images-product/poutre-mauerlat-150x150.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 10
@@ -116,7 +116,7 @@ export const PRODUCTS: Product[] = [
         price: 15000,
         originalPrice: null,
         description: 'Оптовая связка рейки деревянной сухой.',
-        image: '/images-product/bois-emballage-coffrage-chantier.jpg',
+        image: '/images-product/liteau-bois-20x50.jpg',
         vedette: false,
         rating: 4.5,
         reviews: 6
@@ -128,7 +128,7 @@ export const PRODUCTS: Product[] = [
         price: 21000,
         originalPrice: null,
         description: 'Пиломатериал хвойных пород (Ель). Упаковка 10 шт.',
-        image: '/images-product/bois-contre-colle-structure-epicea.jpg',
+        image: '/images-product/poutre-epicea-100x150.jpg',
         vedette: false,
         rating: 4.6,
         reviews: 14
@@ -140,7 +140,7 @@ export const PRODUCTS: Product[] = [
         price: 28000,
         originalPrice: null,
         description: 'Массивный сосновый брус для перекрытий. Упаковка 10 шт.',
-        image: '/images-product/bois-lamelle-colle-grande-portee.jpg',
+        image: '/images-product/poutre-pin-100x200.jpg',
         vedette: false,
         rating: 4.9,
         reviews: 20
@@ -152,7 +152,7 @@ export const PRODUCTS: Product[] = [
         price: 18000,
         originalPrice: null,
         description: 'Комплект гладких строганных столборов для веранд.',
-        image: '/images-product/poutre-en-i-lamibois-charpente.jpg',
+        image: '/images-product/poteau-soutien-150x150.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 9
