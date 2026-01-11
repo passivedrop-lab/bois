@@ -6,7 +6,7 @@ import { TreePine, Package, Flame, Wrench, Truck, Palette, Shield } from 'lucide
 
 const categories = [
   {
-    name: 'Строительный лес',
+    name: 'Строительная древесина',
     description: 'Брус, бревно и конструкционные материалы',
     href: '/catalogue/bois-de-construction',
     icon: TreePine,
@@ -20,42 +20,42 @@ const categories = [
     color: 'from-orange-700 to-orange-900',
   },
   {
-    name: 'Дрова и Биотопливо',
+    name: 'Дрова и биотопливо',
     description: 'Колотые дрова, пеллеты и брикеты',
     href: '/catalogue/bois-de-chauffage',
     icon: Flame,
     color: 'from-fire-600 to-fire-800',
   },
   {
-    name: 'Для бани и сауны',
+    name: 'Древесина для сауны',
     description: 'Вагонка, пологи и отделочные материалы',
     href: '/catalogue/bois-sauna',
     icon: Wrench,
     color: 'from-amber-600 to-amber-800',
   },
   {
-    name: 'Декоративная отделка',
+    name: 'Декоративная древесина',
     description: 'Планкен, имитация бруса и декор',
     href: '/catalogue/bois-decoratif',
     icon: Palette,
     color: 'from-stone-600 to-stone-800',
   },
   {
-    name: 'Панели и щиты',
+    name: 'Панели и плиты',
     description: 'Мебельные щиты, фанера и плиты',
     href: '/catalogue/panneaux',
     icon: Package,
     color: 'from-brown-600 to-brown-800',
   },
   {
-    name: 'Экстерьерные системы',
+    name: 'Дерево для наружных работ',
     description: 'Террасная доска и фасадные решения',
     href: '/catalogue/bois-exterieur',
     icon: Truck,
     color: 'from-emerald-700 to-emerald-900',
   },
   {
-    name: 'Техническое дерево',
+    name: 'Техническая / индустриальная древесина',
     description: 'Брус для опалубки и промышленные заготовки',
     href: '/catalogue/bois-brut-industriel',
     icon: Shield,

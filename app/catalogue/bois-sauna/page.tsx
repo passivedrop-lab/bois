@@ -5,7 +5,7 @@ export default function CategoryPage() {
   return (
     <div className="pb-12">
       <CategoryHero
-        title="Для бани и сауны"
+        title="Древесина для сауны"
         subtitle="Вагонка, пологи и отделочные материалы для вашей бани."
         icon="🧖"
       />

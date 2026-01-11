@@ -5,7 +5,7 @@ export default function CategoryPage() {
   return (
     <div className="pb-12">
       <CategoryHero
-        title="Техническое дерево"
+        title="Техническая / индустриальная древесина"
         subtitle="Брус для опалубки и промышленные заготовки для производства."
         icon="⚙️"
       />

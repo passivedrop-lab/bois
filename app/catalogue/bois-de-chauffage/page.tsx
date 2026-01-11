@@ -5,7 +5,7 @@ export default function CategoryPage() {
   return (
     <div className="pb-12">
       <CategoryHero
-        title="Дрова и Биотопливо"
+        title="Дрова и биотопливо"
         subtitle="Колотые дрова, пеллеты и брикеты для уюта в вашем доме."
         icon="🔥"
       />

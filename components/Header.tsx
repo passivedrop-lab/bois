@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import { Menu, X, ShoppingCart, User, Phone, Search, Heart, LogOut } from 'lucide-react'
 import { useAuth } from './AuthProvider'
 import { useCartStore } from '@/lib/store/cartStore'
+import { PRODUCTS } from '@/lib/data/products'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,12 +28,12 @@ export default function Header() {
   const categories = [
     { name: 'Строительная древесина', href: '/catalogue/bois-de-construction' },
     { name: 'Пиломатериалы', href: '/catalogue/bois-scié' },
-    { name: 'Дрова', href: '/catalogue/bois-de-chauffage' },
+    { name: 'Дрова и биотопливо', href: '/catalogue/bois-de-chauffage' },
     { name: 'Древесина для сауны', href: '/catalogue/bois-sauna' },
     { name: 'Декоративная древесина', href: '/catalogue/bois-decoratif' },
-    { name: 'Панели', href: '/catalogue/panneaux' },
-    { name: 'Древесина для наружных работ', href: '/catalogue/bois-exterieur' },
-    { name: 'Необработанная/промышленная древесина', href: '/catalogue/bois-brut-industriel' },
+    { name: 'Панели и плиты', href: '/catalogue/panneaux' },
+    { name: 'Дерево для наружных работ', href: '/catalogue/bois-exterieur' },
+    { name: 'Техническая / индустриальная древесина', href: '/catalogue/bois-brut-industriel' },
   ]
 
   return (
@@ -81,15 +82,25 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-wood-700 hover:text-fire-600 font-medium transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`relative font-medium transition-colors ${isActive ? 'text-fire-600' : 'text-wood-700 hover:text-fire-600'}`}
+                >
+                  {item.name}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeMenuItem"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-fire-600"
+                      initial={false}
+                    />
+                  )}
+                </Link>
+              )
+            })}
           </nav>
 
           {/* Actions */}
@@ -177,7 +188,18 @@ export default function Header() {
         <div className="container mx-auto px-4 relative">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
             {categories.map((category) => {
-              const isActive = pathname === category.href
+              const decodedPathname = decodeURIComponent(pathname)
+              let isActive = decodedPathname === category.href || decodedPathname.startsWith(category.href + '/')
+
+              // Check if we are on a product page belonging to this category
+              if (!isActive && pathname.startsWith('/products/')) {
+                const productId = pathname.split('/').pop()
+                const product = PRODUCTS.find(p => p.id === productId)
+                if (product && product.category === category.name) {
+                  isActive = true
+                }
+              }
+
               return (
                 <Link
                   key={category.href}
@@ -219,16 +241,20 @@ export default function Header() {
             ))}
             <div className="pt-4 border-t border-wood-200 mt-2">
               <p className="text-sm font-semibold text-wood-900 mb-2">Категории:</p>
-              {categories.map((category) => (
-                <Link
-                  key={category.name}
-                  href={category.href}
-                  className="block py-2 text-sm text-wood-600 hover:text-fire-600 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              ))}
+              {categories.map((category) => {
+                const decodedPathname = decodeURIComponent(pathname)
+                const isActive = decodedPathname === category.href || decodedPathname.startsWith(category.href + '/')
+                return (
+                  <Link
+                    key={category.name}
+                    href={category.href}
+                    className={`block py-2 text-sm transition-colors ${isActive ? 'text-fire-600 font-bold' : 'text-wood-600 hover:text-fire-600'}`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {category.name}
+                  </Link>
+                )
+              })}
             </div>
           </nav>
         </div>
