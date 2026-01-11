@@ -84,7 +84,7 @@ export default function ProfilePage() {
               {profile?.role === 'admin' && (
                 <Link href="/admin" className="ml-auto flex items-center gap-1 text-xs bg-wood-900 text-white px-2 py-1 rounded">
                   <Crown size={12} />
-                  Admin Panel
+                  Панель управления
                 </Link>
               )}
             </h2>

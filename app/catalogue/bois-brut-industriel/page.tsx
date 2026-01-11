@@ -10,7 +10,7 @@ export default function CategoryPage() {
         icon="⚙️"
       />
       <div className="container mx-auto px-4">
-        <ProductList categoryName="Bois brut/industriel" />
+        <ProductList categoryName="Техническая / индустриальная древесина" />
       </div>
     </div>
   )

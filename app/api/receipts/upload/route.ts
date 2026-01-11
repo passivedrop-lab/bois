@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const customerEmail = formData.get('customerEmail') as string
 
     if (!orderId || !file) {
-      return NextResponse.json({ error: 'Paramètres manquants' }, { status: 400 })
+      return NextResponse.json({ error: 'Отсутствующие параметры' }, { status: 400 })
     }
 
     const fileBuffer = await file.arrayBuffer()
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
       if (orderError || !order) {
         console.error('Order Fetch Error:', orderError)
-        return NextResponse.json({ error: 'Commande introuvable' }, { status: 404 })
+        return NextResponse.json({ error: 'Заказ не найден' }, { status: 404 })
       }
 
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -50,23 +50,23 @@ export async function POST(request: NextRequest) {
         </tr>
       `).join('')
 
-      const subject = `🔥 Nouveau reçu : Commande #${orderId}`
+      const subject = `🔥 Новая квитанция : Заказ #${orderId}`
       const html = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; padding: 20px;">
-          <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">Nouveau reçu de virement</h2>
+          <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">Получена новая квитанция об оплате</h2>
           
           <div style="margin: 20px 0;">
-            <p><strong>Commande :</strong> #${orderId}</p>
-            <p><strong>Client :</strong> ${order.customer_name} (<a href="mailto:${order.customer_email}">${order.customer_email}</a>)</p>
-            <p><strong>Adresse :</strong> ${order.delivery_address || 'Non spécifiée'}</p>
+            <p><strong>Заказ :</strong> #${orderId}</p>
+            <p><strong>Клиент :</strong> ${order.customer_name} (<a href="mailto:${order.customer_email}">${order.customer_email}</a>)</p>
+            <p><strong>Адрес :</strong> ${order.delivery_address || 'Не указан'}</p>
           </div>
 
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
             <thead>
               <tr style="background-color: #f9fafb;">
-                <th style="padding: 10px; text-align: left; border-bottom: 2px solid #eee;">Produit</th>
-                <th style="padding: 10px; text-align: center; border-bottom: 2px solid #eee;">Qté</th>
-                <th style="padding: 10px; text-align: right; border-bottom: 2px solid #eee;">Prix</th>
+                <th style="padding: 10px; text-align: left; border-bottom: 2px solid #eee;">Товар</th>
+                <th style="padding: 10px; text-align: center; border-bottom: 2px solid #eee;">Кол-во</th>
+                <th style="padding: 10px; text-align: right; border-bottom: 2px solid #eee;">Цена</th>
               </tr>
             </thead>
             <tbody>
@@ -74,24 +74,24 @@ export async function POST(request: NextRequest) {
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">TOTAL:</td>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">ИТОГО:</td>
                 <td style="padding: 10px; text-align: right; font-weight: bold; color: #dc2626; font-size: 1.2em;">${order.total_price.toLocaleString()} ₽</td>
               </tr>
             </tfoot>
           </table>
 
           <div style="background-color: #fef2f2; padding: 20px; border-radius: 8px; text-align: center; margin-top: 30px;">
-            <h3 style="margin-top: 0; color: #991b1b;">Actions rapides</h3>
-            <p style="font-size: 0.9em; color: #7f1d1d; margin-bottom: 20px;">Cliquez sur un bouton ci-dessous pour changer le statut immédiatement.</p>
+            <h3 style="margin-top: 0; color: #991b1b;">Быстрые действия</h3>
+            <p style="font-size: 0.9em; color: #7f1d1d; margin-bottom: 20px;">Нажмите кнопку ниже, чтобы немедленно изменить статус.</p>
             
             <div style="text-align: center;">
-              <a href="${approveUrl}" style="display: inline-block; background-color: #16a34a; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-right: 10px;">✅ VALIDER</a>
-              <a href="${rejectUrl}" style="display: inline-block; background-color: #dc2626; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold;">❌ REJETER</a>
+              <a href="${approveUrl}" style="display: inline-block; background-color: #16a34a; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-right: 10px;">✅ ПОДТВЕРДИТЬ</a>
+              <a href="${rejectUrl}" style="display: inline-block; background-color: #dc2626; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: bold;">❌ ОТКЛОНИТЬ</a>
             </div>
           </div>
 
           <p style="font-size: 0.8em; color: #666; margin-top: 30px; text-align: center;">
-            Le reçu est joint à cet email.
+            Квитанция приложена к этому письму.
           </p>
         </div>
       `

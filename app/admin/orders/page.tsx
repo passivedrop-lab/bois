@@ -76,7 +76,7 @@ export default function AdminOrders() {
       }
     } catch (error) {
       console.error('Error loading orders:', error)
-      toast.error('Erreur lors du chargement des commandes')
+      toast.error('Ошибка при загрузке заказов')
     } finally {
       setLoading(false)
     }
@@ -98,7 +98,7 @@ export default function AdminOrders() {
       })
     } catch (error) {
       console.error('Failed to send email:', error)
-      toast.error('Erreur lors de l\'envoi de l\'email')
+      toast.error('Ошибка при отправке письма')
     }
   }
 
@@ -127,7 +127,7 @@ export default function AdminOrders() {
         }
       }
 
-      toast.success(`Commande mis à jour: ${newStatus}`)
+      toast.success(`Заказ обновлен: ${newStatus}`)
       setShowModal(false)
       setRejectionReason('')
     } catch (error: any) {
@@ -168,26 +168,26 @@ export default function AdminOrders() {
             <Link href="/admin" className="p-2 hover:bg-wood-100 rounded-lg transition">
               <ArrowLeft size={20} />
             </Link>
-            <h1 className="text-2xl font-bold text-wood-900">Gestion des commandes</h1>
+            <h1 className="text-2xl font-bold text-wood-900">Управление заказами</h1>
           </div>
           <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
             <button
               onClick={() => setFilter('all')}
               className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition ${filter === 'all' ? 'bg-wood-900 text-white' : 'bg-wood-100 text-wood-600'}`}
             >
-              Tous
+              Все
             </button>
             <button
               onClick={() => setFilter('pending')}
               className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition ${filter === 'pending' ? 'bg-yellow-600 text-white' : 'bg-yellow-50 text-yellow-700'}`}
             >
-              En attente
+              В ожидании
             </button>
             <button
               onClick={() => setFilter('verified')}
               className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition ${filter === 'verified' ? 'bg-green-600 text-white' : 'bg-green-50 text-green-700'}`}
             >
-              Validés
+              Подтвержденные
             </button>
           </div>
         </div>
@@ -197,17 +197,17 @@ export default function AdminOrders() {
         {loading ? (
           <div className="text-center py-12">
             <Loader className="mx-auto animate-spin mb-2" />
-            <p>Chargement des commandes...</p>
+            <p>Загрузка заказов...</p>
           </div>
         ) : filteredOrders.length === 0 ? (
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
             <Search className="mx-auto text-wood-300 mb-4" size={48} />
-            <p className="text-wood-600 text-lg">Aucune commande trouvée</p>
+            <p className="text-wood-600 text-lg">Заказы не найдены</p>
             <button
               onClick={loadOrders}
               className="mt-4 flex items-center justify-center gap-2 text-fire-600 font-medium hover:underline mx-auto"
             >
-              <RefreshCw size={16} /> Rafraîchir
+              <RefreshCw size={16} /> Обновить
             </button>
           </div>
         ) : (
@@ -223,7 +223,7 @@ export default function AdminOrders() {
                       </span>
                     </div>
                     <p className="text-sm text-wood-600">
-                      {new Date(order.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      {new Date(order.created_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </p>
                     <p className="font-medium text-wood-800 mt-1">{order.customer_name} <span className="text-wood-400">|</span> {order.customer_email}</p>
                   </div>
@@ -239,7 +239,7 @@ export default function AdminOrders() {
                       className="px-4 py-2 bg-wood-100 text-wood-700 rounded-lg hover:bg-wood-200 transition font-medium flex items-center gap-2"
                     >
                       <Eye size={18} />
-                      <span className="hidden sm:inline">Gérer</span>
+                      <span className="hidden sm:inline">Управлять</span>
                     </button>
                   </div>
                 </div>
@@ -267,16 +267,16 @@ export default function AdminOrders() {
               {/* Details Grid */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-sm font-bold text-wood-400 uppercase tracking-wider mb-3">Client</h3>
+                  <h3 className="text-sm font-bold text-wood-400 uppercase tracking-wider mb-3">Клиент</h3>
                   <div className="bg-wood-50 p-4 rounded-lg space-y-1 text-sm">
-                    <p><span className="font-medium">Nom:</span> {selectedOrder.customer_name}</p>
+                    <p><span className="font-medium">Имя:</span> {selectedOrder.customer_name}</p>
                     <p><span className="font-medium">Email:</span> {selectedOrder.customer_email}</p>
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-wood-400 uppercase tracking-wider mb-3">Livraison</h3>
+                  <h3 className="text-sm font-bold text-wood-400 uppercase tracking-wider mb-3">Доставка</h3>
                   <div className="bg-wood-50 p-4 rounded-lg space-y-1 text-sm">
-                    <p><span className="font-medium">Adresse:</span> {selectedOrder.delivery_address || 'Non spécifiée'}</p>
+                    <p><span className="font-medium">Адрес:</span> {selectedOrder.delivery_address || 'Не указан'}</p>
                   </div>
                 </div>
               </div>
@@ -287,7 +287,7 @@ export default function AdminOrders() {
               {/* Actions */}
               {selectedOrder.status === 'pending' && (
                 <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-6">
-                  <h3 className="font-bold text-yellow-900 mb-4">Actions requises</h3>
+                  <h3 className="font-bold text-yellow-900 mb-4">Требуются действия</h3>
 
                   <div className="space-y-4">
                     <button
@@ -296,7 +296,7 @@ export default function AdminOrders() {
                       className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold transition shadow-lg shadow-green-200 disabled:opacity-50"
                     >
                       {updating ? <Loader className="animate-spin" /> : <Check />}
-                      Valider la commande
+                      Подтвердить заказ
                     </button>
 
                     <div className="relative">
@@ -304,7 +304,7 @@ export default function AdminOrders() {
                         <span className="w-full border-t border-yellow-200" />
                       </div>
                       <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-yellow-50 px-2 text-yellow-600">Ou</span>
+                        <span className="bg-yellow-50 px-2 text-yellow-600">Или</span>
                       </div>
                     </div>
 
@@ -312,7 +312,7 @@ export default function AdminOrders() {
                       <textarea
                         value={rejectionReason}
                         onChange={(e) => setRejectionReason(e.target.value)}
-                        placeholder="Raison du rejet (obligatoire)..."
+                        placeholder="Причина отклонения (обязательно)..."
                         className="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-red-500 mb-2 text-sm"
                         rows={2}
                       />
@@ -322,7 +322,7 @@ export default function AdminOrders() {
                         className="w-full flex items-center justify-center gap-2 bg-red-100 hover:bg-red-200 text-red-700 py-3 rounded-lg font-bold transition disabled:opacity-50"
                       >
                         {updating ? <Loader className="animate-spin" /> : <X />}
-                        Rejeter la commande
+                        Отклонить заказ
                       </button>
                     </div>
                   </div>
@@ -331,7 +331,7 @@ export default function AdminOrders() {
             </div>
 
             <div className="bg-wood-50 p-4 border-t border-wood-200 text-center">
-              <button onClick={() => setShowModal(false)} className="text-wood-600 font-medium hover:text-wood-900">Fermer</button>
+              <button onClick={() => setShowModal(false)} className="text-wood-600 font-medium hover:text-wood-900">Закрыть</button>
             </div>
           </div>
         </div>

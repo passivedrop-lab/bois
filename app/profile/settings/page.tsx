@@ -58,10 +58,10 @@ export default function SettingsPage() {
         .eq('id', user.id)
 
       if (error) throw error
-      toast.success('Profil mis à jour avec succès')
+      toast.success('Профиль успешно обновлен')
     } catch (error) {
       console.error('Error updating profile:', error)
-      toast.error('Erreur lors de la mise à jour')
+      toast.error('Ошибка при обновлении профиля')
     } finally {
       setSaving(false)
     }

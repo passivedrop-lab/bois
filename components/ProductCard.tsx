@@ -73,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <button
                     onClick={handleToggleFavorite}
                     className="absolute top-3 right-3 z-10 p-2 bg-white/90 hover:bg-white rounded-full transition shadow-sm text-wood-600 hover:text-red-500 group-actions"
-                    aria-label="Add to favorites"
+                    aria-label="Добавить в избранное"
                 >
                     <Heart
                         size={18}

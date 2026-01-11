@@ -6,14 +6,14 @@ import Link from 'next/link'
 import { ArrowLeft, Save, Upload, X } from 'lucide-react'
 
 const categories = [
-  'Bois de construction',
-  'Bois scié',
-  'Drova et Biotoplivо',
-  'Bois pour sauna',
-  'Bois décoratif',
-  'Panneaux et voiles',
-  'Bois d\'extérieur',
-  'Bois brut/industriel',
+  'Строительная древесина',
+  'Пиломатериалы',
+  'Дрова и биотопливо',
+  'Древесина для сауны',
+  'Декоративная древесина',
+  'Панели и плиты',
+  'Дерево для наружных работ',
+  'Техническая / индустриальная древесина',
 ]
 
 export default function NewProductPage() {
@@ -48,12 +48,12 @@ export default function NewProductPage() {
     if (file) {
       // Vérifier le type de fichier
       if (!file.type.startsWith('image/')) {
-        alert('Veuillez sélectionner une image valide')
+        alert('Пожалуйста, выберите корректное изображение')
         return
       }
       // Vérifier la taille (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert('L\'image doit faire moins de 5MB')
+        alert('Изображение должно быть меньше 5 МБ')
         return
       }
       setFormData({ ...formData, image: file })
@@ -78,7 +78,7 @@ export default function NewProductPage() {
     setSubmitMessage(null)
 
     if (!formData.image) {
-      setError('Veuillez sélectionner une image')
+      setError('Пожалуйста, выберите изображение')
       return
     }
 
@@ -101,14 +101,14 @@ export default function NewProductPage() {
 
         const data = await res.json()
         if (!res.ok) {
-          throw new Error(data.error || 'Erreur création')
+          throw new Error(data.error || 'Ошибка при создании')
         }
 
         setSubmitMessage('Товар успешно добавлен!')
         setTimeout(() => router.push('/admin/products'), 1500)
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Erreur inconnue'
-        console.error('Erreur création produit:', err)
+        const errorMsg = err instanceof Error ? err.message : 'Неизвестная ошибка'
+        console.error('Ошибка при создании товара:', err)
         setError(`Ошибка при создании товара: ${errorMsg}`)
       } finally {
         setLoading(false)
@@ -132,16 +132,16 @@ export default function NewProductPage() {
 
       <div className="p-6">
         <div className="bg-white rounded-lg shadow max-w-2xl">
-          {/* Messages d'erreur et succès */}
+          {/* Сообщения об ошибках и успехе */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-t-lg">
-              <p className="font-semibold">Erreur:</p>
+              <p className="font-semibold">Ошибка:</p>
               <p className="text-sm mt-1">{error}</p>
             </div>
           )}
           {submitMessage && (
             <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-t-lg">
-              <p className="font-semibold">Succès:</p>
+              <p className="font-semibold">Успешно:</p>
               <p className="text-sm mt-1">{submitMessage}</p>
             </div>
           )}
@@ -171,7 +171,7 @@ export default function NewProductPage() {
                   <div className="relative inline-block">
                     <img
                       src={imagePreview}
-                      alt="Prévisualisation"
+                      alt="Предпросмотр"
                       className="max-w-sm rounded-lg border border-wood-300"
                     />
                     <button

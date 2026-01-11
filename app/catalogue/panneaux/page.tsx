@@ -10,7 +10,7 @@ export default function CategoryPage() {
         icon="📦"
       />
       <div className="container mx-auto px-4">
-        <ProductList categoryName="Panneaux et voiles" />
+        <ProductList categoryName="Панели и плиты" />
       </div>
     </div>
   )

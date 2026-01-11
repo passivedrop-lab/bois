@@ -45,7 +45,7 @@ function ReceiptContent() {
       })
 
       if (!response.ok) {
-        throw new Error('Erreur lors de l\'upload du reçu')
+        throw new Error('Ошибка при загрузке чека')
       }
 
       setShowSuccess(true)
@@ -53,7 +53,7 @@ function ReceiptContent() {
         router.push('/profile/orders')
       }, 3000)
     } catch (err) {
-      setError('Erreur lors du téléversement. Veuillez réessayer.')
+      setError('Ошибка при загрузке. Пожалуйста, попробуйте еще раз.')
       console.error(err)
     } finally {
       setUploading(false)
@@ -63,7 +63,7 @@ function ReceiptContent() {
   if (!orderId) {
     return (
       <div className="py-20 text-center">
-        <p>Commande non spécifiée. Veuillez retourner à <Link href="/profile/orders" className="text-fire-600 underline">vos commandes</Link>.</p>
+        <p>Заказ не указан. Пожалуйста, вернитесь к <Link href="/profile/orders" className="text-fire-600 underline">вашим заказам</Link>.</p>
       </div>
     )
   }
@@ -215,7 +215,7 @@ function ReceiptContent() {
 
 export default function ReceiptPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Загрузка...</div>}>
       <ReceiptContent />
     </Suspense>
   )

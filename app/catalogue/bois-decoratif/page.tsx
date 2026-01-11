@@ -10,7 +10,7 @@ export default function CategoryPage() {
         icon="✨"
       />
       <div className="container mx-auto px-4">
-        <ProductList categoryName="Bois décoratif" />
+        <ProductList categoryName="Декоративная древесина" />
       </div>
     </div>
   )

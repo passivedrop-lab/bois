@@ -10,27 +10,27 @@ export async function POST(request: Request) {
     let html = ''
 
     if (type === 'confirmation') {
-      subject = `Confirmation de commande #${orderId}`
+      subject = `Подтверждение заказа #${orderId}`
       html = `
-          <h1>Merci pour votre commande, ${customerName}!</h1>
-          <p>Nous avons bien reçu votre commande #${orderId} d'un montant de ${orderTotal}₽.</p>
-          <p>Nous allons vérifier votre paiement et vous informerons dès que votre commande sera validée.</p>
-          <p>Cordialement,<br/>L'équipe TsarstvoDereva</p>
+          <h1>Спасибо за ваш заказ, ${customerName}!</h1>
+          <p>Мы получили ваш заказ #${orderId} на сумму ${orderTotal}₽.</p>
+          <p>Мы проверим вашу оплату и сообщим вам, как только заказ будет подтвержден.</p>
+          <p>С уважением,<br/>Команда TsarstvoDereva</p>
         `
     } else if (type === 'verified') {
-      subject = `Commande #${orderId} validée !`
+      subject = `Заказ #${orderId} подтвержден !`
       html = `
-          <h1>Bonne nouvelle !</h1>
-          <p>Votre commande #${orderId} a été validée.</p>
-          <p>Nous préparons l'expédition. Vous recevrez un autre email avec les détails de suivi.</p>
+          <h1>Хорошие новости !</h1>
+          <p>Ваш заказ #${orderId} был подтвержден.</p>
+          <p>Мы готовим заказ к отправке. Вы получите еще одно письмо с деталями отслеживания.</p>
         `
     } else if (type === 'rejected') {
-      subject = `Problème avec la commande #${orderId}`
+      subject = `Проблема с заказом #${orderId}`
       html = `
-          <h1>Information importante</h1>
-          <p>Votre commande #${orderId} n'a pas pu être validée.</p>
-          <p><strong>Raison :</strong> ${reason}</p>
-          <p>Veuillez contacter notre support pour résoudre ce problème.</p>
+          <h1>Важная информация</h1>
+          <p>К сожалению, ваш заказ #${orderId} не может быть подтвержден.</p>
+          <p><strong>Причина:</strong> ${reason}</p>
+          <p>Пожалуйста, свяжитесь с нашей службой поддержки для решения этой проблемы.</p>
         `
     } else if (type === 'admin_notification') {
       subject = `Nouvelle commande #${orderId}`
@@ -47,15 +47,15 @@ export async function POST(request: Request) {
           itemsHtml = items.map((item: any) =>
             `<li style="margin-bottom: 5px;">
                             ${item.product_name} <br/>
-                            <span style="color: #666; font-size: 0.9em;">Qté: ${item.quantity} | Prix: ${item.price}₽</span>
+                            <span style="color: #666; font-size: 0.9em;">Кол-во: ${item.quantity} | Цена: ${item.price}₽</span>
                         </li>`
           ).join('')
         } else {
-          itemsHtml = '<li>Aucun article trouvé</li>'
+          itemsHtml = '<li>Товары не найдены</li>'
         }
       } catch (e) {
         console.error('Error fetching items for email:', e)
-        itemsHtml = '<li>Erreur chargement détails</li>'
+        itemsHtml = '<li>Ошибка загрузки деталей</li>'
       }
 
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -64,27 +64,27 @@ export async function POST(request: Request) {
 
       html = `
            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-             <h1>Nouvelle commande reçue</h1>
+             <h1>Получен новый заказ</h1>
              <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <p style="margin: 5px 0;"><strong>Client:</strong> ${customerName}</p>
+                <p style="margin: 5px 0;"><strong>Клиент:</strong> ${customerName}</p>
                 <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                <p style="margin: 5px 0;"><strong>Montant Total:</strong> <span style="color: #ea580c; font-weight: bold;">${orderTotal}₽</span></p>
-                <p style="margin: 5px 0;"><strong>ID Commande:</strong> #${orderId}</p>
+                <p style="margin: 5px 0;"><strong>Общая сумма:</strong> <span style="color: #ea580c; font-weight: bold;">${orderTotal}₽</span></p>
+                <p style="margin: 5px 0;"><strong>ID Заказа:</strong> #${orderId}</p>
              </div>
              
-             <h3>Articles commandés :</h3>
+             <h3>Заказанные товары :</h3>
              <ul style="border: 1px solid #e5e7eb; padding: 15px 15px 15px 30px; border-radius: 8px;">
                 ${itemsHtml}
              </ul>
 
              <div style="margin-top: 30px; padding: 20px; border-top: 1px solid #eee; text-align: center;">
-               <p style="margin-bottom: 15px;">Action rapide :</p>
-               <a href="${confirmLink}" style="background-color: #16a34a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-right: 15px; font-weight: bold;">✅ Valider</a>
-               <a href="${rejectLink}" style="background-color: #dc2626; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">❌ Rejeter</a>
+               <p style="margin-bottom: 15px;">Быстрое действие :</p>
+               <a href="${confirmLink}" style="background-color: #16a34a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-right: 15px; font-weight: bold;">✅ Подтвердить</a>
+               <a href="${rejectLink}" style="background-color: #dc2626; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">❌ Отклонить</a>
              </div>
 
              <p style="margin-top: 30px; text-align: center; color: #6b7280; font-size: 0.9em;">
-               <a href="${baseUrl}/admin/orders" style="color: #4b5563;">Voir tous les détails dans le Dashboard</a>
+               <a href="${baseUrl}/admin/orders" style="color: #4b5563;">Посмотреть детали в панели управления</a>
              </p>
            </div>
         `

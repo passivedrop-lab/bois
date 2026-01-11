@@ -55,7 +55,7 @@ export default function AdminProducts() {
             const json = await res.json()
             if (res.ok && json.products) setProducts(json.products)
           } catch (err) {
-            console.error('Erreur chargement produits:', err)
+            console.error('Ошибка при загрузке товаров:', err)
           } finally {
             setLoading(false)
           }
@@ -71,11 +71,11 @@ export default function AdminProducts() {
             method: 'DELETE',
           })
           const json = await res.json()
-          if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+          if (!res.ok) throw new Error(json.error || 'Ошибка при удалении')
           setProducts(products.filter((p) => p.id !== id))
         } catch (err) {
-          console.error('Erreur suppression produit:', err)
-          alert('Erreur lors de la suppression')
+          console.error('Ошибка при удалении товара:', err)
+          alert('Ошибка при удалении')
         }
       })()
     }
@@ -93,13 +93,13 @@ export default function AdminProducts() {
           body: JSON.stringify({ id, vedette: newVedette }),
         })
         const json = await res.json()
-        if (!res.ok) throw new Error(json.error || 'Erreur update')
+        if (!res.ok) throw new Error(json.error || 'Ошибка обновления')
         setProducts(
           products.map((p) => (p.id === id ? { ...p, vedette: newVedette } : p))
         )
       } catch (err) {
-        console.error('Erreur toggle vedette:', err)
-        alert('Erreur lors de la mise à jour')
+        console.error('Ошибка изменения статуса избранного:', err)
+        alert('Ошибка при обновлении')
       }
     })()
   }
@@ -148,12 +148,12 @@ export default function AdminProducts() {
                   headers: { 'x-admin-delete-token': token },
                 })
                 const json = await res.json()
-                if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+                if (!res.ok) throw new Error(json.error || 'Ошибка при удалении')
                 setProducts([])
-                alert(json.message || 'Tous les produits ont été supprimés')
+                alert(json.message || 'Все товары были удалены')
               } catch (err) {
-                console.error('Erreur suppression globale:', err)
-                alert('Erreur lors de la suppression')
+                console.error('Ошибка при глобальном удалении:', err)
+                alert('Ошибка при удалении')
               } finally {
                 setDeletingAll(false)
               }
@@ -161,11 +161,11 @@ export default function AdminProducts() {
             className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-semibold"
             disabled={deletingAll}
           >
-            {deletingAll ? 'Suppression en cours...' : 'Supprimer tous les produits'}
+            {deletingAll ? 'Удаление...' : 'Удалить все товары'}
           </button>
           <button
             onClick={async () => {
-              if (selectedIds.length === 0) return alert('Aucun produit sélectionné')
+              if (selectedIds.length === 0) return alert('Товары не выбраны')
               if (!confirm(`Вы уверены, что хотите удалить ${selectedIds.length} выбранных товаров?`)) return
               setDeletingAll(true)
               try {
@@ -175,13 +175,13 @@ export default function AdminProducts() {
                   body: JSON.stringify({ ids: selectedIds }),
                 })
                 const json = await res.json()
-                if (!res.ok) throw new Error(json.error || 'Erreur suppression')
+                if (!res.ok) throw new Error(json.error || 'Ошибка при удалении')
                 setProducts(products.filter((p) => !selectedIds.includes(p.id)))
                 setSelectedIds([])
-                alert(json.message || 'Sélection supprimée')
+                alert(json.message || 'Выделенные товары удалены')
               } catch (err) {
-                console.error('Erreur suppression multiple:', err)
-                alert('Erreur lors de la suppression')
+                console.error('Ошибка при множественном удалении:', err)
+                alert('Ошибка при удалении')
               } finally {
                 setDeletingAll(false)
               }
@@ -189,7 +189,7 @@ export default function AdminProducts() {
             className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition font-semibold"
             disabled={deletingAll}
           >
-            {deletingAll ? 'Suppression...' : 'Supprimer la sélection'}
+            {deletingAll ? 'Удаление...' : 'Удалить выбранные'}
           </button>
         </div>
 
@@ -262,8 +262,8 @@ export default function AdminProducts() {
                   <button
                     onClick={() => toggleVedette(product.id)}
                     className={`p-2 rounded-lg transition ${product.vedette
-                        ? 'bg-amber-100 hover:bg-amber-200'
-                        : 'hover:bg-gray-100'
+                      ? 'bg-amber-100 hover:bg-amber-200'
+                      : 'hover:bg-gray-100'
                       }`}
                     title={product.vedette ? 'Удалить из избранного' : 'Добавить в избранное'}
                   >
@@ -282,7 +282,7 @@ export default function AdminProducts() {
                   <button
                     onClick={() => handleDelete(product.id)}
                     className="p-2 hover:bg-red-100 rounded-lg transition"
-                    title="Supprimer"
+                    title="Удалить"
                   >
                     <Trash2 size={20} className="text-red-600" />
                   </button>
