@@ -45,6 +45,10 @@ export default function OrdersPage() {
         return { icon: Truck, color: 'text-blue-600', text: 'В пути' }
       case 'processing':
         return { icon: Clock, color: 'text-yellow-600', text: 'В обработке' }
+      case 'verified':
+        return { icon: CheckCircle, color: 'text-green-600', text: 'Подтвержден' }
+      case 'rejected':
+        return { icon: AlertCircle, color: 'text-red-600', text: 'Отклонен' }
       case 'cancelled':
         return { icon: AlertCircle, color: 'text-red-600', text: 'Отменено' }
       default:

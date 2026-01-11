@@ -1,39 +1,12 @@
 "use client"
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ShoppingCart, Star, Heart } from 'lucide-react'
-import { useCartStore } from '@/lib/store/cartStore'
-import { useFavoritesStore } from '@/lib/store/favoritesStore'
-import toast from 'react-hot-toast'
 import { PRODUCTS } from '@/lib/data/products'
+import ProductCard from './ProductCard'
 
 export default function FeaturedProducts() {
   const products = PRODUCTS.filter(p => p.vedette)
-  const cartStore = useCartStore()
-  const favoritesStore = useFavoritesStore()
-
-  const handleAddToCart = async (product: typeof products[0]) => {
-    await cartStore.addItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-    })
-    toast.success('Добавлено в корзину')
-  }
-
-  const handleToggleFavorite = async (product: typeof products[0]) => {
-    const wasFavorite = favoritesStore.isFavorite(product.id)
-    await favoritesStore.toggleFavorite({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-    })
-    toast.success(
-      !wasFavorite ? 'Добавлено в избранное' : 'Удалено из избранного'
-    )
-  }
 
   if (products.length === 0) return null
 
@@ -61,88 +34,9 @@ export default function FeaturedProducts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="h-full"
             >
-              <div className="card group">
-                {/* Image */}
-                <div className="relative overflow-hidden bg-wood-100">
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                      <Star size={14} fill="white" />
-                      Хит
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4 z-10">
-                    <button
-                      onClick={() => handleToggleFavorite(product)}
-                      className="p-2 bg-white/90 hover:bg-white rounded-full transition"
-                    >
-                      <Heart
-                        size={20}
-                        className={favoritesStore.isFavorite(product.id) ? 'text-red-500 fill-red-500' : 'text-wood-600'}
-                      />
-                    </button>
-                  </div>
-                  <div className="aspect-square flex items-center justify-center bg-wood-100">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={600}
-                      height={600}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover w-full h-full"
-                      priority={index === 0}
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition"></div>
-                </div>
-
-                {/* Content */}
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={12}
-                          className={`sm:w-3.5 sm:h-3.5 ${i < Math.floor(product.rating) ? 'text-fire-500 fill-fire-500' : 'text-wood-300'}`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs sm:text-sm text-wood-600">({product.reviews})</span>
-                  </div>
-
-                  <h3 className="text-base sm:text-lg font-semibold text-wood-900 mb-2 sm:mb-3 line-clamp-2 min-h-[3rem]">
-                    {product.name}
-                  </h3>
-
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <div>
-                      {product.originalPrice ? (
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                          <span className="text-wood-400 line-through text-xs sm:text-sm">
-                            {product.originalPrice.toLocaleString('ru-RU')} ₽
-                          </span>
-                          <span className="text-xl sm:text-2xl font-bold text-fire-600">
-                            {product.price.toLocaleString('ru-RU')} ₽
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="text-xl sm:text-2xl font-bold text-wood-900">
-                          {product.price.toLocaleString('ru-RU')} ₽
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="w-full btn-primary flex items-center justify-center gap-2 text-sm sm:text-base py-2.5 sm:py-3"
-                  >
-                    <ShoppingCart size={18} className="sm:w-5 sm:h-5" />
-                    В корзину
-                  </button>
-                </div>
-              </div>
+              <ProductCard product={product} />
             </motion.div>
           ))}
         </div>

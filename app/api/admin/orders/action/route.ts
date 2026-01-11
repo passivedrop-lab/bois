@@ -2,59 +2,60 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
 export async function GET(request: NextRequest) {
-    const { searchParams } = new URL(request.url)
-    const orderId = searchParams.get('id')
-    const action = searchParams.get('action') as 'verified' | 'rejected'
+  const { searchParams } = new URL(request.url)
+  const orderId = searchParams.get('id')
+  const action = searchParams.get('action') as 'verified' | 'rejected'
 
-    if (!orderId || !action || !['verified', 'rejected'].includes(action)) {
-        return new NextResponse('Action invalide', { status: 400 })
+  if (!orderId || !action || !['verified', 'rejected'].includes(action)) {
+    return new NextResponse('Action invalide', { status: 400 })
+  }
+
+  try {
+    const supabase = await createClient()
+
+    // 1. Get order details first to notify customer later
+    const { data: order, error: fetchError } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('id', orderId)
+      .single()
+
+    if (fetchError || !order) {
+      return new NextResponse(`Commande #${orderId} introuvable`, { status: 404 })
     }
 
+    // 2. Update order status
+    const { error: updateError } = await supabase
+      .from('orders')
+      .update({ status: action })
+      .eq('id', orderId)
+
+    if (updateError) throw updateError
+
+    // 3. Trigger customer notification email
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     try {
-        const supabase = await createClient()
+      await fetch(`${baseUrl}/api/emails/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: action,
+          email: order.customer_email,
+          orderId: order.id,
+          orderTotal: order.total_price,
+          customerName: order.customer_name,
+          reason: action === 'rejected' ? 'Vérification du paiement échouée ou document manquant' : undefined
+        })
+      })
+    } catch (emailErr) {
+      console.error('Failed to send customer notification:', emailErr)
+    }
 
-        // 1. Get order details first to notify customer later
-        const { data: order, error: fetchError } = await supabase
-            .from('orders')
-            .select('*')
-            .eq('id', orderId)
-            .single()
+    // 4. Return success page
+    const statusLabel = action === 'verified' ? 'VALIDÉE' : 'REJETÉE'
+    const statusColor = action === 'verified' ? '#16a34a' : '#dc2626'
 
-        if (fetchError || !order) {
-            return new NextResponse(`Commande #${orderId} introuvable`, { status: 404 })
-        }
-
-        // 2. Update order status
-        const { error: updateError } = await supabase
-            .from('orders')
-            .update({ status: action })
-            .eq('id', orderId)
-
-        if (updateError) throw updateError
-
-        // 3. Trigger customer notification email
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-        try {
-            await fetch(`${baseUrl}/api/emails/send`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    type: action,
-                    email: order.customer_email,
-                    orderId: order.id,
-                    orderTotal: order.total_price,
-                    customerName: order.customer_name,
-                })
-            })
-        } catch (emailErr) {
-            console.error('Failed to send customer notification:', emailErr)
-        }
-
-        // 4. Return success page
-        const statusLabel = action === 'verified' ? 'VALIDÉE' : 'REJETÉE'
-        const statusColor = action === 'verified' ? '#16a34a' : '#dc2626'
-
-        return new NextResponse(`
+    return new NextResponse(`
       <!DOCTYPE html>
       <html>
         <head>
@@ -79,11 +80,11 @@ export async function GET(request: NextRequest) {
         </body>
       </html>
     `, {
-            headers: { 'Content-Type': 'text/html; charset=utf-8' }
-        })
+      headers: { 'Content-Type': 'text/html; charset=utf-8' }
+    })
 
-    } catch (error: any) {
-        console.error('Order Action Error:', error)
-        return new NextResponse(`Erreur: ${error.message}`, { status: 500 })
-    }
+  } catch (error: any) {
+    console.error('Order Action Error:', error)
+    return new NextResponse(`Erreur: ${error.message}`, { status: 500 })
+  }
 }

@@ -13,7 +13,7 @@ export interface CartItem {
 interface CartStore {
   items: CartItem[]
   isSyncing: boolean
-  addItem: (item: Omit<CartItem, 'quantity'>) => Promise<void>
+  addItem: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => Promise<void>
   removeItem: (id: string) => Promise<void>
   updateQuantity: (id: string, quantity: number) => Promise<void>
   clearCart: () => Promise<void>
@@ -32,12 +32,17 @@ export const useCartStore = create<CartStore>()(
       isSyncing: false,
 
       addItem: async (item) => {
+        const quantityToAdd = item.quantity || 1
         const existingItem = get().items.find((i) => i.id === item.id)
+
+        // Remove quantity from item object to avoid spreading it if it exists in a way we don't want (though typescript handles typing)
+        const { quantity, ...itemProps } = item as any
+
         const newItems = existingItem
           ? get().items.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+            i.id === item.id ? { ...i, quantity: i.quantity + quantityToAdd } : i
           )
-          : [...get().items, { ...item, quantity: 1 }]
+          : [...get().items, { ...itemProps, quantity: quantityToAdd }]
 
         set({ items: newItems })
 
