@@ -36,7 +36,8 @@ export const PRODUCTS: Product[] = [
         variants: [
             { id: 'v1', label: '100х100х3000 мм', price: 36000 },
             { id: 'v2', label: '100х150х3000 мм', price: 42000 },
-            { id: 'v3', label: '150х150х3000 мм', price: 48000 }
+            { id: 'v3', label: '150х150х3000 мм', price: 48000 },
+            { id: 'v4', label: '200х200х3000 мм', price: 54000 }
         ]
     },
     {
@@ -53,7 +54,9 @@ export const PRODUCTS: Product[] = [
         reviews: 12,
         variants: [
             { id: 'v1', label: '150х150х6000 мм', price: 46800, originalPrice: 54000 },
-            { id: 'v2', label: '200х200х6000 мм', price: 58000, originalPrice: 65000 }
+            { id: 'v2', label: '200х200х6000 мм', price: 58000, originalPrice: 65000 },
+            { id: 'v3', label: '50х100х3000 мм', price: 40000 },
+            { id: 'v4', label: '150х150х6000 мм', price: 46800 }
         ]
     },
     {
@@ -70,7 +73,9 @@ export const PRODUCTS: Product[] = [
         reviews: 30,
         variants: [
             { id: 'v1', label: '40х40х3000 мм', price: 18000 },
-            { id: 'v2', label: '50х50х3000 мм', price: 18000 }
+            { id: 'v2', label: '50х50х3000 мм', price: 18000 },
+            { id: 'v3', label: '30х90х3000 мм', price: 18000 },
+            { id: 'v4', label: '30х90х2000 мм', price: 18000 }
         ]
     },
     {
@@ -169,7 +174,9 @@ export const PRODUCTS: Product[] = [
         reviews: 35,
         variants: [
             { id: 'v1', label: 'Ель, 100х150х6000 мм', price: 21000 },
-            { id: 'v2', label: 'Сосна, 100х200х6000 мм', price: 28000 }
+            { id: 'v2', label: 'Сосна, 100х200х6000 мм', price: 28000 },
+            { id: 'v3', label: '100х100х3000 мм', price: 21000 },
+            { id: 'v4', label: '150х150х300 мм', price: 21000 }
         ]
     },
     {
