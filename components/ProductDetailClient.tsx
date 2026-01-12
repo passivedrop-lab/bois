@@ -89,17 +89,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
 
     // Calculate total price of selected items
-    const totalPrice = product.variants?.reduce((sum, variant) => {
-        const qty = quantities[variant.id] || 0
-        if (qty <= 0) return sum
+    const totalPrice = (product.variants && product.variants.length > 0)
+        ? product.variants.reduce((sum, variant) => {
+            const qty = quantities[variant.id] || 0
+            if (qty <= 0) return sum
 
-        if (product.unit === 'м³') {
-            const { volume } = getVariantDetails(variant.label, qty)
-            return sum + (variant.price * volume)
-        }
+            if (product.unit === 'м³') {
+                const { volume } = getVariantDetails(variant.label, qty)
+                return sum + (variant.price * volume)
+            }
 
-        return sum + (variant.price * qty)
-    }, 0) || (product.price * (quantities['default'] || 1))
+            return sum + (variant.price * qty)
+        }, 0)
+        : (product.price * (quantities['default'] || 1))
 
     // Count total items selected
     const totalItems = Object.values(quantities).reduce((a, b) => a + b, 0)
@@ -354,9 +356,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                         ) : (
                             // Fallback for Products without Variants
                             <div className="mb-8 p-6 bg-wood-50 rounded-xl border border-wood-100">
-                                <span className="text-4xl font-bold text-fire-600 block mb-4">
-                                    {product.price.toLocaleString('ru-RU')} ₽
-                                </span>
+                                <div className="flex flex-col mb-4">
+                                    <span className="text-4xl font-bold text-fire-600">
+                                        {(product.price * (quantities['default'] || 1)).toLocaleString('ru-RU')} ₽
+                                    </span>
+                                    {(quantities['default'] || 1) > 1 && (
+                                        <span className="text-sm text-wood-500">
+                                            ({product.price.toLocaleString('ru-RU')} ₽ / {product.unit || 'шт.'})
+                                        </span>
+                                    )}
+                                </div>
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center bg-white border border-wood-300 rounded-lg">
                                         <button
