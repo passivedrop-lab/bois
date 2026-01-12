@@ -81,7 +81,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Качественная сухая строганная доска для отделочных и каркасных работ. \n\nХарактеристики:\n• Сорт: А (Экстра/Прима)\n• Поверхность: Гладкая, шлифованная\n• Влажность: 10-12%\n• Применение: Силовой каркас, отделка, стропильная система (видимая).',
-        image: '/images-product/bois-contre-colle-structure-epicea.jpg',
+        image: '/images-product/madrier-bois-charpente-50x150x6000mm.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 30,
@@ -98,7 +98,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Лаги пола из сибирской лиственницы, устойчивые к гниению и влаге. \n\nХарактеристики:\n• Сечение: 50х150 мм\n• Длина: 4000 мм\n• Порода: Лиственница Сибирская\n• Плотность: Высокая (650 кг/м3)\n• Сорт: BC (Допускаются живые сучки)\n• Применение: Лаги пола, террасы, нижняя обвязка дома, влажные помещения.',
-        image: '/images-product/bois-lamelle-colle-grande-portee.jpg',
+        image: '/images-product/planche-charpente-50x200.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 15
@@ -111,7 +111,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Конструкционный клееный брус высшего качества. Не дает усадки, не трескается. \n\nХарактеристики:\n• Сечение: 200х200 мм\n• Длина: 6000 мм\n• Клей: D4 (Влагостойкий, экологичный)\n• Ламели: Цельные, бездефектные\n• Прочность: GL24h\n• Применение: Опорные столбы, балки перекрытий больших пролетов, фахверк.',
-        image: '/images-product/poutre-en-i-lamibois-charpente.jpg',
+        image: '/images-product/bois-lamelle-colle-grande-portee.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 5
@@ -586,7 +586,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Твердая древесноволокнистая плита (оргалит). \n\nХарактеристики:\n• Толщина: 3.2 мм\n• Размер листа: 2745х1700 мм\n• Цвет: Коричневый\n• Поверхность: Одна сторона гладкая\n• Применение: Задние стенки мебели, отделка ящиков, временные перегородки.',
-        image: '/images-product/panneau-fibres-bois-isorel-3mm.jpg',
+        image: '/images-product/panneau-isorel-dur-dvp-3-2mm.jpg',
         vedette: false,
         rating: 4.4,
         reviews: 25
@@ -616,7 +616,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Экологичная огнестойкая плита ЦСП. \n\nХарактеристики:\n• Толщина: 10 мм\n• Размер: 1200х3200 мм\n• Состав: Древесная щепа + Цемент\n• Особенности: Пожаробезопасность, влагостойкость, биостойкость\n• Применение: Наружная обшивка каркасных домов, полы во влажных помещениях.',
-        image: '/images-product/panneau-particules-ciment-viking.jpg',
+        image: '/images-product/panneau-particules-ciment-csp-10mm.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 15
@@ -683,7 +683,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: 42000,
         unit: 'м³',
         description: 'Вагонка из отборной липы для отделки парных. \n\nХарактеристики:\n• Сечение: 15х90 мм\n• Порода: Липа Сибирская\n• Сорт: Экстра (Белоснежная, без сучков)\n• Влажность: 8-10% (Мебельная сушка)\n• Свойства: Не обжигает кожу, не выделяет смолу\n• Применение: Стены и потолки в банях и саунах.',
-        image: '/images-product/lambris-sauna-tilleul-80x15.jpg',
+        image: '/images-product/lambris-bois-tilleul-sauna-extra.jpg',
         vedette: true,
         rating: 4.9,
         reviews: 45
@@ -696,7 +696,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Премиальная отделка из канадского красного кедра (WRC). \n\nХарактеристики:\n• Материал: Красный кедр (Канада)\n• Сорт: Premium Clear\n• Аромат: Насыщенный кедровый\n• Цвет: Множество оттенков от светлого до кофейного\n• Термоизоляция: Высокая\n• Применение: Элитные сауны, инфракрасные кабины.',
-        image: '/images-product/lambris-cedre-rouge-du-canada.jpg',
+        image: '/images-product/lambris-bois-cedre-aromatique-14x140.jpg',
         vedette: false,
         rating: 5.0,
         reviews: 12
@@ -722,7 +722,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Отработанные доски для устройства полоков (лежаков). \n\nХарактеристики:\n• Сечение: 28х90 мм\n• Материал: Липа (Экстра)\n• Обработка: Шлифовка, скругленные фаски\n• Влажность: 10%\n• Применение: Лежаки в парной, скамейки.',
-        image: '/images-product/banc-sauna-tilleul-90x28.jpg',
+        image: '/images-product/banc-sauna-bois-tilleul-confort-27x90.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 20
@@ -735,7 +735,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: 21000,
         unit: 'шт.',
         description: 'Надежная стеклянная дверь в деревянной коробке. \n\nХарактеристики:\n• Стекло: Закаленное (8 мм), цвет "Бронза"\n• Коробка: Липа/Ольха\n• Петли: 3 шт (усиленные)\n• Ручка: Деревянная с магнитным замком\n• Размер: 1900х700 мм (по коробке)\n• Применение: Вход в парную.',
-        image: '/images-product/porte-sauna-verre-bronze.jpg',
+        image: '/images-product/porte-sauna-verre-trempe-cadre-bois.jpg',
         vedette: true,
         rating: 4.7,
         reviews: 35
@@ -815,7 +815,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'палета',
         description: 'Удобные сетки с сухими березовыми дровами. \n\nХарактеристики:\n• Объем сетки: 30 литров\n• Вес сетки: ~8-10 кг\n• Порода: Береза 100%\n• Применение: Камины, мангалы, грили, бани.',
-        image: '/images-product/filet-buches-bois-chauffage-30l.jpg',
+        image: '/images-product/buches-bois-bouleau-sec-filet-40l.jpg',
         vedette: false,
         rating: 4.8,
         reviews: 85
@@ -887,7 +887,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Пиломатериал для фундаментных и черновых работ. \n\nХарактеристики:\n• Сечение: 100х100 / 100х150 мм\n• Порода: Сосна / Ель\n• Влажность: Естественная\n• Применение: Опалубка, строительные леса, временные ограждения.',
-        image: '/images-product/poutre-coffrage-bois-100x150.jpg',
+        image: '/images-product/poutre-bois-brut-coffrage-100x100.jpg',
         vedette: false,
         rating: 4.2,
         reviews: 15
@@ -900,7 +900,7 @@ export const PRODUCTS: Product[] = [
         originalPrice: null,
         unit: 'м³',
         description: 'Обрезная доска 2-3 сорта для монолитных работ. \n\nХарактеристики:\n• Толщина: 25 мм\n• Ширина: 100-150 мм\n• Сорт: Технический\n• Применение: Съемная опалубка фундамента, обрешетка.',
-        image: '/images-product/planche-bois-brut-coffrage-25mm.jpg',
+        image: '/images-product/planche-bois-brut-second-choix-25x150.jpg',
         vedette: false,
         rating: 4.0,
         reviews: 30

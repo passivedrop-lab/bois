@@ -39,11 +39,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     }
 
     const parseDimensions = (label: string) => {
+        // Matches HxWxL (e.g., 50x150x6000)
         const match = label.match(/(\d+)[xх](\d+)[xх](\d+)/)
         if (match) {
             return {
-                width: parseInt(match[1]),
-                height: parseInt(match[2]),
+                thickness: parseInt(match[1]),
+                width: parseInt(match[2]),
                 length: parseInt(match[3])
             }
         }
@@ -59,6 +60,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         product.variants.forEach(variant => {
             const dims = parseDimensions(variant.label)
             if (dims) {
+                // Calculation for area coverage (use Width x Length)
+                // Width is usually the middle dimension or second dimension in the label (e.g., 50x150x6000)
+                // However, in the catalog, some dimensions like 100x100x3000 are used.
+                // We'll use the second and third dimensions for area calculation if it's "plank-like"
+                // or the first and third depending on the context. 
+                // Let's stick to the assumption that coverage is Width (dims.width) * Length (dims.length)
                 const pieceArea = (dims.width * dims.length) / 1000000
                 if (pieceArea > 0) {
                     const count = Math.ceil(surface / pieceArea)
@@ -69,18 +76,44 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
         setSuggestions(newSuggestions)
         setShowCalculator(false)
-        console.log("Suggestions calculated:", newSuggestions) // Debug
-        toast.success(`Расчет для ${surface} м² выполнен. Выберите варианты.`)
+        toast.success(`Расчет для ${surface} м² выполнен. Рекомендации добавлены.`)
+    }
+
+    const getVariantDetails = (variantLabel: string, qty: number) => {
+        const dims = parseDimensions(variantLabel)
+        if (!dims) return { volume: 0, area: 0 }
+
+        const volume = (dims.thickness * dims.width * dims.length * qty) / 1000000000
+        const area = (dims.width * dims.length * qty) / 1000000
+        return { volume, area }
     }
 
     // Calculate total price of selected items
     const totalPrice = product.variants?.reduce((sum, variant) => {
         const qty = quantities[variant.id] || 0
+        if (qty <= 0) return sum
+
+        if (product.unit === 'м³') {
+            const { volume } = getVariantDetails(variant.label, qty)
+            return sum + (variant.price * volume)
+        }
+
         return sum + (variant.price * qty)
-    }, 0) || (product.price * (quantities['default'] || 1)) // Fallback for no-variant products
+    }, 0) || (product.price * (quantities['default'] || 1))
 
     // Count total items selected
     const totalItems = Object.values(quantities).reduce((a, b) => a + b, 0)
+
+    // Calculate total volume/area for display
+    const totals = product.variants?.reduce((acc, variant) => {
+        const qty = quantities[variant.id] || 0
+        if (qty <= 0) return acc
+        const { volume, area } = getVariantDetails(variant.label, qty)
+        return {
+            volume: acc.volume + volume,
+            area: acc.area + area
+        }
+    }, { volume: 0, area: 0 }) || { volume: 0, area: 0 }
 
     const handleAddToCart = () => {
         if (product.variants && product.variants.length > 0) {
@@ -88,10 +121,19 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             Object.entries(quantities).forEach(([variantId, qty]) => {
                 const variant = product.variants!.find(v => v.id === variantId)
                 if (variant && qty > 0) {
+                    let finalPrice = variant.price
+                    let displayName = `${product.name} (${variant.label})`
+
+                    if (product.unit === 'м³') {
+                        const { volume } = getVariantDetails(variant.label, 1) // Volume of 1 piece
+                        finalPrice = variant.price * volume
+                        displayName = `${product.name} (${variant.label}) — ${volume.toFixed(3)} м³/шт`
+                    }
+
                     cartStore.addItem({
                         id: `${product.id}-${variant.id}`,
-                        name: `${product.name} (${variant.label})`,
-                        price: variant.price,
+                        name: displayName,
+                        price: finalPrice,
                         quantity: qty,
                         variantLabel: variant.label,
                         image: product.image
@@ -346,17 +388,18 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                                         <span className="text-3xl font-bold">
                                             {totalPrice.toLocaleString('ru-RU')} ₽
                                         </span>
-                                        <span className="text-wood-400 text-sm">
-                                            ({totalItems} товаров)
-                                        </span>
+                                        <div className="flex flex-col text-wood-400 text-xs">
+                                            <span>({totalItems} шт.)</span>
+                                            {totals.volume > 0 && <span>{totals.volume.toFixed(3)} м³</span>}
+                                        </div>
                                     </div>
                                 </div>
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={totalItems === 0}
                                     className={`w-full sm:w-auto px-8 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition ${totalItems > 0
-                                            ? 'bg-fire-600 hover:bg-fire-500 text-white shadow-fire-900/50 shadow-lg cursor-pointer transform hover:-translate-y-0.5'
-                                            : 'bg-wood-700 text-wood-500 cursor-not-allowed'
+                                        ? 'bg-fire-600 hover:bg-fire-500 text-white shadow-fire-900/50 shadow-lg cursor-pointer transform hover:-translate-y-0.5'
+                                        : 'bg-wood-700 text-wood-500 cursor-not-allowed'
                                         }`}
                                 >
                                     <ShoppingCart size={20} />
