@@ -104,6 +104,14 @@ export default function OrdersPage() {
                         <StatusIcon size={16} />
                         {statusInfo.text}
                       </div>
+                      {order.status === 'pending' && (
+                        <Link
+                          href={`/oformlenie-zakaza/receipt?orderId=${order.id}&amount=${order.total_price}`}
+                          className="inline-block mt-2 text-xs bg-fire-100 text-fire-700 px-3 py-1 rounded-full hover:bg-fire-200 transition font-bold"
+                        >
+                          Загрузить чек
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

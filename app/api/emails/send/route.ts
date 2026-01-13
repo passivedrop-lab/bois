@@ -10,12 +10,28 @@ export async function POST(request: Request) {
     let html = ''
 
     if (type === 'confirmation') {
-      subject = `Подтверждение заказа #${orderId}`
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      const uploadLink = `${baseUrl}/oformlenie-zakaza/receipt?orderId=${orderId}&amount=${orderTotal}`
+
+      subject = `Подтверждение и оплата заказа #${orderId}`
       html = `
-          <h1>Спасибо за ваш заказ, ${customerName}!</h1>
-          <p>Мы получили ваш заказ #${orderId} на сумму ${orderTotal}₽.</p>
-          <p>Мы проверим вашу оплату и сообщим вам, как только заказ будет подтвержден.</p>
-          <p>С уважением,<br/>Команда TsarstvoDereva</p>
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1>Спасибо за ваш заказ, ${customerName}!</h1>
+            <p>Мы получили ваш заказ <strong>#${orderId}</strong> на сумму <strong>${orderTotal}₽</strong>.</p>
+            
+            <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 20px; border-radius: 8px; margin: 25px 0;">
+              <h3 style="color: #9a3412; margin-top: 0;">Финальный этап : Загрузка чека</h3>
+              <p>Для того чтобы мы начали обработку вашего заказа, пожалуйста, загрузите подтверждение оплаты (скриншот или PDF квитанции).</p>
+              <div style="text-align: center; margin-top: 20px;">
+                <a href="${uploadLink}" style="background-color: #ea580c; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">📤 Загрузить чек оплаты</a>
+              </div>
+            </div>
+
+            <p>Мы проверим вашу оплату и сообщим вам, как только заказ будет подтвержден.</p>
+            <p style="color: #666; font-size: 0.9em; margin-top: 30px; border-top: 1px solid #eee; pt: 20px;">
+              С уважением,<br/>Команда TsarstvoDereva
+            </p>
+          </div>
         `
     } else if (type === 'verified') {
       subject = `Заказ #${orderId} подтвержден !`

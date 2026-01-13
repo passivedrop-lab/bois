@@ -61,9 +61,23 @@ function ReceiptContent() {
   }
 
   if (!orderId) {
+    console.error('ReceiptContent: Missing orderId in URL search params')
     return (
-      <div className="py-20 text-center">
-        <p>Заказ не указан. Пожалуйста, вернитесь к <Link href="/profile/orders" className="text-fire-600 underline">вашим заказам</Link>.</p>
+      <div className="py-20 text-center container mx-auto px-4">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-8 max-w-2xl mx-auto">
+          <AlertCircle size={48} className="mx-auto text-amber-500 mb-4" />
+          <h2 className="text-2xl font-bold text-amber-900 mb-4">Информация о заказе не найдена</h2>
+          <p className="text-amber-800 mb-6">
+            Похоже, вы перешли на эту страницу без указания номера заказа.
+            Пожалуйста, перейдите в раздел ваших заказов, чтобы загрузить чек для конкретного заказа.
+          </p>
+          <Link
+            href="/profile/orders"
+            className="inline-block bg-fire-600 text-white px-8 py-3 rounded-lg hover:bg-fire-700 transition font-semibold"
+          >
+            Перейти к моим заказам
+          </Link>
+        </div>
       </div>
     )
   }

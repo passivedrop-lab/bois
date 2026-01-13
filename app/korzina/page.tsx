@@ -1,11 +1,25 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ShoppingCart, Plus, Minus, Trash2 } from 'lucide-react'
 import { useCartStore } from '@/lib/store/cartStore'
+import { useAuth } from '@/components/AuthProvider'
+import toast from 'react-hot-toast'
 
 export default function CartPage() {
+  const router = useRouter()
+  const { user } = useAuth()
   const { items: cartItems, removeItem, updateQuantity, clearCart, getTotal } = useCartStore()
+
+  const handleCheckout = () => {
+    if (!user) {
+      toast.error('Пожалуйста, войдите для оформления заказа')
+      router.push('/vhod?next=/oformlenie-zakaza')
+      return
+    }
+    router.push('/oformlenie-zakaza')
+  }
 
   return (
     <div className="py-12 sm:py-16 md:py-20">
@@ -73,10 +87,11 @@ export default function CartPage() {
                   <span>{getTotal()}₽</span>
                 </div>
               </div>
-              <button className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold mb-3">
-                <Link href="/oformlenie-zakaza">
-                  Оформить заказ
-                </Link>
+              <button
+                onClick={handleCheckout}
+                className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold mb-3"
+              >
+                Оформить заказ
               </button>
               <button
                 onClick={() => clearCart()}
