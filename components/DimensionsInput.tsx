@@ -8,8 +8,14 @@ export default function DimensionsInput() {
     const { dimensions, setDimensions, calculateVolume } = useCustomOrderStore()
 
     const handleChange = (field: 'height' | 'width' | 'length', value: string) => {
-        const numValue = parseInt(value) || 0
-        setDimensions({ [field]: numValue })
+        if (value === '') {
+            setDimensions({ [field]: 0 })
+            return
+        }
+        const numValue = parseInt(value)
+        if (!isNaN(numValue)) {
+            setDimensions({ [field]: numValue })
+        }
     }
 
     const volume = calculateVolume()
@@ -29,7 +35,7 @@ export default function DimensionsInput() {
                             type="number"
                             min="10"
                             max="500"
-                            value={dimensions.height}
+                            value={dimensions.height === 0 ? '' : dimensions.height}
                             onChange={(e) => handleChange('height', e.target.value)}
                             className="w-full px-3 py-2 border border-wood-300 rounded-lg focus:ring-2 focus:ring-fire-500 focus:border-fire-500 outline-none"
                             placeholder="100"
@@ -48,7 +54,7 @@ export default function DimensionsInput() {
                             type="number"
                             min="10"
                             max="500"
-                            value={dimensions.width}
+                            value={dimensions.width === 0 ? '' : dimensions.width}
                             onChange={(e) => handleChange('width', e.target.value)}
                             className="w-full px-3 py-2 border border-wood-300 rounded-lg focus:ring-2 focus:ring-fire-500 focus:border-fire-500 outline-none"
                             placeholder="100"
@@ -67,7 +73,7 @@ export default function DimensionsInput() {
                             type="number"
                             min="100"
                             max="6000"
-                            value={dimensions.length}
+                            value={dimensions.length === 0 ? '' : dimensions.length}
                             onChange={(e) => handleChange('length', e.target.value)}
                             className="w-full px-3 py-2 border border-wood-300 rounded-lg focus:ring-2 focus:ring-fire-500 focus:border-fire-500 outline-none"
                             placeholder="3000"
