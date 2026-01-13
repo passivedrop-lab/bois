@@ -64,25 +64,38 @@ export default function ProductCard({ product }: ProductCardProps) {
         const surface = parseFloat(calculatorSurface.replace(',', '.'))
         if (!surface || isNaN(surface) || !product.variants) return
 
-        const newQuantities = { ...quantities }
+        const newSuggestions: { [key: string]: number } = {}
 
         product.variants.forEach(variant => {
             const dims = parseDimensions(variant.label)
             if (dims) {
                 // Calculate coverage of one piece in m² (assuming Width x Length is the coverage face)
-                // For boards/lining: Width * Length
                 const pieceArea = (dims.width * dims.length) / 1000000 // mm² to m²
                 if (pieceArea > 0) {
                     const count = Math.ceil(surface / pieceArea)
-                    newQuantities[variant.id] = count
+                    newSuggestions[variant.id] = count
                 }
             }
         })
 
-        setQuantities(newQuantities)
+        setSuggestions(newSuggestions)
         setShowCalculator(false)
-        setCalculatorSurface('')
-        toast.success(`Количество обновлено для ${surface} м²`)
+        toast.success(`Расчет для ${surface} м² выполнен`)
+    }
+
+    const applyAllSuggestions = () => {
+        const newQuantities = { ...quantities }
+        Object.entries(suggestions).forEach(([id, qty]) => {
+            newQuantities[id] = qty
+        })
+        setQuantities(newQuantities)
+        toast.success('Все рекомендации применены')
+    }
+
+    const clearAllQuantities = () => {
+        setQuantities({})
+        setSuggestions({})
+        toast.success('Количества сброшены')
     }
 
 
@@ -268,14 +281,20 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.variants && product.variants.length > 0 ? (
                     <div className="flex flex-col gap-2 mb-4" onClick={(e) => e.stopPropagation()}>
 
-                        {/* Calculator Toggle */}
-                        <div className="flex justify-end mb-1">
+                        {/* Calculator & Reset Controls */}
+                        <div className="flex justify-between items-center mb-1">
+                            <button
+                                onClick={clearAllQuantities}
+                                className="text-[10px] font-bold text-wood-400 hover:text-red-500 transition-colors uppercase tracking-tight"
+                            >
+                                Сбросить всё
+                            </button>
                             <button
                                 onClick={() => setShowCalculator(!showCalculator)}
-                                className="flex items-center gap-1 text-xs font-medium text-fire-600 hover:text-fire-700 bg-fire-50 px-2 py-1 rounded transition-colors"
+                                className="flex items-center gap-1 text-xs font-bold text-fire-600 hover:text-fire-700 bg-fire-50 px-2 py-1 rounded transition-colors"
                             >
                                 <Calculator size={14} />
-                                Рассчитать количество
+                                Калькулятор м²
                             </button>
                         </div>
 
@@ -302,6 +321,19 @@ export default function ProductCard({ product }: ProductCardProps) {
                                         OK
                                     </button>
                                 </div>
+                            </div>
+                        )}
+
+                        {/* Apply All Suggestions Bar */}
+                        {Object.keys(suggestions).length > 0 && (
+                            <div className="mb-2 p-2 bg-blue-600 text-white rounded-lg flex items-center justify-between shadow-md animate-in zoom-in-95">
+                                <span className="text-[10px] font-bold uppercase tracking-wider pl-1">Рекомендации готовы</span>
+                                <button
+                                    onClick={applyAllSuggestions}
+                                    className="bg-white text-blue-600 text-xs px-3 py-1 rounded font-bold hover:bg-blue-50 transition active:scale-95"
+                                >
+                                    Выбрать всё
+                                </button>
                             </div>
                         )}
 

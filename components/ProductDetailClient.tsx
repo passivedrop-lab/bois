@@ -79,6 +79,21 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         toast.success(`Расчет для ${surface} м² выполнен. Рекомендации добавлены.`)
     }
 
+    const applyAllSuggestions = () => {
+        const newQuantities = { ...quantities }
+        Object.entries(suggestions).forEach(([id, qty]) => {
+            newQuantities[id] = qty
+        })
+        setQuantities(newQuantities)
+        toast.success('Все рекомендации применены')
+    }
+
+    const clearAllQuantities = () => {
+        setQuantities({})
+        setSuggestions({})
+        toast.success('Количества сброшены')
+    }
+
     const getVariantDetails = (variantLabel: string, qty: number) => {
         const dims = parseDimensions(variantLabel)
         if (!dims) return { volume: 0, area: 0 }
@@ -248,14 +263,43 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                                         <Shield size={16} className="text-fire-600" />
                                         Выберите размеры
                                     </h3>
-                                    <button
-                                        onClick={() => setShowCalculator(!showCalculator)}
-                                        className="text-sm bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-md flex items-center gap-2 font-medium transition shadow-sm"
-                                    >
-                                        <Truck size={16} />
-                                        Калькулятор (м²)
-                                    </button>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={clearAllQuantities}
+                                            className="text-xs font-bold text-wood-400 hover:text-red-500 transition-colors uppercase tracking-tight mr-2"
+                                        >
+                                            Сбросить
+                                        </button>
+                                        <button
+                                            onClick={() => setShowCalculator(!showCalculator)}
+                                            className="text-sm bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-md flex items-center gap-2 font-medium transition shadow-sm"
+                                        >
+                                            <Truck size={16} />
+                                            Калькулятор (м²)
+                                        </button>
+                                    </div>
                                 </div>
+
+                                {/* Apply All Suggestions Bar */}
+                                {Object.keys(suggestions).length > 0 && (
+                                    <div className="mb-6 p-4 bg-blue-600 text-white rounded-xl flex items-center justify-between shadow-lg animate-in zoom-in-95 border border-blue-500">
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-white/20 p-2 rounded-lg">
+                                                <Check size={20} className="text-white" />
+                                            </div>
+                                            <div>
+                                                <p className="font-bold leading-tight">Рекомендации готовы</p>
+                                                <p className="text-xs text-blue-100">Примените расчет ко всем размерам</p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={applyAllSuggestions}
+                                            className="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-blue-50 transition active:scale-95 shadow-sm"
+                                        >
+                                            Выбрать всё
+                                        </button>
+                                    </div>
+                                )}
 
                                 {/* Calculator Input */}
                                 {showCalculator && (
