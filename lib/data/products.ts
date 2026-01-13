@@ -176,7 +176,7 @@ export const PRODUCTS: Product[] = [
             { id: 'v1', label: 'Ель, 100х150х6000 мм', price: 21000 },
             { id: 'v2', label: 'Сосна, 100х200х6000 мм', price: 28000 },
             { id: 'v3', label: '100х100х3000 мм', price: 21000 },
-            { id: 'v4', label: '150х150х300 мм', price: 21000 }
+            { id: 'v4', label: '150х150х3000 мм', price: 21000 }
         ]
     },
     {
