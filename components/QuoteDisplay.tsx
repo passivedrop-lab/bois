@@ -119,28 +119,48 @@ export default function QuoteDisplay() {
 
                 {/* Détail des prix */}
                 <div className="space-y-2 mb-6 pb-6 border-b border-wood-200">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-wood-600">Базовая стоимость:</span>
-                        <span className="font-medium">{pricing.basePrice.toLocaleString('ru-RU')} ₽</span>
+                    <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                            <span className="text-wood-600">Базовая стоимость:</span>
+                            <span className="font-medium">{pricing.basePrice.toLocaleString('ru-RU')} ₽</span>
+                        </div>
+                        <div className="flex justify-between text-xs text-wood-500 pl-4">
+                            <span>{woodType.pricePerM3.toLocaleString('ru-RU')} ₽/м³ × {pricing.volume.toFixed(4)} м³</span>
+                        </div>
                     </div>
 
                     {pricing.finishCost > 0 && (
                         <div className="flex justify-between text-sm">
-                            <span className="text-wood-600">Отделка:</span>
-                            <span className="font-medium">+{pricing.finishCost.toLocaleString('ru-RU')} ₽</span>
+                            <span className="text-wood-600">
+                                Отделка ({finishData?.nameRu}):
+                            </span>
+                            <span className="font-medium text-fire-600">+{pricing.finishCost.toLocaleString('ru-RU')} ₽</span>
                         </div>
                     )}
 
-                    {pricing.optionsCost > 0 && (
-                        <div className="flex justify-between text-sm">
-                            <span className="text-wood-600">Опции:</span>
-                            <span className="font-medium">+{pricing.optionsCost.toLocaleString('ru-RU')} ₽</span>
+                    {/* Afficher chaque option individuellement */}
+                    {options.length > 0 && (
+                        <div className="space-y-1.5 pl-2 border-l-2 border-fire-200">
+                            <div className="text-xs font-semibold text-wood-700 mb-1">Дополнительные опции:</div>
+                            {options.map((optionId) => {
+                                const option = OPTIONS.find(o => o.id === optionId)
+                                if (!option) return null
+                                const optionCost = option.price * pricing.volume
+                                return (
+                                    <div key={optionId} className="flex justify-between text-sm">
+                                        <span className="text-wood-600 text-xs">• {option.nameRu}</span>
+                                        <span className="font-medium text-fire-600 text-xs">
+                                            +{optionCost.toLocaleString('ru-RU')} ₽
+                                        </span>
+                                    </div>
+                                )
+                            })}
                         </div>
                     )}
 
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-sm pt-2 border-t border-wood-100">
                         <span className="text-wood-600">Надбавка за индивидуальный заказ (25%):</span>
-                        <span className="font-medium">+{pricing.customMarkup.toLocaleString('ru-RU')} ₽</span>
+                        <span className="font-medium text-fire-600">+{pricing.customMarkup.toLocaleString('ru-RU')} ₽</span>
                     </div>
                 </div>
 
