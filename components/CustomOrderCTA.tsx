@@ -43,7 +43,7 @@ export default function CustomOrderCTA() {
 
                     {/* CTA Button */}
                     <Link
-                        href="/commande-sur-mesure"
+                        href="/individualnyi-zakaz"
                         className="inline-flex items-center gap-3 px-8 py-4 bg-white text-fire-600 rounded-xl font-bold text-lg hover:bg-wood-50 transition-all shadow-xl hover:shadow-2xl hover:scale-105"
                     >
                         <Hammer size={24} />
