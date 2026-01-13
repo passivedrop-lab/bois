@@ -34,12 +34,12 @@ export default function QuoteDisplay() {
 
         if (!woodType) return
 
-        // Créer un nom descriptif pour la commande
+        // Создать описание для заказа
         const customName = `${woodType.nameRu} на заказ (${dimensions.height}×${dimensions.width}×${dimensions.length} мм)`
 
-        // Créer les détails de la variante
+        // Создать детали варианта
         const variantDetails = [
-            `Отделка: ${finishData?.nameRu || 'Brut'}`,
+            `Отделка: ${finishData?.nameRu || 'Необработанный'}`,
             options.length > 0 ? `Опции: ${options.map(o => OPTIONS.find(opt => opt.id === o)?.nameRu).join(', ')}` : null,
             `Объем: ${pricing.volume.toFixed(4)} м³`
         ].filter(Boolean).join(' • ')
@@ -55,7 +55,7 @@ export default function QuoteDisplay() {
             })
 
             toast.success('Добавлено в корзину!')
-            reset() // Réinitialiser le configurateur
+            reset() // Сбросить конфигуратор
         } catch (error) {
             toast.error('Ошибка при добавлении в корзину')
             console.error(error)
@@ -78,14 +78,14 @@ export default function QuoteDisplay() {
             animate={{ opacity: 1, y: 0 }}
             className="sticky top-24 space-y-4"
         >
-            {/* Carte de devis */}
+            {/* Карточка расчета */}
             <div className="p-6 bg-white rounded-2xl shadow-xl border border-wood-200">
                 <div className="flex items-center gap-2 mb-4">
                     <FileText className="text-fire-500" size={24} />
                     <h3 className="text-xl font-bold text-wood-900">Расчет стоимости</h3>
                 </div>
 
-                {/* Récapitulatif */}
+                {/* Резюме */}
                 <div className="space-y-3 mb-6 pb-6 border-b border-wood-200">
                     <div className="flex justify-between text-sm">
                         <span className="text-wood-600">Древесина:</span>
@@ -117,7 +117,7 @@ export default function QuoteDisplay() {
                     )}
                 </div>
 
-                {/* Détail des prix */}
+                {/* Детализация цен */}
                 <div className="space-y-2 mb-6 pb-6 border-b border-wood-200">
                     <div className="space-y-1">
                         <div className="flex justify-between text-sm">
@@ -208,7 +208,7 @@ export default function QuoteDisplay() {
                     )}
                 </div>
 
-                {/* Bouton d'ajout au panier */}
+                {/* Кнопка добавления в корзину */}
                 <button
                     onClick={handleAddToCart}
                     disabled={!isValid()}
@@ -219,7 +219,7 @@ export default function QuoteDisplay() {
                 </button>
             </div>
 
-            {/* Note informative */}
+            {/* Информационное примечание */}
             <div className="p-4 bg-wood-50 rounded-lg border border-wood-200">
                 <p className="text-xs text-wood-600 leading-relaxed">
                     💡 <strong>Примечание:</strong> Все индивидуальные заказы проходят проверку нашими специалистами.

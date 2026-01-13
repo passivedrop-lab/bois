@@ -33,7 +33,7 @@ export async function POST(request: Request) {
           <p>Пожалуйста, свяжитесь с нашей службой поддержки для решения этой проблемы.</p>
         `
     } else if (type === 'admin_notification') {
-      subject = `Nouvelle commande #${orderId}`
+      subject = `Новый заказ #${orderId}`
 
       let itemsHtml = ''
       try {

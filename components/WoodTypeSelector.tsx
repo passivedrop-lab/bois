@@ -21,13 +21,13 @@ export default function WoodTypeSelector() {
                         key={wood.id}
                         onClick={() => setWoodType(wood)}
                         className={`relative p-4 rounded-xl border-2 transition-all text-left ${woodType?.id === wood.id
-                                ? 'border-fire-500 bg-fire-50'
-                                : 'border-wood-200 hover:border-wood-300 bg-white'
+                            ? 'border-fire-500 bg-fire-50'
+                            : 'border-wood-200 hover:border-wood-300 bg-white'
                             }`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                     >
-                        {/* Image miniature */}
+                        {/* Превью изображения */}
                         <div className="flex items-start gap-3">
                             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
                                 <Image
@@ -42,7 +42,6 @@ export default function WoodTypeSelector() {
                                 <div className="flex items-start justify-between gap-2">
                                     <div>
                                         <h3 className="font-semibold text-wood-900">{wood.nameRu}</h3>
-                                        <p className="text-xs text-wood-600 mt-0.5">{wood.name}</p>
                                     </div>
 
                                     {woodType?.id === wood.id && (
@@ -56,15 +55,15 @@ export default function WoodTypeSelector() {
                                     {wood.pricePerM3.toLocaleString('ru-RU')} ₽/м³
                                 </p>
 
-                                {/* Propriétés */}
+                                {/* Свойства */}
                                 <div className="flex gap-2 mt-2 text-xs text-wood-600">
-                                    <span title="Durabilité">💪 {wood.properties.durability}/5</span>
-                                    <span title="Résistance à l'humidité">💧 {wood.properties.moisture_resistance}/5</span>
+                                    <span title="Долговечность">💪 {wood.properties.durability}/5</span>
+                                    <span title="Влагостойкость">💧 {wood.properties.moisture_resistance}/5</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Description au survol */}
+                        {/* Описание при выборе */}
                         {woodType?.id === wood.id && (
                             <motion.p
                                 initial={{ opacity: 0, height: 0 }}

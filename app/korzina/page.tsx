@@ -74,7 +74,7 @@ export default function CartPage() {
                 </div>
               </div>
               <button className="w-full bg-fire-600 text-white py-3 rounded-lg hover:bg-fire-700 transition font-semibold mb-3">
-                <Link href="/checkout">
+                <Link href="/oformlenie-zakaza">
                   Оформить заказ
                 </Link>
               </button>
@@ -90,7 +90,7 @@ export default function CartPage() {
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <ShoppingCart className="mx-auto text-wood-300 mb-4" size={48} />
             <p className="text-wood-600 mb-6">Ваша корзина пуста</p>
-            <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
+            <Link href="/katalog" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
               Продолжить покупки
             </Link>
           </div>

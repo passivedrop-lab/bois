@@ -10,7 +10,7 @@ export default function FinishSelector() {
 
     return (
         <div className="space-y-6">
-            {/* Finitions */}
+            {/* Варианты отделки */}
             <div className="space-y-3">
                 <label className="block text-sm font-medium text-wood-900">
                     Отделка <span className="text-fire-500">*</span>
@@ -22,8 +22,8 @@ export default function FinishSelector() {
                             key={finishOption.id}
                             onClick={() => setFinish(finishOption.id)}
                             className={`relative px-4 py-3 rounded-lg border-2 transition-all text-left ${finish === finishOption.id
-                                    ? 'border-fire-500 bg-fire-50'
-                                    : 'border-wood-200 hover:border-wood-300 bg-white'
+                                ? 'border-fire-500 bg-fire-50'
+                                : 'border-wood-200 hover:border-wood-300 bg-white'
                                 }`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -32,9 +32,6 @@ export default function FinishSelector() {
                                 <div className="flex-1">
                                     <p className="font-medium text-sm text-wood-900">
                                         {finishOption.nameRu}
-                                    </p>
-                                    <p className="text-xs text-wood-600 mt-0.5">
-                                        {finishOption.name}
                                     </p>
                                     {finishOption.priceMultiplier > 0 && (
                                         <p className="text-xs text-fire-600 mt-1">
@@ -54,7 +51,7 @@ export default function FinishSelector() {
                 </div>
             </div>
 
-            {/* Options supplémentaires */}
+            {/* Дополнительные опции */}
             <div className="space-y-3">
                 <label className="block text-sm font-medium text-wood-900">
                     Дополнительные опции
@@ -65,8 +62,8 @@ export default function FinishSelector() {
                         <motion.label
                             key={option.id}
                             className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${options.includes(option.id)
-                                    ? 'border-fire-500 bg-fire-50'
-                                    : 'border-wood-200 hover:border-wood-300 bg-white'
+                                ? 'border-fire-500 bg-fire-50'
+                                : 'border-wood-200 hover:border-wood-300 bg-white'
                                 }`}
                             whileHover={{ scale: 1.01 }}
                         >
@@ -81,7 +78,6 @@ export default function FinishSelector() {
                                 <p className="font-medium text-sm text-wood-900">
                                     {option.nameRu}
                                 </p>
-                                <p className="text-xs text-wood-600">{option.name}</p>
                             </div>
 
                             <p className="text-sm font-semibold text-fire-600">

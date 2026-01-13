@@ -11,7 +11,7 @@ export default function CustomOrderSection() {
     return (
         <section className="py-16 md:py-24">
             <div className="container mx-auto px-4 sm:px-6">
-                {/* Configurateur principal */}
+                {/* Основной конфигуратор */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -19,9 +19,9 @@ export default function CustomOrderSection() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="grid lg:grid-cols-3 gap-8"
                 >
-                    {/* Colonne gauche : Configurateur */}
+                    {/* Левая колонка: Конфигуратор */}
                     <div className="lg:col-span-2 space-y-8">
-                        {/* Carte de configuration */}
+                        {/* Карточка конфигурации */}
                         <div className="bg-white rounded-2xl shadow-lg border border-wood-200 p-6 md:p-8">
                             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-wood-200">
                                 <div className="p-3 bg-fire-100 rounded-xl">
@@ -34,7 +34,7 @@ export default function CustomOrderSection() {
                             </div>
 
                             <div className="space-y-8">
-                                {/* Étape 1 : Type de bois */}
+                                {/* Шаг 1: Тип древесины */}
                                 <div>
                                     <div className="flex items-center gap-2 mb-4">
                                         <div className="w-8 h-8 bg-fire-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
@@ -45,7 +45,7 @@ export default function CustomOrderSection() {
                                     <WoodTypeSelector />
                                 </div>
 
-                                {/* Étape 2 : Dimensions */}
+                                {/* Шаг 2: Размеры */}
                                 <div>
                                     <div className="flex items-center gap-2 mb-4">
                                         <div className="w-8 h-8 bg-fire-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
@@ -56,7 +56,7 @@ export default function CustomOrderSection() {
                                     <DimensionsInput />
                                 </div>
 
-                                {/* Étape 3 : Finitions */}
+                                {/* Шаг 3: Отделка */}
                                 <div>
                                     <div className="flex items-center gap-2 mb-4">
                                         <div className="w-8 h-8 bg-fire-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
@@ -69,7 +69,7 @@ export default function CustomOrderSection() {
                             </div>
                         </div>
 
-                        {/* Avantages de la commande sur mesure */}
+                        {/* Преимущества индивидуального заказа */}
                         <div className="grid sm:grid-cols-3 gap-4">
                             <div className="p-4 bg-gradient-to-br from-fire-50 to-wood-50 rounded-xl border border-fire-200">
                                 <div className="text-2xl mb-2">✨</div>
@@ -91,13 +91,13 @@ export default function CustomOrderSection() {
                         </div>
                     </div>
 
-                    {/* Colonne droite : Devis */}
+                    {/* Правая колонка: Расчет */}
                     <div className="lg:col-span-1">
                         <QuoteDisplay />
                     </div>
                 </motion.div>
 
-                {/* Note de bas de page */}
+                {/* Примечание */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}

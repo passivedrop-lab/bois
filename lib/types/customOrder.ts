@@ -1,4 +1,4 @@
-// Types pour les commandes sur mesure
+// Типы для индивидуальных заказов
 
 export interface WoodType {
     id: string
@@ -15,9 +15,9 @@ export interface WoodType {
 }
 
 export interface Dimensions {
-    height: number // en mm
-    width: number // en mm
-    length: number // en mm
+    height: number // в мм
+    width: number // в мм
+    length: number // в мм
 }
 
 export interface CustomOrderConfig {
@@ -29,11 +29,11 @@ export interface CustomOrderConfig {
 }
 
 export interface PriceBreakdown {
-    volume: number // en m³
-    basePrice: number // prix du bois
-    finishCost: number // coût des finitions
-    optionsCost: number // coût des options
-    customMarkup: number // majoration sur mesure (25%)
+    volume: number // в м³
+    basePrice: number // стоимость древесины
+    finishCost: number // стоимость отделки
+    optionsCost: number // стоимость опций
+    customMarkup: number // наценка за индивидуальный заказ (25%)
     subtotal: number
     total: number
 }
@@ -44,131 +44,131 @@ export interface CustomQuote extends CustomOrderConfig {
     createdAt?: Date
 }
 
-// Types de bois disponibles
+// Доступные типы древесины
 export const WOOD_TYPES: WoodType[] = [
     {
         id: 'pine',
-        name: 'Pin',
+        name: 'Сосна',
         nameRu: 'Сосна',
         pricePerM3: 21000,
-        description: 'Bois tendre polyvalent, excellent rapport qualité-prix',
+        description: 'Универсальная мягкая древесина, отличное соотношение цены и качества',
         image: '/images-product/bois-massif-charpente-sapin-douglas.jpg',
         properties: {
             durability: 3,
             moisture_resistance: 2,
-            color: 'Jaune clair'
+            color: 'Светло-желтый'
         }
     },
     {
         id: 'spruce',
-        name: 'Épicéa',
+        name: 'Ель',
         nameRu: 'Ель',
         pricePerM3: 21000,
-        description: 'Bois blanc, léger, idéal pour la construction',
+        description: 'Белая древесина, легкая, идеально подходит для строительства',
         image: '/images-product/bois-ossature-epicea-douglas-c24.jpg',
         properties: {
             durability: 3,
             moisture_resistance: 2,
-            color: 'Blanc crème'
+            color: 'Кремово-белый'
         }
     },
     {
         id: 'larch',
-        name: 'Mélèze',
+        name: 'Лиственница',
         nameRu: 'Лиственница',
         pricePerM3: 33000,
-        description: 'Très durable, résistant à l\'humidité',
+        description: 'Очень прочная, устойчивая к влаге',
         image: '/images-product/planche-terrasse-lisse-meleze-28x140x4000mm.jpg',
         properties: {
             durability: 5,
             moisture_resistance: 5,
-            color: 'Brun rosé'
+            color: 'Розовато-коричневый'
         }
     },
     {
         id: 'cedar',
-        name: 'Cèdre',
+        name: 'Кедр',
         nameRu: 'Кедр',
         pricePerM3: 125000,
-        description: 'Bois noble aromatique, propriétés thérapeutiques',
+        description: 'Благородная ароматная древесина, терапевтические свойства',
         image: '/images-product/lambris-bois-cedre-aromatique-14x140.jpg',
         properties: {
             durability: 5,
             moisture_resistance: 4,
-            color: 'Rose-ocre'
+            color: 'Розово-охристый'
         }
     },
     {
         id: 'linden',
-        name: 'Tilleul',
+        name: 'Липа',
         nameRu: 'Липа',
         pricePerM3: 38500,
-        description: 'Idéal pour sauna, ne brûle pas la peau',
+        description: 'Идеально для сауны, не обжигает кожу',
         image: '/images-product/lambris-bois-tilleul-sauna-extra.jpg',
         properties: {
             durability: 3,
             moisture_resistance: 3,
-            color: 'Blanc crème'
+            color: 'Слоновая кость'
         }
     },
     {
         id: 'alder',
-        name: 'Aulne',
+        name: 'Ольха',
         nameRu: 'Ольха',
         pricePerM3: 23000,
-        description: 'Bois noble, résistant à l\'humidité',
+        description: 'Благородная древесина, влагостойкая',
         image: '/images-product/lambris-bois-aulne-premium-sauna.jpg',
         properties: {
             durability: 4,
             moisture_resistance: 4,
-            color: 'Cognac'
+            color: 'Коньячный'
         }
     },
     {
         id: 'oak',
-        name: 'Chêne',
+        name: 'Дуб',
         nameRu: 'Дуб',
         pricePerM3: 32500,
-        description: 'Bois premium, très durable et noble',
+        description: 'Премиальная древесина, очень прочная и благородная',
         image: '/images-product/panneau-bois-massif-chene-prestige-40x600.jpg',
         properties: {
             durability: 5,
             moisture_resistance: 4,
-            color: 'Brun doré'
+            color: 'Золотисто-коричневый'
         }
     },
     {
         id: 'birch',
-        name: 'Bouleau',
+        name: 'Береза',
         nameRu: 'Береза',
         pricePerM3: 16250,
-        description: 'Bois clair, homogène, facile à travailler',
+        description: 'Светлая древесина, однородная, легко обрабатывается',
         image: '/images-product/panneau-contreplaque-batiment-10mm.jpg',
         properties: {
             durability: 3,
             moisture_resistance: 2,
-            color: 'Blanc-jaune'
+            color: 'Бело-желтый'
         }
     }
 ]
 
-// Finitions disponibles
+// Доступные варианты отделки
 export const FINISHES = [
-    { id: 'raw', name: 'Brut', nameRu: 'Необработанный', priceMultiplier: 0 },
-    { id: 'planed', name: 'Raboté', nameRu: 'Строганный', priceMultiplier: 0.15 },
-    { id: 'sanded', name: 'Poncé', nameRu: 'Шлифованный', priceMultiplier: 0.20 },
-    { id: 'oiled', name: 'Huilé', nameRu: 'Промасленный', priceMultiplier: 0.25 },
-    { id: 'varnished', name: 'Vernis', nameRu: 'Лакированный', priceMultiplier: 0.30 },
-    { id: 'thermo', name: 'Thermottraité', nameRu: 'Термообработанный', priceMultiplier: 0.50 }
+    { id: 'raw', name: 'Необработанный', nameRu: 'Необработанный', priceMultiplier: 0 },
+    { id: 'planed', name: 'Строганный', nameRu: 'Строганный', priceMultiplier: 0.15 },
+    { id: 'sanded', name: 'Шлифованный', nameRu: 'Шлифованный', priceMultiplier: 0.20 },
+    { id: 'oiled', name: 'Промасленный', nameRu: 'Промасленный', priceMultiplier: 0.25 },
+    { id: 'varnished', name: 'Лакированный', nameRu: 'Лакированный', priceMultiplier: 0.30 },
+    { id: 'thermo', name: 'Термообработанный', nameRu: 'Термообработанный', priceMultiplier: 0.50 }
 ]
 
-// Options supplémentaires
+// Дополнительные опции
 export const OPTIONS = [
-    { id: 'kiln_dried', name: 'Séchage en chambre', nameRu: 'Камерная сушка', price: 3000 }, // par m³
-    { id: 'antifungal', name: 'Traitement antifongique', nameRu: 'Антисептик', price: 2000 },
-    { id: 'chamfer', name: 'Chanfreins', nameRu: 'Фаски', price: 1500 },
-    { id: 'custom_profile', name: 'Profil personnalisé', nameRu: 'Индивидуальный профиль', price: 5000 }
+    { id: 'kiln_dried', name: 'Камерная сушка', nameRu: 'Камерная сушка', price: 3000 }, // за м³
+    { id: 'antifungal', name: 'Антисептик', nameRu: 'Антисептик', price: 2000 },
+    { id: 'chamfer', name: 'Фаски', nameRu: 'Фаски', price: 1500 },
+    { id: 'custom_profile', name: 'Индивидуальный профиль', nameRu: 'Индивидуальный профиль', price: 5000 }
 ]
 
-// Majoration pour commande sur mesure
+// Наценка за индивидуальный заказ
 export const CUSTOM_ORDER_MARKUP = 0.25 // 25%

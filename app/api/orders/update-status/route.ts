@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     if (!orderId || !status) {
       return NextResponse.json(
-        { error: 'Paramètres manquants' },
+        { error: 'Отсутствуют параметры' },
         { status: 400 }
       )
     }
@@ -27,50 +27,50 @@ export async function POST(request: NextRequest) {
     let emailBody = ''
 
     if (status === 'verified') {
-      emailSubject = `Votre commande #${orderId} a été validée`
+      emailSubject = `Ваш заказ #${orderId} подтвержден`
       emailBody = `
-Bonjour,
+Здравствуйте,
 
-Votre commande #${orderId} a été validée avec succès.
-Notre équipe prepare maintenant votre commande pour l'expédition.
+Ваш заказ #${orderId} успешно подтвержден.
+Наша команда готовит ваш заказ к отправке.
 
-Vous recevrez une notification quand votre colis sera en route.
+Вы получите уведомление, когда ваш заказ будет отправлен.
 
-Cordialement,
+С уважением,
 TsarstvoDereva
       `
     } else if (status === 'rejected') {
-      emailSubject = `Votre commande #${orderId} a été rejetée`
+      emailSubject = `Ваш заказ #${orderId} отклонен`
       emailBody = `
-Bonjour,
+Здравствуйте,
 
-Votre commande #${orderId} a été rejetée.
-${reason ? `Raison: ${reason}` : ''}
+Ваш заказ #${orderId} был отклонен.
+${reason ? `Причина: ${reason}` : ''}
 
-Veuillez nous contacter pour plus d'informations.
+Пожалуйста, свяжитесь с нами для получения дополнительной информации.
 
-Cordialement,
+С уважением,
 TsarstvoDereva
       `
     }
 
     // En production, utiliser Resend pour envoyer l'email
-    console.log('Email envoyé au client')
-    console.log('Sujet:', emailSubject)
-    console.log('Contenu:', emailBody)
+    console.log('Email отправлен клиенту')
+    console.log('Тема:', emailSubject)
+    console.log('Содержание:', emailBody)
 
     return NextResponse.json(
       {
         success: true,
-        message: `Commande #${orderId} ${status === 'verified' ? 'validée' : 'rejetée'}`,
+        message: `Заказ #${orderId} ${status === 'verified' ? 'подтвержден' : 'отклонен'}`,
         orderId,
       },
       { status: 200 }
     )
   } catch (error) {
-    console.error('Erreur:', error)
+    console.error('Ошибка:', error)
     return NextResponse.json(
-      { error: 'Erreur lors de la mise à jour de la commande' },
+      { error: 'Ошибка при обновлении заказа' },
       { status: 500 }
     )
   }

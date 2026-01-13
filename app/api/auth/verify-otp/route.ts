@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { email, otp } = await request.json()
 
     if (!email || !otp) {
-      return NextResponse.json({ error: 'Email et code requis' }, { status: 400 })
+      return NextResponse.json({ error: 'Требуются Email и код' }, { status: 400 })
     }
 
     const supabase = await createServerClient()
@@ -21,11 +21,11 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (selErr || !stored) {
-      return NextResponse.json({ error: 'Code invalide ou expiré' }, { status: 400 })
+      return NextResponse.json({ error: 'Неверный или просроченный код' }, { status: 400 })
     }
 
     if (stored.code !== otp) {
-      return NextResponse.json({ error: 'Code invalide' }, { status: 400 })
+      return NextResponse.json({ error: 'Неверный код' }, { status: 400 })
     }
 
     // Comparer les timestamps ISO (convert to number for comparison)
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     if (expiresTime < Date.now()) {
       // Supprimer l'OTP expiré
       await supabase.from('otps').delete().eq('email', email)
-      return NextResponse.json({ error: 'Code expiré' }, { status: 400 })
+      return NextResponse.json({ error: 'Код просрочен' }, { status: 400 })
     }
 
     // Delete used OTP
@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
 
     if (profile && !queryError) {
       const token = Buffer.from(JSON.stringify({ userId: profile.id, email })).toString('base64')
-      return NextResponse.json({ success: true, token, userId: profile.id, message: 'Connexion réussie', needsRegistration: false })
+      return NextResponse.json({ success: true, token, userId: profile.id, message: 'Вход выполнен', needsRegistration: false })
     }
 
-    return NextResponse.json({ success: true, verified: true, message: 'Code vérifié. Complétez votre profil', needsRegistration: true })
+    return NextResponse.json({ success: true, verified: true, message: 'Код подтвержден. Заполните профиль', needsRegistration: true })
   } catch (error) {
     console.error('Erreur verify-otp:', error)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+    return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 })
   }
 }

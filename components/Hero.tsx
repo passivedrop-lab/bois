@@ -27,24 +27,24 @@ export default function Hero() {
                 <Flame size={48} className="sm:w-16 sm:h-16 text-fire-400" />
               </div>
             </div>
-            
+
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-white mb-4 sm:mb-6 leading-tight px-2">
               Качественный лес
               <br />
               <span className="text-fire-400">для любых проектов</span>
             </h1>
-            
+
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-wood-200 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-              Премиальные пиломатериалы высочайшего качества: брус, доска, бревна, дрова, панели и декоративные решения. 
+              Премиальные пиломатериалы высочайшего качества: брус, доска, бревна, дрова, панели и декоративные решения.
               Доставка по всей России. Гарантия качества и профессионализм.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <Link href="/catalogue" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center justify-center gap-2">
+              <Link href="/katalog" className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-flex items-center justify-center gap-2">
                 Каталог товаров
                 <ArrowRight size={18} className="sm:w-5 sm:h-5" />
               </Link>
-              <Link href="/a-propos" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-wood-900 inline-flex items-center justify-center">
+              <Link href="/o-nas" className="btn-outline text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 border-white text-white hover:bg-white hover:text-wood-900 inline-flex items-center justify-center">
                 О компании
               </Link>
             </div>

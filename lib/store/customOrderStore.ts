@@ -11,22 +11,22 @@ import {
 } from '@/lib/types/customOrder'
 
 interface CustomOrderStore extends CustomOrderConfig {
-    // Actions
+    // Действия
     setWoodType: (type: WoodType | null) => void
     setDimensions: (dims: Partial<Dimensions>) => void
     setFinish: (finish: string) => void
     toggleOption: (option: string) => void
     setQuantity: (qty: number) => void
 
-    // Calculateurs
+    // Расчеты
     calculateVolume: () => number
     calculatePrice: () => PriceBreakdown
     generateQuote: () => CustomQuote
 
-    // Validation
+    // Валидация
     isValid: () => boolean
 
-    // Réinitialisation
+    // Сброс
     reset: () => void
 }
 
@@ -63,7 +63,7 @@ export const useCustomOrderStore = create<CustomOrderStore>((set, get) => ({
 
     calculateVolume: () => {
         const { dimensions } = get()
-        // Convertir mm en m et calculer le volume
+        // Перевести мм в м и рассчитать объем
         const volumeM3 = (dimensions.height / 1000) * (dimensions.width / 1000) * (dimensions.length / 1000)
         return volumeM3
     },
@@ -86,26 +86,26 @@ export const useCustomOrderStore = create<CustomOrderStore>((set, get) => ({
         const volume = get().calculateVolume()
         const totalVolume = volume * quantity
 
-        // Prix de base du bois
+        // Базовая стоимость древесины
         const basePrice = woodType.pricePerM3 * totalVolume
 
-        // Coût de la finition (pourcentage du prix de base)
+        // Стоимость отделки (процент от базовой стоимости)
         const finishData = FINISHES.find(f => f.id === finish)
         const finishCost = finishData ? basePrice * finishData.priceMultiplier : 0
 
-        // Coût des options (prix fixe par m³)
+        // Стоимость опций (фиксированная цена за м³)
         const optionsCost = options.reduce((total, optionId) => {
             const option = OPTIONS.find(o => o.id === optionId)
             return total + (option ? option.price * totalVolume : 0)
         }, 0)
 
-        // Sous-total avant majoration
+        // Промежуточный итог до наценки
         const subtotal = basePrice + finishCost + optionsCost
 
-        // Majoration pour commande sur mesure (25%)
+        // Наценка за индивидуальный заказ (25%)
         const customMarkup = subtotal * CUSTOM_ORDER_MARKUP
 
-        // Total final
+        // Итоговый результат
         const total = subtotal + customMarkup
 
         return {

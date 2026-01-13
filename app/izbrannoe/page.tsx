@@ -48,8 +48,8 @@ export default function FavoritesPage() {
                     <button
                       onClick={() => handleAddToCart(item)}
                       className={`flex-1 py-2 rounded transition text-sm font-semibold flex items-center justify-center gap-2 ${addedToCart === item.id
-                          ? 'bg-green-600 text-white'
-                          : 'bg-fire-600 text-white hover:bg-fire-700'
+                        ? 'bg-green-600 text-white'
+                        : 'bg-fire-600 text-white hover:bg-fire-700'
                         }`}
                     >
                       <ShoppingCart size={16} />
@@ -71,7 +71,7 @@ export default function FavoritesPage() {
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <Heart className="mx-auto text-wood-300 mb-4" size={48} />
             <p className="text-wood-600 mb-6">У вас еще нет избранных товаров</p>
-            <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
+            <Link href="/katalog" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
               Открыть каталог
             </Link>
           </div>

@@ -34,7 +34,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!authLoading && !user) {
       toast.error('Пожалуйста, войдите для оформления заказа')
-      router.push('/login?next=/checkout')
+      router.push('/vhod?next=/oformlenie-zakaza')
     }
     if (user?.email) {
       setFormData(prev => ({ ...prev, email: user.email! }))
@@ -73,7 +73,7 @@ export default function CheckoutPage() {
     try {
       if (!user) {
         toast.error('Пожалуйста, войдите для оформления заказа')
-        router.push('/login?next=/checkout')
+        router.push('/vhod?next=/oformlenie-zakaza')
         return
       }
 
@@ -150,7 +150,7 @@ export default function CheckoutPage() {
 
       const orderIdStr = String(order.id)
       const amountStr = String(grandTotal)
-      router.push(`/checkout/receipt?orderId=${orderIdStr}&amount=${amountStr}`)
+      router.push(`/oformlenie-zakaza/receipt?orderId=${orderIdStr}&amount=${amountStr}`)
     } catch (error: any) {
       const detailedError = error.message || error.details || error.code || 'Техническая ошибка';
       console.error('CRITICAL Order Creation Error:', {
@@ -318,7 +318,7 @@ export default function CheckoutPage() {
             {/* CTA */}
             <div className="flex gap-4">
               <Link
-                href="/cart"
+                href="/korzina"
                 className="px-6 py-3 border-2 border-wood-300 text-wood-900 rounded-lg hover:bg-wood-50 transition font-semibold"
               >
                 Назад в корзину

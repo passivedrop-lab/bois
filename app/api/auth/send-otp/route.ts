@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { email } = await request.json()
 
     if (!email || !email.includes('@')) {
-      return NextResponse.json({ error: 'Email invalide' }, { status: 400 })
+      return NextResponse.json({ error: 'Некорректный Email' }, { status: 400 })
     }
 
     const code = Math.floor(100000 + Math.random() * 900000).toString()
@@ -25,17 +25,17 @@ export async function POST(request: NextRequest) {
     if (insertError) {
       console.error('Erreur insertion OTP:', insertError)
       return NextResponse.json(
-        { error: 'Erreur lors de l\'envoi du code. Réessayez.' },
+        { error: 'Ошибка при отправке кода. Попробуйте еще раз.' },
         { status: 500 }
       )
     }
 
     return NextResponse.json(
-      { success: true, message: 'Code OTP envoyé à votre email' },
+      { success: true, message: 'Код подтверждения отправлен на ваш Email' },
       { status: 200 }
     )
   } catch (error) {
     console.error('Erreur send-otp:', error)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+    return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 })
   }
 }

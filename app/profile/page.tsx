@@ -120,7 +120,7 @@ export default function ProfilePage() {
                 <span>Мои Заказы</span>
               </Link>
               <Link
-                href="/favorites"
+                href="/izbrannoe"
                 className="flex items-center gap-2 p-3 rounded-lg hover:bg-wood-100 transition text-wood-700"
               >
                 <Heart size={18} />

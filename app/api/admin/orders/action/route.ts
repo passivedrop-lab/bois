@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const action = searchParams.get('action') as 'verified' | 'rejected'
 
   if (!orderId || !action || !['verified', 'rejected'].includes(action)) {
-    return new NextResponse('Action invalide', { status: 400 })
+    return new NextResponse('Неверное действие', { status: 400 })
   }
 
   try {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       .single()
 
     if (fetchError || !order) {
-      return new NextResponse(`Commande #${orderId} introuvable`, { status: 404 })
+      return new NextResponse(`Заказ #${orderId} не найден`, { status: 404 })
     }
 
     // 2. Update order status
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
           orderId: order.id,
           orderTotal: order.total_price,
           customerName: order.customer_name,
-          reason: action === 'rejected' ? 'Vérification du paiement échouée ou document manquant' : undefined
+          reason: action === 'rejected' ? 'Ошибка проверки платежа или отсутствие документа' : undefined
         })
       })
     } catch (emailErr) {
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 4. Return success page
-    const statusLabel = action === 'verified' ? 'VALIDÉE' : 'REJETÉE'
+    const statusLabel = action === 'verified' ? 'ПОДТВЕРЖДЕН' : 'ОТКЛОНЕН'
     const statusColor = action === 'verified' ? '#16a34a' : '#dc2626'
 
     return new NextResponse(`
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       <html>
         <head>
           <meta charset="utf-8">
-          <title>Commande Mise à Jour</title>
+          <title>Статус заказа обновлен</title>
           <style>
             body { font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f9fafb; }
             .card { background: white; padding: 40px; border-radius: 12px; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); text-align: center; border: 1px solid #eee; }
@@ -71,11 +71,11 @@ export async function GET(request: NextRequest) {
         <body>
           <div class="card">
             <div style="font-size: 48px;">${action === 'verified' ? '✅' : '❌'}</div>
-            <h1>Succès</h1>
-            <p>La commande <strong>#${orderId}</strong> a été marquée comme :</p>
+            <h1>Успешно</h1>
+            <p>Заказ <strong>#${orderId}</strong> был отмечен как :</p>
             <div class="status">${statusLabel}</div>
-            <p>Le client a été prévenu par email.</p>
-            <a href="/admin/orders" class="btn">Retour au Dashboard</a>
+            <p>Клиент уведомлен по электронной почте.</p>
+            <a href="/admin/orders" class="btn">Вернуться в панель управления</a>
           </div>
         </body>
       </html>
@@ -85,6 +85,6 @@ export async function GET(request: NextRequest) {
 
   } catch (error: any) {
     console.error('Order Action Error:', error)
-    return new NextResponse(`Erreur: ${error.message}`, { status: 500 })
+    return new NextResponse(`Ошибка: ${error.message}`, { status: 500 })
   }
 }

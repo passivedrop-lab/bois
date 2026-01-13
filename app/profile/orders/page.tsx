@@ -114,7 +114,7 @@ export default function OrdersPage() {
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <Package className="mx-auto text-wood-300 mb-4" size={48} />
             <p className="text-wood-600 mb-6">У вас пока нет заказов</p>
-            <Link href="/catalogue" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
+            <Link href="/katalog" className="inline-block bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition">
               Перейти в каталог
             </Link>
           </div>

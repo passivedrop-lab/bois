@@ -112,23 +112,23 @@ export async function POST(request: NextRequest) {
     if (sendError) {
       console.error('❌ Resend Send Error:', sendError)
       return NextResponse.json({
-        error: 'Erreur lors de l\'envoi de l\'email',
+        error: 'Ошибка при отправке email',
         details: sendError
       }, { status: 500 })
     }
 
-    console.log('✅ Email envoyé avec succès à', adminEmail, 'ID:', data?.id)
+    console.log('✅ Email успешно отправлен администратору', adminEmail, 'ID:', data?.id)
     return NextResponse.json({
       success: true,
-      message: 'Reçu envoyé à l\'admin avec succès',
+      message: 'Чек успешно отправлен администратору',
       orderId,
       emailId: data?.id
     }, { status: 200 })
 
   } catch (error) {
-    console.error('❌ Erreur globale:', error)
+    console.error('❌ Глобальная ошибка:', error)
     return NextResponse.json({
-      error: 'Erreur lors du traitement du reçu',
+      error: 'Ошибка при обработке чека',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
   }

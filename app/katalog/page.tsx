@@ -5,14 +5,14 @@ import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
 const categories = [
-  { name: 'Строительная древесина', href: '/catalogue/bois-de-construction', icon: '🏗️' },
-  { name: 'Пиломатериалы', href: '/catalogue/bois-scié', icon: '🪵' },
-  { name: 'Дрова и биотопливо', href: '/catalogue/bois-de-chauffage', icon: '🔥' },
-  { name: 'Древесина для сауны', href: '/catalogue/bois-sauna', icon: '🧖' },
-  { name: 'Декоративная древесина', href: '/catalogue/bois-decoratif', icon: '✨' },
-  { name: 'Панели и плиты', href: '/catalogue/panneaux', icon: '📦' },
-  { name: 'Дерево для наружных работ', href: '/catalogue/bois-exterieur', icon: '🌲' },
-  { name: 'Техническая / индустриальная древесина', href: '/catalogue/bois-brut-industriel', icon: '⚙️' },
+  { name: 'Строительная древесина', href: '/katalog/stroitelnyi-les', icon: '🏗️' },
+  { name: 'Пиломатериалы', href: '/katalog/pilomaterialy', icon: '🪵' },
+  { name: 'Дрова и биотопливо', href: '/katalog/drova', icon: '🔥' },
+  { name: 'Древесина для сауны', href: '/katalog/materialy-dlya-bani', icon: '🧖' },
+  { name: 'Декоративная древесина', href: '/katalog/dekorativnaya-otdelka', icon: '✨' },
+  { name: 'Панели и плиты', href: '/katalog/paneli', icon: '📦' },
+  { name: 'Дерево для наружных работ', href: '/katalog/fasadnye-sistemy', icon: '🌲' },
+  { name: 'Техническая / индустриальная древесина', href: '/katalog/tekhnicheskoe-derevo', icon: '⚙️' },
 ]
 
 export default function CataloguePage() {

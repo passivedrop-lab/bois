@@ -21,19 +21,19 @@ export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([
     {
       id: '1',
-      name: 'Bois de construction brut',
-      category: 'Bois de construction',
+      name: 'Необработанная строительная древесина',
+      category: 'Строительная древесина',
       price: 15000,
       promoPrice: 12000,
-      description: 'Bois de qualité pour construction',
+      description: 'Качественная древесина для строительства',
       vedette: false,
     },
     {
       id: '2',
-      name: 'Demi-rondin',
-      category: 'Bois scié',
+      name: 'Полубревно',
+      category: 'Пиломатериалы',
       price: 8500,
-      description: 'Demi-rondin de qualité',
+      description: 'Качественное полубревно',
       vedette: false,
     },
   ])

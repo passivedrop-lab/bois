@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
     if (!email || !firstName || !lastName) {
       return NextResponse.json(
-        { error: 'Email, prénom et nom requis' },
+        { error: 'Требуются Email, имя и фамилия' },
         { status: 400 }
       )
     }
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     if (existingProfile) {
       return NextResponse.json(
-        { error: 'Cet email est déjà enregistré' },
+        { error: 'Этот email уже зарегистрирован' },
         { status: 400 }
       )
     }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     if (insertError || !profile) {
       console.error('Erreur création profil:', insertError)
       return NextResponse.json(
-        { error: 'Erreur lors de la création du profil' },
+        { error: 'Ошибка при создании профиля' },
         { status: 500 }
       )
     }
@@ -63,12 +63,12 @@ export async function POST(request: NextRequest) {
       token,
       userId: profile.id,
       email: profile.email,
-      message: 'Inscription réussie!',
+      message: 'Регистрация успешна!',
     })
   } catch (error) {
     console.error('Erreur register:', error)
     return NextResponse.json(
-      { error: 'Erreur serveur' },
+      { error: 'Ошибка сервера' },
       { status: 500 }
     )
   }

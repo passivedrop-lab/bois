@@ -21,15 +21,15 @@ export default function AdminLoginPage() {
         // Définir le cookie d'accès
         Cookies.set('admin_secret_access', 'true', { expires: 1 }) // Expire dans 1 jour
 
-        toast.success('Accès autorisé !')
+        toast.success('Доступ разрешен!')
         router.push('/admin')
         router.refresh()
       } else {
-        throw new Error('Code incorrect')
+        throw new Error('Неверный код')
       }
     } catch (error: any) {
       console.error('Error:', error)
-      toast.error(error.message || 'Accès refusé')
+      toast.error(error.message || 'Доступ запрещен')
     } finally {
       setLoading(false)
     }

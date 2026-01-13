@@ -132,7 +132,7 @@ export default function AdminOrders() {
       setRejectionReason('')
     } catch (error: any) {
       console.error('Error updating status:', error)
-      toast.error('Erreur: ' + error.message)
+      toast.error('Ошибка: ' + error.message)
     } finally {
       setUpdating(false)
     }
@@ -255,7 +255,7 @@ export default function AdminOrders() {
           <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-wood-200 p-6 flex items-center justify-between z-10">
               <div>
-                <h2 className="text-2xl font-bold text-wood-900">Commande #{selectedOrder.id}</h2>
+                <h2 className="text-2xl font-bold text-wood-900">Заказ #{selectedOrder.id}</h2>
                 <span className={`text-xs font-bold px-2 py-0.5 rounded ${getStatusColor(selectedOrder.status)}`}>{selectedOrder.status}</span>
               </div>
               <button onClick={() => setShowModal(false)} className="p-2 hover:bg-wood-100 rounded-full transition">

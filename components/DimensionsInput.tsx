@@ -21,7 +21,7 @@ export default function DimensionsInput() {
             </label>
 
             <div className="grid grid-cols-3 gap-3">
-                {/* Hauteur */}
+                {/* Высота */}
                 <div>
                     <label className="block text-xs text-wood-600 mb-1">Высота</label>
                     <div className="relative">
@@ -40,7 +40,7 @@ export default function DimensionsInput() {
                     </div>
                 </div>
 
-                {/* Largeur */}
+                {/* Ширина */}
                 <div>
                     <label className="block text-xs text-wood-600 mb-1">Ширина</label>
                     <div className="relative">
@@ -59,7 +59,7 @@ export default function DimensionsInput() {
                     </div>
                 </div>
 
-                {/* Longueur */}
+                {/* Длина */}
                 <div>
                     <label className="block text-xs text-wood-600 mb-1">Длина</label>
                     <div className="relative">
@@ -79,7 +79,7 @@ export default function DimensionsInput() {
                 </div>
             </div>
 
-            {/* Presets rapides */}
+            {/* Быстрые пресеты */}
             <div className="flex flex-wrap gap-2">
                 <span className="text-xs text-wood-600">Стандартные размеры:</span>
                 <button
@@ -102,7 +102,7 @@ export default function DimensionsInput() {
                 </button>
             </div>
 
-            {/* Visualisation du volume */}
+            {/* Визуализация объема */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

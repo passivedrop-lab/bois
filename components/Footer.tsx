@@ -69,7 +69,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/livraison" className="hover:text-fire-400 transition">
+                <Link href="/dostavka" className="hover:text-fire-400 transition">
                   Доставка и логистика
                 </Link>
               </li>
@@ -86,12 +86,12 @@ export default function Footer() {
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Информация</h4>
             <ul className="space-y-2 text-sm sm:text-base text-wood-300">
               <li>
-                <Link href="/a-propos" className="hover:text-fire-400 transition">
+                <Link href="/o-nas" className="hover:text-fire-400 transition">
                   О компании
                 </Link>
               </li>
               <li>
-                <Link href="/legal" className="hover:text-fire-400 transition">
+                <Link href="/pravovaya-informaciya" className="hover:text-fire-400 transition">
                   Правовая информация
                 </Link>
               </li>

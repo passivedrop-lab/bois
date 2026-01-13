@@ -18,22 +18,22 @@ export default function Header() {
 
   const menuItems = [
     { name: 'Главная', href: '/' },
-    { name: 'Каталог', href: '/catalogue' },
-    { name: 'Услуги', href: '/services' },
-    { name: 'Доставка', href: '/livraison' },
-    { name: 'О нас', href: '/a-propos' },
-    { name: 'Контакты', href: '/contacts' },
+    { name: 'Каталог', href: '/katalog' },
+    { name: 'Услуги', href: '/uslugi' },
+    { name: 'Доставка', href: '/dostavka' },
+    { name: 'О нас', href: '/o-nas' },
+    { name: 'Контакты', href: '/kontakty' },
   ]
 
   const categories = [
-    { name: 'Строительная древесина', href: '/catalogue/bois-de-construction' },
-    { name: 'Пиломатериалы', href: '/catalogue/bois-scié' },
-    { name: 'Дрова и биотопливо', href: '/catalogue/bois-de-chauffage' },
-    { name: 'Древесина для сауны', href: '/catalogue/bois-sauna' },
-    { name: 'Декоративная древесина', href: '/catalogue/bois-decoratif' },
-    { name: 'Панели и плиты', href: '/catalogue/panneaux' },
-    { name: 'Дерево для наружных работ', href: '/catalogue/bois-exterieur' },
-    { name: 'Техническая / индустриальная древесина', href: '/catalogue/bois-brut-industriel' },
+    { name: 'Строительная древесина', href: '/katalog/stroitelnyi-les' },
+    { name: 'Пиломатериалы', href: '/katalog/pilomaterialy' },
+    { name: 'Дрова и биотопливо', href: '/katalog/drova' },
+    { name: 'Древесина для сауны', href: '/katalog/materialy-dlya-bani' },
+    { name: 'Декоративная древесина', href: '/katalog/dekorativnaya-otdelka' },
+    { name: 'Панели и плиты', href: '/katalog/paneli' },
+    { name: 'Дерево для наружных работ', href: '/katalog/fasadnye-sistemy' },
+    { name: 'Техническая / индустриальная древесина', href: '/katalog/tekhnicheskoe-derevo' },
   ]
 
   return (
@@ -56,7 +56,7 @@ export default function Header() {
                   <span className="hidden xs:inline text-xs sm:text-sm">Мой профиль</span>
                 </Link>
               ) : (
-                <Link href="/login" className="flex items-center gap-1.5 sm:gap-2 hover:text-fire-400 transition whitespace-nowrap">
+                <Link href="/vhod" className="flex items-center gap-1.5 sm:gap-2 hover:text-fire-400 transition whitespace-nowrap">
                   <User size={14} className="sm:w-4 sm:h-4" />
                   <span className="text-xs sm:text-sm">Вход / Регистрация</span>
                 </Link>
@@ -109,14 +109,14 @@ export default function Header() {
               <Search size={18} className="sm:w-6 sm:h-6 text-wood-700" />
             </button>
             <Link
-              href="/favorites"
+              href="/izbrannoe"
               className="relative p-1.5 sm:p-2 hover:bg-wood-100 rounded-lg transition"
               aria-label="Избранное"
             >
               <Heart size={18} className="sm:w-6 sm:h-6 text-wood-700" />
             </Link>
             <Link
-              href="/cart"
+              href="/korzina"
               className="relative p-1.5 sm:p-2 hover:bg-wood-100 rounded-lg transition"
               aria-label="Корзина"
             >
