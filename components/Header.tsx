@@ -8,6 +8,7 @@ import { Menu, X, ShoppingCart, User, Phone, Search, Heart, LogOut } from 'lucid
 import { useAuth } from './AuthProvider'
 import { useCartStore } from '@/lib/store/cartStore'
 import { PRODUCTS } from '@/lib/data/products'
+import { CATEGORIES } from '@/lib/data/categories'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -16,6 +17,8 @@ export default function Header() {
   const cartCount = useCartStore((state) => state.getItemCount())
   const pathname = usePathname()
 
+
+
   const menuItems = [
     { name: 'Главная', href: '/' },
     { name: 'Каталог', href: '/katalog' },
@@ -23,17 +26,6 @@ export default function Header() {
     { name: 'Доставка', href: '/dostavka' },
     { name: 'О нас', href: '/o-nas' },
     { name: 'Контакты', href: '/kontakty' },
-  ]
-
-  const categories = [
-    { name: 'Строительная древесина', href: '/katalog/stroitelnyi-les' },
-    { name: 'Пиломатериалы', href: '/katalog/pilomaterialy' },
-    { name: 'Дрова и биотопливо', href: '/katalog/drova' },
-    { name: 'Древесина для сауны', href: '/katalog/materialy-dlya-bani' },
-    { name: 'Декоративная древесина', href: '/katalog/dekorativnaya-otdelka' },
-    { name: 'Панели и плиты', href: '/katalog/paneli' },
-    { name: 'Дерево для наружных работ', href: '/katalog/fasadnye-sistemy' },
-    { name: 'Техническая / индустриальная древесина', href: '/katalog/tekhnicheskoe-derevo' },
   ]
 
   return (
@@ -187,7 +179,7 @@ export default function Header() {
       <div className="bg-wood-50/50 backdrop-blur-md border-b border-wood-100 py-3 overflow-hidden">
         <div className="container mx-auto px-4 relative">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {categories.map((category) => {
+            {CATEGORIES.map((category) => {
               const decodedPathname = decodeURIComponent(pathname)
               let isActive = decodedPathname === category.href || decodedPathname.startsWith(category.href + '/')
 
@@ -241,7 +233,7 @@ export default function Header() {
             ))}
             <div className="pt-4 border-t border-wood-200 mt-2">
               <p className="text-sm font-semibold text-wood-900 mb-2">Категории:</p>
-              {categories.map((category) => {
+              {CATEGORIES.map((category) => {
                 const decodedPathname = decodeURIComponent(pathname)
                 const isActive = decodedPathname === category.href || decodedPathname.startsWith(category.href + '/')
                 return (

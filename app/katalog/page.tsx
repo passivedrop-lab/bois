@@ -4,16 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
-const categories = [
-  { name: 'Строительная древесина', href: '/katalog/stroitelnyi-les', icon: '🏗️' },
-  { name: 'Пиломатериалы', href: '/katalog/pilomaterialy', icon: '🪵' },
-  { name: 'Дрова и биотопливо', href: '/katalog/drova', icon: '🔥' },
-  { name: 'Древесина для сауны', href: '/katalog/materialy-dlya-bani', icon: '🧖' },
-  { name: 'Декоративная древесина', href: '/katalog/dekorativnaya-otdelka', icon: '✨' },
-  { name: 'Панели и плиты', href: '/katalog/paneli', icon: '📦' },
-  { name: 'Дерево для наружных работ', href: '/katalog/fasadnye-sistemy', icon: '🌲' },
-  { name: 'Техническая / индустриальная древесина', href: '/katalog/tekhnicheskoe-derevo', icon: '⚙️' },
-]
+import { CATEGORIES } from '@/lib/data/categories'
 
 export default function CataloguePage() {
   return (
@@ -23,7 +14,7 @@ export default function CataloguePage() {
         <p className="text-wood-600 mb-8">Откройте для себя широкий ассортимент качественной древесины</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((category) => (
+          {CATEGORIES.map((category) => (
             <Link
               key={category.href}
               href={category.href}

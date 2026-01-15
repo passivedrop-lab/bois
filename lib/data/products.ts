@@ -251,7 +251,10 @@ export const PRODUCTS: Product[] = [
         reviews: 25,
         variants: [
             { id: 'v1', label: 'Доска заборная 20х95х2000 мм', price: 18000 },
-            { id: 'v2', label: 'Штакетник 20х45х1500 мм', price: 18000 }
+            { id: 'v2', label: 'Штакетник 20х45х1500 мм', price: 18000 },
+            { id: 'v3', label: '25х100х1500 мм', price: 18000 },
+            { id: 'v4', label: '45х150х3000 мм', price: 18000 },
+            { id: 'v5', label: '50х200х6000 мм', price: 18000 }
         ]
     },
     {

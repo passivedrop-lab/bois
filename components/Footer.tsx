@@ -59,12 +59,12 @@ export default function Footer() {
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Наши услуги</h4>
             <ul className="space-y-2 text-sm sm:text-base text-wood-300">
               <li>
-                <Link href="/uslugi" className="hover:text-fire-400 transition">
+                <Link href="/uslugi#consultation" className="hover:text-fire-400 transition">
                   Консультация
                 </Link>
               </li>
               <li>
-                <Link href="/uslugi" className="hover:text-fire-400 transition">
+                <Link href="/uslugi#cutting" className="hover:text-fire-400 transition">
                   Распил и обработка
                 </Link>
               </li>
@@ -74,7 +74,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/uslugi" className="hover:text-fire-400 transition">
+                <Link href="/uslugi#wholesale" className="hover:text-fire-400 transition">
                   Оптовые поставки
                 </Link>
               </li>

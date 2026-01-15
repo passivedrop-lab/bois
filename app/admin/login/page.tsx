@@ -2,13 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Lock, Loader, KeyRound } from 'lucide-react'
+import { Lock, Loader, KeyRound, Eye, EyeOff } from 'lucide-react'
 import toast from 'react-hot-toast'
 import Cookies from 'js-cookie'
 
 export default function AdminLoginPage() {
   const router = useRouter()
   const [code, setCode] = useState('')
+  const [showCode, setShowCode] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -59,13 +60,20 @@ export default function AdminLoginPage() {
             <div className="relative">
               <KeyRound className="absolute left-3 top-3 text-wood-500" size={20} />
               <input
-                type="password"
+                type={showCode ? 'text' : 'password'}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-200"
+                className="w-full pl-10 pr-10 py-3 border border-wood-300 rounded-lg focus:outline-none focus:border-fire-600 focus:ring-2 focus:ring-fire-200"
                 placeholder="••••••••••••••••••••"
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowCode(!showCode)}
+                className="absolute right-3 top-3 text-wood-500 hover:text-wood-700"
+              >
+                {showCode ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
             </div>
           </div>
 

@@ -48,27 +48,30 @@ export const useCartStore = create<CartStore>()(
         set({ items: newItems })
 
         // Sync with Supabase if user is logged in (Non-blocking)
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user) {
-            const cartItem = newItems.find(i => i.id === item.id)
-            if (cartItem) {
-              supabase
-                .from('user_cart')
-                .upsert({
-                  user_id: user.id,
-                  product_id: item.id,
-                  product_name: item.name,
-                  price: item.price,
-                  quantity: cartItem.quantity,
-                }, {
-                  onConflict: 'user_id,product_id'
-                })
-                .then(({ error }) => {
-                  if (error) console.error('Error syncing cart to Supabase:', error)
-                })
-            }
+        const checkUser = await supabase.auth.getUser()
+        const user = checkUser.data.user
+
+        if (user) {
+          const cartItem = newItems.find(i => i.id === item.id)
+          if (cartItem) {
+            supabase
+              .from('user_cart')
+              .upsert({
+                user_id: user.id,
+                product_id: item.id,
+                product_name: item.name,
+                price: item.price,
+                quantity: cartItem.quantity,
+                image: item.image || null,
+                variant_label: item.variantLabel || null
+              }, {
+                onConflict: 'user_id,product_id'
+              })
+              .then(({ error }) => {
+                if (error) console.error('Error syncing cart to Supabase:', error)
+              })
           }
-        }).catch(err => console.error('Auth check error in cart sync:', err))
+        }
       },
 
       removeItem: async (id) => {
@@ -76,18 +79,17 @@ export const useCartStore = create<CartStore>()(
         set({ items: newItems })
 
         // Remove from Supabase if user is logged in
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user) {
-            supabase
-              .from('user_cart')
-              .delete()
-              .eq('user_id', user.id)
-              .eq('product_id', id)
-              .then(({ error }) => {
-                if (error) console.error('Error removing item from Supabase:', error)
-              })
-          }
-        })
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          supabase
+            .from('user_cart')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('product_id', id)
+            .then(({ error }) => {
+              if (error) console.error('Error removing item from Supabase:', error)
+            })
+        }
       },
 
       updateQuantity: async (id, quantity) => {
@@ -101,9 +103,11 @@ export const useCartStore = create<CartStore>()(
         )
         set({ items: newItems })
 
-        // Update in Supabase if user is logged in
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user) {
+        // Sync update with Supabase
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          const item = newItems.find(i => i.id === id)
+          if (item) {
             supabase
               .from('user_cart')
               .update({ quantity })
@@ -113,24 +117,17 @@ export const useCartStore = create<CartStore>()(
                 if (error) console.error('Error updating quantity in Supabase:', error)
               })
           }
-        })
+        }
       },
 
       clearCart: async () => {
         set({ items: [] })
-
-        // Clear from Supabase if user is logged in
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user) {
-            supabase
-              .from('user_cart')
-              .delete()
-              .eq('user_id', user.id)
-              .then(({ error }) => {
-                if (error) console.error('Error clearing cart from Supabase:', error)
-              })
-          }
-        })
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          supabase.from('user_cart').delete().eq('user_id', user.id).then(({ error }) => {
+            if (error) console.error('Error clearing cart in Supabase:', error)
+          })
+        }
       },
 
       syncWithSupabase: async (userId: string) => {
@@ -155,6 +152,8 @@ export const useCartStore = create<CartStore>()(
               name: item.product_name,
               price: item.price,
               quantity: item.quantity,
+              image: item.image,
+              variantLabel: item.variant_label
             }))
             set({ items: mergedItems })
           } else if (localItems.length > 0) {

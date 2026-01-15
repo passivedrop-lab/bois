@@ -151,33 +151,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
             for (const item of items) {
                 if (item) {
-                    // Add item 'qty' times or implement a bulk add in store if available.
-                    // Since store usually increments by 1, we might need a loop or store update.
-                    // Assuming basic store adds 1 by default, we'll loop or just add once with qty if supported.
-                    // Checking store interface: cartStore.addItem({id, name, price}) usually adds 1.
-                    // For better UX with large quantities, we should check if store supports quantity.
-                    // If not, we will just call addItem multiple times (not ideal) or assume store handles duplicates by incrementing.
-                    // Ideally, we'd update store to accept quantity, but for now let's assume standard behavior:
-                    // We will call addItem for each unit or if store allows passing quantity.
-                    // Let's check store in a separate step or assume we simply call addItem 'qty' times. 
-                    // BUT calling typical cart store 'addItem' repeatedly causes toast spam.
-                    // Let's assume we can't easily change store signature right now and just call it once per variant 
-                    // but that would be wrong price-wise if we don't pass quantity.
-                    // Wait, the previous code didn't handle quantity > 1. 
-                    // Let's implement a loop for now, but really we should refactor store later.
-                    // Actually, usually addItem increments. To add 5, we call it 5 times? That's slow.
-                    // Let's simply add the item and then if the user wants more they use the cart page (standard MVP)
-                    // OR, better: We just show a toast "Added X items".
-                    // IMPORTANT: To support "choosing specific quantity", we really need to pass quantity to store.
-                    // Since I can't see store, I will assume I can only add one by one or need to hack it.
-                    // Hack: Just call addItem sequentially.
-                    for (let i = 0; i < item.quantity; i++) {
-                        await cartStore.addItem({
-                            id: item.id,
-                            name: item.name,
-                            price: item.price
-                        })
-                    }
+                    await cartStore.addItem({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity
+                    })
                 }
             }
             setQuantities({}) // Reset after adding
@@ -189,13 +168,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             const multiplier = getDiscountMultiplier(qty)
             const finalPrice = Math.round(product.price * multiplier)
 
-            for (let i = 0; i < qty; i++) {
-                await cartStore.addItem({
-                    id: product.id,
-                    name: product.name,
-                    price: finalPrice,
-                })
-            }
+            await cartStore.addItem({
+                id: product.id,
+                name: product.name,
+                price: finalPrice,
+                quantity: qty
+            })
+
             setQuantities({})
             toast.success('Добавлено в корзину')
         }
