@@ -373,19 +373,41 @@ export default function ProductCard({ product }: ProductCardProps) {
                                             </div>
                                         </div>
 
-                                        {/* Suggestion & Apply Button */}
-                                        {suggestion && suggestion > 0 && (
-                                            <div className="mt-2 flex items-center justify-between text-xs bg-blue-50 text-blue-800 px-2 py-1.5 rounded border border-blue-100 animate-in fade-in slide-in-from-top-1">
-                                                <span>Необходимо: <span className="font-bold">{suggestion} шт</span></span>
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleQuantityInput(variant.id, suggestion.toString())
-                                                    }}
-                                                    className="ml-2 bg-blue-600 text-white px-2 py-0.5 rounded hover:bg-blue-700 transition"
-                                                >
-                                                    Выбрать
-                                                </button>
+                                        {/* Suggestion & Apply Button with Price Per M2 */}
+                                        {Object.keys(suggestions).length > 0 && (
+                                            <div className="mt-2 space-y-1">
+                                                {/* Price Per M2 Estimation */}
+                                                {(() => {
+                                                    const dims = parseDimensions(variant.label)
+                                                    if (dims) {
+                                                        const pieceArea = (dims.width * dims.length) / 1000000 // m2
+                                                        const pricePerM2 = Math.round(variant.price / pieceArea)
+                                                        // Only show for reasonably standard items (avoid division by tiny numbers or accessories)
+                                                        if (pieceArea > 0 && pricePerM2 > 0 && product.unit === 'м³') {
+                                                            return (
+                                                                <div className="text-[10px] text-wood-500 text-right italic">
+                                                                    ~{pricePerM2.toLocaleString('ru-RU')} ₽ / м²
+                                                                </div>
+                                                            )
+                                                        }
+                                                    }
+                                                    return null
+                                                })()}
+
+                                                {suggestion && suggestion > 0 && (
+                                                    <div className="flex items-center justify-between text-xs bg-blue-50 text-blue-800 px-2 py-1.5 rounded border border-blue-100 animate-in fade-in slide-in-from-top-1">
+                                                        <span>Необходимо: <span className="font-bold">{suggestion} шт</span></span>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleQuantityInput(variant.id, suggestion.toString())
+                                                            }}
+                                                            className="ml-2 bg-blue-600 text-white px-2 py-0.5 rounded hover:bg-blue-700 transition"
+                                                        >
+                                                            Выбрать
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
