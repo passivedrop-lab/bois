@@ -59,7 +59,8 @@ export default function AuthPage() {
         setShowCodeInput(true) // Move to code entry
       }
     } catch (error: any) {
-      toast.error(error.message)
+      console.error('Registration Error:', error)
+      toast.error(error?.message || ('Ошибка при регистрации: ' + JSON.stringify(error)))
     } finally {
       setLoading(false)
     }
@@ -97,7 +98,8 @@ export default function AuthPage() {
         return // Don't stop loading yet? No, we need to let them enter code.
       }
     } catch (error: any) {
-      toast.error(error.message)
+      console.error('Login Error:', error)
+      toast.error(error?.message || ('Ошибка при входе: ' + JSON.stringify(error)))
       setLoading(false)
     }
   }
@@ -124,7 +126,8 @@ export default function AuthPage() {
       router.push('/profile')
       router.refresh()
     } catch (error: any) {
-      toast.error(error.message || 'Неверный код')
+      console.error('Verification Error:', error)
+      toast.error(error?.message || ('Ошибка проверки: ' + JSON.stringify(error)))
     } finally {
       setLoading(false)
     }
