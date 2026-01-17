@@ -53,7 +53,11 @@ export async function POST(request: Request) {
 
       let itemsHtml = ''
       try {
-        const supabase = await createClient()
+        const { createClient } = await import('@supabase/supabase-js')
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
         const { data: items } = await supabase
           .from('order_items')
           .select('*')

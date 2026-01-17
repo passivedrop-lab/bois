@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -11,7 +11,13 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const supabase = await createClient()
+    // START FIX: Use Service Role to bypass RLS for this specific admin action
+    // This allows the link to work even if the admin is not logged in on the device
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    // END FIX
 
     // 1. Get order details first to notify customer later
     const { data: order, error: fetchError } = await supabase

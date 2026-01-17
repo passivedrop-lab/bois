@@ -17,8 +17,14 @@ export async function POST(request: NextRequest) {
 
     // Use shared resend client
     const { resend } = await import('@/lib/resend')
-    const { createClient } = await import('@/lib/supabase/server')
-    const supabase = await createClient()
+    const { createClient } = await import('@supabase/supabase-js')
+
+    // START FIX: Use Service Role to fetch full order details including items
+    // ignoring RLS which might hide items for guest users
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
 
     // Fetch order details and items
     const { data: order, error: orderError } = await supabase
