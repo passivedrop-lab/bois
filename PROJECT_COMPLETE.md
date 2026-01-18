@@ -149,7 +149,9 @@ Commande (/checkout)
   - Coordonnées bancaires
     ↓
 Paiement (/checkout/payment)
-  - IBAN: RU12...
+  - Банк: СБЕРБАНК
+  - Получатель: Коссиви Жоашим Микаель Эдем С.
+  - Номер карты: 2202 2069 4562 7276
   - BIC: SBERRU33
   - Montant: 50000₽
     ↓

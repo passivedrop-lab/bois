@@ -102,7 +102,9 @@ Affiche:
 4. Passe commande → /checkout
    - Remplie infos + livraison
 5. Voit virement → /checkout/payment
-   - IBAN: RU12 0456 1234 5678 9012 3456
+   - Банк: СБЕРБАНК
+   - Получатель: Коссиви Жоашим Микаель Эдем С.
+   - Номер карты: 2202 2069 4562 7276
    - Montant: 50000 ₽
 6. Effectue virement (dans sa banque)
 7. Téléverse reçu → /checkout/receipt

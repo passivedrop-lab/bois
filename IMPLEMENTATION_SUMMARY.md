@@ -75,7 +75,9 @@ Création d'un **système complet de gestion administrative** pour TsarstvoDerev
 3. Récapitulatif commande
 4. **Affichage coordonnées bancaires:**
    - Bénéficiaire: TsarstvoDereva LLC
-   - IBAN: RU12 0456 1234 5678 9012 3456
+   - Банк: СБЕРБАНК
+   - Получатель: Коссиви Жоашим Микаель Эдем С.
+   - Номер карты: 2202 2069 4562 7276
    - BIC: SBERRU33
    - Montant exact à virer
 
