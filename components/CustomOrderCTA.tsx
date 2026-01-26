@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Hammer, ArrowRight, Sparkles } from 'lucide-react'
+import { Hammer, ArrowRight, Sparkles, Ruler, Award, Clock } from 'lucide-react'
 
 export default function CustomOrderCTA() {
     return (
@@ -53,16 +53,16 @@ export default function CustomOrderCTA() {
 
                     {/* Avantages rapides */}
                     <div className="grid grid-cols-3 gap-4 md:gap-8 mt-12 pt-8 border-t border-white/20">
-                        <div>
-                            <div className="text-3xl mb-2">✨</div>
+                        <div className="flex flex-col items-center">
+                            <Ruler className="text-white mb-2" size={32} />
                             <p className="text-sm md:text-base text-white font-medium">Точные размеры</p>
                         </div>
-                        <div>
-                            <div className="text-3xl mb-2">🎯</div>
+                        <div className="flex flex-col items-center">
+                            <Award className="text-white mb-2" size={32} />
                             <p className="text-sm md:text-base text-white font-medium">Премиум качество</p>
                         </div>
-                        <div>
-                            <div className="text-3xl mb-2">⚡</div>
+                        <div className="flex flex-col items-center">
+                            <Clock className="text-white mb-2" size={32} />
                             <p className="text-sm md:text-base text-white font-medium">От 7 дней</p>
                         </div>
                     </div>
