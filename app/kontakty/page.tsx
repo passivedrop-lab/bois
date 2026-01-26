@@ -20,7 +20,7 @@ export default function Page() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-wood-900">Наш офис</h3>
-                  <p className="text-wood-600">Москва, ул. Лесная, д. 15</p>
+                  <p className="text-wood-600">Россия, Вологодская обл., г. Никольск, ул. Ленина, д. 12</p>
                 </div>
               </div>
 
@@ -30,7 +30,7 @@ export default function Page() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-wood-900">Телефон</h3>
-                  <p className="text-wood-600">+7 (999) 123-45-67</p>
+                  <p className="text-wood-600">+7 (81754) 2-18-35</p>
                 </div>
               </div>
 
@@ -40,7 +40,7 @@ export default function Page() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-wood-900">Email</h3>
-                  <p className="text-wood-600">info@tsarstvadereva.ru</p>
+                  <p className="text-wood-600">seles95@yandex.ru</p>
                 </div>
               </div>
 

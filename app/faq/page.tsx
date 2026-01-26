@@ -53,7 +53,7 @@ export default function FAQPage() {
     },
     {
       question: "Кого я могу контактировать для других вопросов?",
-      answer: "Наша команда доступна по электронной почте info@tsarstvadereva.ru или по телефону +7 (999) 123-45-67. Мы обычно отвечаем в течение 24 часов."
+      answer: "Наша команда доступна по электронной почте seles95@yandex.ru или по телефону +7 (81754) 2-18-35. Мы обычно отвечаем в течение 24 часов."
     }
   ]
 
@@ -98,13 +98,13 @@ export default function FAQPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:info@tsarstvadereva.ru"
+                href="mailto:seles95@yandex.ru"
                 className="bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
               >
                 Отправить письмо
               </a>
               <a
-                href="tel:+79991234567"
+                href="tel:+78175421835"
                 className="bg-white border-2 border-fire-600 text-fire-600 px-6 py-2 rounded-lg hover:bg-fire-50 transition font-semibold"
               >
                 Позвонить

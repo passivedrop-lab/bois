@@ -37,18 +37,18 @@ export default function Footer() {
             <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-wood-300">
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <span>Москва, ул. Лесная, д. 15</span>
+                <span>Россия, Вологодская обл., г. Никольск, ул. Ленина, д. 12</span>
               </li>
               <li className="flex items-start gap-2">
                 <Phone size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <a href="tel:+79991234567" className="hover:text-fire-400 transition break-all">
-                  +7 (999) 123-45-67
+                <a href="tel:+78175421835" className="hover:text-fire-400 transition break-all">
+                  +7 (81754) 2-18-35
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <a href="mailto:info@drovapremium.ru" className="hover:text-fire-400 transition break-all">
-                  info@drovapremium.ru
+                <a href="mailto:seles95@yandex.ru" className="hover:text-fire-400 transition break-all">
+                  seles95@yandex.ru
                 </a>
               </li>
             </ul>
