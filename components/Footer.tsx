@@ -10,12 +10,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <div className="bg-fire-600 text-white p-1.5 sm:p-2 rounded-lg">
-                <span className="text-lg sm:text-xl font-bold">TS</span>
+                <span className="text-lg sm:text-xl font-bold">L</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-serif font-bold">TsarstvoDereva</h3>
+              <h3 className="text-lg sm:text-xl font-serif font-bold">ООО «ЛЕС»</h3>
             </div>
             <p className="text-sm sm:text-base text-wood-300 mb-3 sm:mb-4">
-              TsarstvoDereva — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
+              ООО «ЛЕС» (TsarstvoDereva) — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
             </p>
             <div className="flex flex-col gap-2">
               <p className="text-xs text-wood-500 uppercase tracking-wider font-bold">Мы в Telegram</p>
@@ -37,18 +37,12 @@ export default function Footer() {
             <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-wood-300">
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <span>Россия, Вологодская обл., г. Никольск, ул. Ленина, д. 12</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Phone size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <a href="tel:+78175421835" className="hover:text-fire-400 transition break-all">
-                  +7 (81754) 2-18-35
-                </a>
+                <span>Россия, Вологодская область, Никольский район, деревня Кумбисер, д. 2а</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
-                <a href="mailto:seles95@yandex.ru" className="hover:text-fire-400 transition break-all">
-                  seles95@yandex.ru
+                <a href="mailto:LES3514008268@MAIL.RU" className="hover:text-fire-400 transition break-all">
+                  LES3514008268@MAIL.RU
                 </a>
               </li>
             </ul>
@@ -91,8 +85,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/pravovaya-informaciya" className="hover:text-fire-400 transition">
-                  Правовая информация
+                <Link href="/rekvizity" className="hover:text-fire-400 transition">
+                  Реквизиты
                 </Link>
               </li>
               <li>
@@ -105,7 +99,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-wood-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-wood-400 text-xs sm:text-sm">
-          <p>&copy; 2025 TsarstvoDereva. Все права защищены.</p>
+          <p>&copy; 2025 ООО «ЛЕС». Все права защищены.</p>
         </div>
       </div>
     </footer>

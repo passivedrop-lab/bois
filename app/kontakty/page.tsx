@@ -20,19 +20,11 @@ export default function Page() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-wood-900">Наш офис</h3>
-                  <p className="text-wood-600">Россия, Вологодская обл., г. Никольск, ул. Ленина, д. 12</p>
+                  <p className="text-wood-600">Россия, Вологодская область, Никольский район, деревня Кумбисер, д. 2а</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="bg-wood-100 p-3 rounded-lg">
-                  <Phone className="text-wood-900" size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-wood-900">Телефон</h3>
-                  <p className="text-wood-600">+7 (81754) 2-18-35</p>
-                </div>
-              </div>
+              {/* Phone removed as per request */}
 
               <div className="flex items-start gap-4">
                 <div className="bg-wood-100 p-3 rounded-lg">
@@ -40,7 +32,7 @@ export default function Page() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-wood-900">Email</h3>
-                  <p className="text-wood-600">seles95@yandex.ru</p>
+                  <p className="text-wood-600">LES3514008268@MAIL.RU</p>
                 </div>
               </div>
 
