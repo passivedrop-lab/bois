@@ -37,7 +37,7 @@ function ReceiptContent() {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('orderId', orderId)
-      formData.append('customerEmail', user?.email || 'admin@tsarstvo')
+      formData.append('customerEmail', user?.email || 'seles95@yandex.ru')
 
       const response = await fetch('/api/receipts/upload', {
         method: 'POST',

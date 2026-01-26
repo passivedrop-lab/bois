@@ -325,7 +325,7 @@ export default function AuthPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  placeholder="+7 (999) 000-00-00"
+                  placeholder="+7 (81754) 0-00-00"
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
                 />
               </div>
@@ -337,7 +337,7 @@ export default function AuthPage() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   required
-                  placeholder="Москва"
+                  placeholder="Никольск"
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
                 />
               </div>

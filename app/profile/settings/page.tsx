@@ -115,7 +115,7 @@ export default function SettingsPage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
-                  placeholder="+7 (999) 000-00-00"
+                  placeholder="+7 (81754) 0-00-00"
                 />
               </div>
 
@@ -126,7 +126,7 @@ export default function SettingsPage() {
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full px-4 py-2 border border-wood-200 rounded-lg focus:outline-none focus:border-fire-600"
-                  placeholder="Москва"
+                  placeholder="Никольск"
                 />
               </div>
 

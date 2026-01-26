@@ -131,7 +131,7 @@ export default function CheckoutPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: 'admin_notification',
-            email: 'admin@tsarstvodereva.ru',
+            email: 'seles95@yandex.ru',
             orderId: order.id,
             orderTotal: grandTotal,
             customerName: `${formData.firstName} ${formData.lastName}`
