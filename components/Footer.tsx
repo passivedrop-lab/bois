@@ -10,12 +10,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <div className="bg-fire-600 text-white p-1.5 sm:p-2 rounded-lg">
-                <span className="text-lg sm:text-xl font-bold">L</span>
+                <span className="text-lg sm:text-xl font-bold">TS</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-serif font-bold">ООО «ЛЕС»</h3>
+              <h3 className="text-lg sm:text-xl font-serif font-bold">TsarstvoDereva</h3>
             </div>
             <p className="text-sm sm:text-base text-wood-300 mb-3 sm:mb-4">
-              ООО «ЛЕС» (TsarstvoDereva) — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
+              TsarstvoDereva — премиальные пиломатериалы и лесопродукты с доставкой по всей России. Брус, доска, бревна, дрова, панели и декоративный лес высочайшего качества.
             </p>
             <div className="flex flex-col gap-2">
               <p className="text-xs text-wood-500 uppercase tracking-wider font-bold">Мы в Telegram</p>
@@ -86,7 +86,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/rekvizity" className="hover:text-fire-400 transition">
-                  Реквизиты
+                  Юридическая информация
                 </Link>
               </li>
               <li>
@@ -99,7 +99,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-wood-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-wood-400 text-xs sm:text-sm">
-          <p>&copy; 2025 ООО «ЛЕС». Все права защищены.</p>
+          <p>&copy; 2025 TsarstvoDereva. Все права защищены.</p>
         </div>
       </div>
     </footer>
