@@ -40,6 +40,12 @@ export default function Footer() {
                 <span>Россия, Вологодская область, Никольский район, деревня Кумбисер, д. 2а</span>
               </li>
               <li className="flex items-start gap-2">
+                <Phone size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
+                <a href="tel:+78175421835" className="hover:text-fire-400 transition break-all">
+                  +7 (81754) 2-18-35
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
                 <Mail size={16} className="text-fire-400 mt-0.5 flex-shrink-0 sm:w-4.5 sm:h-4.5" />
                 <a href="mailto:LES3514008268@MAIL.RU" className="hover:text-fire-400 transition break-all">
                   LES3514008268@MAIL.RU

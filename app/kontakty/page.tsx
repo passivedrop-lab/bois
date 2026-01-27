@@ -24,7 +24,15 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Phone removed as per request */}
+              <div className="flex items-start gap-4">
+                <div className="bg-wood-100 p-3 rounded-lg">
+                  <Phone className="text-wood-900" size={24} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-wood-900">Телефон</h3>
+                  <p className="text-wood-600">+7 (81754) 2-18-35</p>
+                </div>
+              </div>
 
               <div className="flex items-start gap-4">
                 <div className="bg-wood-100 p-3 rounded-lg">

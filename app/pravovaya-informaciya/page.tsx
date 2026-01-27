@@ -11,6 +11,7 @@ export default function LegalPage() {
               <h2 className="text-2xl font-bold text-wood-900 mb-4">О компании</h2>
               <p className="mb-2"><strong>Название:</strong> ООО «ЛЕС»</p>
               <p className="mb-2"><strong>Адрес:</strong> Россия, Вологодская область, Никольский район, деревня Кумбисер, д. 2а</p>
+              <p className="mb-2"><strong>Телефон:</strong> +7 (81754) 2-18-35</p>
               <p><strong>Email:</strong> LES3514008268@MAIL.RU</p>
             </section>
 
