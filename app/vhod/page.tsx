@@ -146,6 +146,10 @@ export default function AuthPage() {
           <h2 className="text-2xl font-bold text-wood-900 mb-4">Введите код</h2>
           <p className="text-wood-600 mb-6">
             Мы отправили код из 6 цифр на <strong>{email}</strong>.
+            <br />
+            <span className="text-sm text-wood-500 mt-2 block italic">
+              Если вы не видите письмо, пожалуйста, проверьте папку «Спам».
+            </span>
           </p>
 
           <form onSubmit={handleVerifyCode} className="space-y-4">
