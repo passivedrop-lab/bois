@@ -35,10 +35,6 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 text-xs sm:text-sm">
             <div className="flex items-center gap-3 sm:gap-4">
-              <a href="tel:+78175421835" className="flex items-center gap-1.5 sm:gap-2 hover:text-fire-400 transition whitespace-nowrap">
-                <Phone size={14} className="sm:w-4 sm:h-4" />
-                <span className="text-xs sm:text-sm">+7 (81754) 2-18-35</span>
-              </a>
               <span className="hidden sm:inline">Доставка по всей России</span>
             </div>
             <div className="flex items-center gap-3 sm:gap-4">

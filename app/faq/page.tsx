@@ -52,8 +52,8 @@ export default function FAQPage() {
       answer: "Расходы на доставку зависят от вашего местоположения и объема заказа. Они будут сообщены вам перед подтверждением платежа."
     },
     {
-      question: "Кого я могу контактировать для других вопросов?",
-      answer: "Наша команда доступна по электронной почте seles95@yandex.ru или по телефону +7 (81754) 2-18-35. Мы обычно отвечаем в течение 24 часов."
+      question: "Как я могу с вами связаться?",
+      answer: "Наша команда доступна по электронной почте seles95@yandex.ru. Мы обычно отвечаем в течение 24 часов."
     }
   ]
 
@@ -94,7 +94,7 @@ export default function FAQPage() {
           <div className="mt-12 bg-fire-50 rounded-lg p-8 border border-fire-200 text-center">
             <h2 className="text-2xl font-bold text-wood-900 mb-4">Не нашли свой ответ?</h2>
             <p className="text-wood-700 mb-6">
-              Наша команда готова вам помочь. Свяжитесь с нами по электронной почте или телефону.
+              Наша команда готова вам помочь. Свяжитесь с нами по электронной почте.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -102,12 +102,6 @@ export default function FAQPage() {
                 className="bg-fire-600 text-white px-6 py-2 rounded-lg hover:bg-fire-700 transition font-semibold"
               >
                 Отправить письмо
-              </a>
-              <a
-                href="tel:+78175421835"
-                className="bg-white border-2 border-fire-600 text-fire-600 px-6 py-2 rounded-lg hover:bg-fire-50 transition font-semibold"
-              >
-                Позвонить
               </a>
             </div>
           </div>
